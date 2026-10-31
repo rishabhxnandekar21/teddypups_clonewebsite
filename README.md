@@ -1,13 +1,13 @@
 # TeddyPups UAE — Clone Project
 
-A high-fidelity recreation of the [TeddyPups UAE](https://puppy.instabizweb.com/) website, built as a React + TypeScript + Vite application.
+A high-fidelity recreation of the [TeddyPups UAE](https://puppy.instabizweb.com/) website, built as a React + JavaScript + Vite application.
 
 ## Technology Stack
 
 | Layer | Technology |
 |---|---|
 | Framework | React 19 |
-| Language | TypeScript 5.6 |
+| Language | JavaScript (ESNext / JSX) |
 | Build Tool | Vite 6 |
 | Routing | React Router 7 |
 | Icons | Lucide React |

@@ -3,9 +3,7 @@
 // Verified labels from reference site header
 // ============================================================
 
-import type { NavLink } from '../types';
-
-export const navLinks: NavLink[] = [
+export const navLinks = [
   { label: 'Puppies', href: '/puppies' },
   { label: 'Gone Home', href: '/gone-home' },
   { label: 'Happy Families', href: '/happy-families' },
@@ -24,4 +22,4 @@ export const BUSINESS = {
   instagram: 'https://www.instagram.com/teddypups.worldwide/',
   tiktok: 'https://www.tiktok.com/@teddypupsuae',
   facebook: 'https://www.facebook.com/profile.php?id=61567496944539',
-} as const;
+};

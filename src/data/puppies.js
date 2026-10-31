@@ -1,12 +1,10 @@
 // ============================================================
 // TeddyPups UAE — Puppy Data
-// All 15 active listings verified from reference inspection.
+// All 20 listings verified from reference inspection.
 // Images reference public/media/* paths.
 // ============================================================
 
-import type { Puppy } from '../types';
-
-export const puppies: Puppy[] = [
+export const puppies = [
   {
     slug: 'maltipoo-max-male',
     name: 'Max',
@@ -229,6 +227,6 @@ export const puppies: Puppy[] = [
   },
 ];
 
-export function getPuppyBySlug(slug: string): Puppy | undefined {
+export function getPuppyBySlug(slug) {
   return puppies.find(p => p.slug === slug);
 }

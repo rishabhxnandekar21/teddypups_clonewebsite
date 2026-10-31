@@ -1,14 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
-import PageLayout from '../components/layout/PageLayout';
-import HomePage from '../pages/HomePage';
-import PuppiesPage from '../pages/PuppiesPage';
-import GoneHomePage from '../pages/GoneHomePage';
-import HappyFamiliesPage from '../pages/HappyFamiliesPage';
-import HowItWorksPage from '../pages/HowItWorksPage';
-import FaqPage from '../pages/FaqPage';
-import ContactPage from '../pages/ContactPage';
-import PuppyDetailPage from '../pages/PuppyDetailPage';
-import NotFoundPage from '../pages/NotFoundPage';
+import PageLayout from '../components/layout/PageLayout.jsx';
+import HomePage from '../pages/HomePage.jsx';
+import PuppiesPage from '../pages/PuppiesPage.jsx';
+import GoneHomePage from '../pages/GoneHomePage.jsx';
+import HappyFamiliesPage from '../pages/HappyFamiliesPage.jsx';
+import HowItWorksPage from '../pages/HowItWorksPage.jsx';
+import FaqPage from '../pages/FaqPage.jsx';
+import ContactPage from '../pages/ContactPage.jsx';
+import PuppyDetailPage from '../pages/PuppyDetailPage.jsx';
+import NotFoundPage from '../pages/NotFoundPage.jsx';
 
 const router = createBrowserRouter([
   {

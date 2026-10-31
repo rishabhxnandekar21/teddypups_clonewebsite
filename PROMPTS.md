@@ -76,6 +76,39 @@ This file records AI prompts, decisions, corrections, and rationale throughout t
 
 ---
 
+## Phase 2 Update: Technology Decision — Migration from TypeScript to JavaScript
+
+**Date:** 2026-11-01  
+**Agent:** Antigravity (Google DeepMind)  
+**Prompt summary:** Migrate the existing React 19 + Vite application from TypeScript to JavaScript while preserving all completed Phase 2 work (routes, layout, data, tokens, styles, assets).
+
+**Approach & Actions:**
+- Converted all `.tsx` components and pages to `.jsx`:
+  - `src/App.jsx`, `src/main.jsx`
+  - `src/components/layout/Header.jsx`, `Footer.jsx`, `PageLayout.jsx`
+  - `src/pages/HomePage.jsx`, `PuppiesPage.jsx`, `PuppyDetailPage.jsx`, `GoneHomePage.jsx`, `HappyFamiliesPage.jsx`, `HowItWorksPage.jsx`, `FaqPage.jsx`, `ContactPage.jsx`, `NotFoundPage.jsx`
+  - `src/routes/index.jsx`
+- Converted data and utility files from `.ts` to `.js`:
+  - `src/data/puppies.js` (all 20 puppy listings intact)
+  - `src/data/alumni.js` (all 27 alumni boarding passes intact)
+  - `src/data/faq.js` (all 9 verified FAQ items intact)
+  - `src/data/navigation.js`
+  - `src/utils/index.js`
+- Removed TypeScript types (`src/types/index.ts`, `src/vite-env.d.ts`) and stripped annotations/generics across components.
+- Removed TypeScript configuration files (`tsconfig.json`, `tsconfig.app.json`, `tsconfig.node.json`, `.tsbuildinfo`).
+- Converted `vite.config.ts` to `vite.config.js`.
+- Updated `index.html` entry script reference to `/src/main.jsx`.
+- Cleaned up `package.json` (removed `@types/react`, `@types/react-dom`, `typescript`; updated build script to `vite build`).
+- Ran `npm install` to prune unused dependencies.
+
+**Verification:**
+- `npm run build` executed successfully without errors (`dist/` generated cleanly in < 3s).
+- Verified all 9 routes with Playwright in headless Chrome.
+- 0 browser console errors / uncaught exceptions detected across all routes.
+- Brand logo and images confirmed loaded.
+
+---
+
 ## Pending (Phase 3+)
 
 - Phase 3: Full component and page implementation

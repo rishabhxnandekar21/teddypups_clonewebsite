@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
 import { Menu, X, MessageCircle } from 'lucide-react';
-import { navLinks, BUSINESS } from '../../data/navigation';
+import { navLinks, BUSINESS } from '../../data/navigation.js';
 import styles from './Header.module.css';
 
 export default function Header() {

@@ -1,13 +1,16 @@
 import { useEffect } from 'react';
 import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
-import { BUSINESS } from '../data/navigation';
+import { BUSINESS } from '../data/navigation.js';
 import styles from './Placeholder.module.css';
 
 export default function ContactPage() {
-  useEffect(() => { document.title = 'Contact — TeddyPups UAE'; }, []);
+  useEffect(() => {
+    document.title = 'Contact — TeddyPups UAE';
+  }, []);
+
   return (
     <section className={styles.placeholder}>
-      <span className={styles['placeholder__badge']}>Phase 2 — Placeholder</span>
+      <span className={styles.placeholder__badge}>Phase 2 — Placeholder</span>
       <p className={styles.placeholder__tag}>let's connect</p>
       <h1 className={styles.placeholder__title}>Contact Us</h1>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', alignItems: 'center', marginTop: '1rem' }}>

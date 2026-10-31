@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getPuppyBySlug } from '../data/puppies';
+import { getPuppyBySlug } from '../data/puppies.js';
 import styles from './Placeholder.module.css';
 
 export default function PuppyDetailPage() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
   const puppy = slug ? getPuppyBySlug(slug) : undefined;
 
   useEffect(() => {
@@ -16,7 +16,7 @@ export default function PuppyDetailPage() {
   if (!puppy) {
     return (
       <section className={styles.placeholder}>
-        <span className={styles['placeholder__badge']}>404</span>
+        <span className={styles.placeholder__badge}>404</span>
         <h1 className={styles.placeholder__title}>Puppy not found</h1>
         <p className={styles.placeholder__desc}>No puppy found with slug: <code>{slug}</code></p>
         <Link to="/puppies" className="btn btn-primary" style={{ marginTop: '1rem' }}>
@@ -28,7 +28,7 @@ export default function PuppyDetailPage() {
 
   return (
     <section className={styles.placeholder}>
-      <span className={styles['placeholder__badge']}>Phase 2 — Placeholder</span>
+      <span className={styles.placeholder__badge}>Phase 2 — Placeholder</span>
       <p className={styles.placeholder__tag}>one ticket home</p>
       <h1 className={styles.placeholder__title}>{puppy.name}</h1>
       <p className={styles.placeholder__desc}>

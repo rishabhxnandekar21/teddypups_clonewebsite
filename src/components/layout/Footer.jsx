@@ -1,10 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Instagram } from 'lucide-react';
-import { navLinks, BUSINESS } from '../../data/navigation';
+import { navLinks, BUSINESS } from '../../data/navigation.js';
 import styles from './Footer.module.css';
 
 // Simple TikTok icon (not in Lucide)
-function TikTokIcon({ size = 18 }: { size?: number }) {
+function TikTokIcon({ size = 18 }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -20,7 +20,7 @@ function TikTokIcon({ size = 18 }: { size?: number }) {
 }
 
 // Simple Facebook icon
-function FacebookIcon({ size = 18 }: { size?: number }) {
+function FacebookIcon({ size = 18 }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

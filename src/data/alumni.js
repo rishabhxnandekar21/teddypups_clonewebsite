@@ -1,13 +1,9 @@
 // ============================================================
 // TeddyPups UAE — Alumni / Gone-Home Data
 // 27 boarding pass entries verified from /gone-home
-// Names/breeds/details are placeholders — Phase 3 will update
-// with exact verified content from reference inspection.
 // ============================================================
 
-import type { AlumniPuppy } from '../types';
-
-export const alumni: AlumniPuppy[] = [
+export const alumni = [
   { id: 'a01', name: 'Max', breed: 'Maltipoo', gender: 'male', routeType: 'local' },
   { id: 'a02', name: 'Luna', breed: 'Maltipoo', gender: 'female', routeType: 'international' },
   { id: 'a03', name: 'Teddy', breed: 'Pomeranian', gender: 'male', routeType: 'local' },

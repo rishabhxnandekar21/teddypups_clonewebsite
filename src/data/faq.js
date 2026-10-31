@@ -3,9 +3,7 @@
 // 9 questions verified from reference inspection of /faq
 // ============================================================
 
-import type { FaqItem } from '../types';
-
-export const faqItems: FaqItem[] = [
+export const faqItems = [
   {
     id: 'faq-1',
     question: 'What breeds do you offer?',
