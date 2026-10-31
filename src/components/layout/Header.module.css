@@ -93,7 +93,7 @@
 .header__navLink {
   position: relative;
   font-family: var(--font-body);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--color-cocoa);
   text-decoration: none;

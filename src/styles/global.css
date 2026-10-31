@@ -1,6 +1,6 @@
 /* ============================================================
    TeddyPups UAE — Global CSS
-   Reset, base styles, layout utilities, button system
+   Reset, base styles, layout utilities, button system & cursor
    ============================================================ */
 
 @import './tokens.css';
@@ -30,6 +30,67 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ============================================================
+   Custom Paw Cursor System (Native CSS Hardware-Accelerated)
+   Hotspot (9, 6) matches the active leading toe tip
+   ============================================================ */
+
+/* 1. Default Canvas Cursor */
+html,
+body {
+  cursor: var(--cursor-paw);
+}
+
+/* 2. Interactive Targets — Paw Press State */
+a,
+button,
+[role="button"],
+.btn,
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+select,
+summary,
+label[for],
+[class*="filterPill"],
+[class*="tabBtn"],
+[class*="navBtn"],
+[class*="thumbBtn"],
+.clickable,
+[data-clickable="true"] {
+  cursor: var(--cursor-paw-press) !important;
+}
+
+/* Ensure interactive child elements inherit or maintain paw press */
+a *,
+button *,
+[role="button"] * {
+  cursor: inherit;
+}
+
+/* 3. Text Inputs & Editable Content — Preserve Native Text Cursor */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="search"],
+input[type="number"],
+input[type="password"],
+input:not([type]),
+textarea,
+[contenteditable="true"] {
+  cursor: text !important;
+}
+
+/* 4. Disabled Controls */
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled,
+[aria-disabled="true"],
+.disabled {
+  cursor: not-allowed !important;
+}
+
 img,
 video {
   display: block;
@@ -48,7 +109,6 @@ ol {
 }
 
 button {
-  cursor: pointer;
   border: none;
   background: none;
   font-family: inherit;
@@ -136,7 +196,6 @@ a:focus-visible {
               transform var(--transition-spring),
               box-shadow var(--transition-fast);
   white-space: nowrap;
-  cursor: pointer;
   border: 2px solid transparent;
   text-decoration: none;
   max-width: 100%;
@@ -265,9 +324,10 @@ a:focus-visible {
 .section-heading {
   font-family: var(--font-display);
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
+  font-weight: 800;
   color: var(--color-cocoa);
   line-height: 1.15;
+  letter-spacing: -0.025em;
 }
 
 .section-subheading {

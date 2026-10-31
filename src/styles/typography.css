@@ -1,10 +1,34 @@
 /* ============================================================
-   TeddyPups UAE — Typography (Font Declarations)
-   Fonts loaded via Google Fonts. Self-hosting can replace this.
+   TeddyPups UAE — Typography & Local Font Declarations
+   Locally hosted woff2 fonts from /fonts/ for zero external latency
    ============================================================ */
 
-/* Google Fonts import — Fraunces, Shantell Sans, Figtree */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&family=Figtree:ital,wght@0,300..900;1,300..900&display=swap');
+/* 1. Fraunces Variable Font (Display Headings) */
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/fraunces.woff2') format('woff2');
+}
+
+/* 2. Figtree Variable Font (Body & Interface) */
+@font-face {
+  font-family: 'Figtree';
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url('/fonts/figtree.woff2') format('woff2');
+}
+
+/* 3. Shantell Sans Variable Font (Handwritten & Decorative) */
+@font-face {
+  font-family: 'Shantell Sans';
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+  src: url('/fonts/shantell-sans.woff2') format('woff2');
+}
 
 /* Font utility classes */
 .font-display {

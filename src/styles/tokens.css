@@ -5,7 +5,7 @@
 
 :root {
   /* ── Brand Colours ── */
-  --color-cocoa:        #2a170e;   /* primary dark text */
+  --color-cocoa:        #2a170e;   /* primary dark text & borders */
   --color-cocoa-soft:   #5a3a28;   /* secondary text */
   --color-milk:         #fffdf8;   /* page background */
   --color-toffee:       #c2622b;   /* primary CTA / accent */
@@ -19,25 +19,25 @@
   --color-whatsapp:     #1f7a4d;   /* WhatsApp CTA */
   --color-whatsapp-hover: #16603c; /* WhatsApp hover */
   --color-sky:          #bfddf5;   /* badge / tag backgrounds */
+  --color-sky-deep:     #2f6e9e;   /* deep sky text/accent */
   --color-blush:        #f9cdbf;   /* accent tag / chip */
 
-  /* ── Typography ── */
-  --font-display: 'Fraunces', Georgia, serif;    /* headings, display */
-  --font-scrawl:  'Shantell Sans', cursive;      /* handwritten notes */
-  --font-body:    'Figtree', system-ui, sans-serif; /* body, nav, controls */
+  /* ── Typography Families ── */
+  --font-display: 'Fraunces', 'Fraunces Fallback', ui-serif, Georgia, serif;
+  --font-scrawl:  'Shantell Sans', 'Shantell Sans Fallback', ui-rounded, 'Comic Sans MS', cursive;
+  --font-body:    'Figtree', 'Figtree Fallback', ui-sans-serif, system-ui, sans-serif;
 
-  /* ── Layout ── */
-  --header-h:        4.75rem;   /* desktop header height */
-  --header-h-mobile: 4rem;      /* mobile header height */
+  /* ── Custom Cursor ── */
+  --cursor-paw:       url('/cursor/paw.svg') 9 6, auto;
+  --cursor-paw-press: url('/cursor/paw-press.svg') 9 6, pointer;
+
+  /* ── Layout & Viewports ── */
+  --header-h:        4.75rem;   /* desktop header height (~76px) */
+  --header-h-mobile: 4rem;      /* mobile header height (~64px) */
   --container-max:   80rem;     /* max content width (1280px) */
   --gutter:          1.25rem;   /* horizontal page padding (mobile) */
   --gutter-md:       2rem;      /* horizontal page padding (tablet+) */
   --gutter-lg:       2.5rem;    /* horizontal page padding (desktop) */
-
-  /* ── Breakpoints (for reference in JS) ── */
-  /* mobile:  < 640px  */
-  /* tablet:  640px – 1023px */
-  /* desktop: >= 1024px */
 
   /* ── Border Radius ── */
   --radius-sm:   0.5rem;
@@ -53,11 +53,13 @@
 
   /* ── Animation Easings ── */
   --ease-pounce: cubic-bezier(0.34, 1.56, 0.64, 1); /* springy bounce */
-  --ease-silk:   cubic-bezier(0.16, 1, 0.3, 1);      /* smooth out */
+  --ease-snap:   cubic-bezier(0.22, 1, 0.36, 1);    /* swift snap */
+  --ease-silk:   cubic-bezier(0.16, 1, 0.3, 1);     /* smooth out */
 
   /* ── Transitions ── */
   --transition-fast:   150ms var(--ease-silk);
   --transition-base:   250ms var(--ease-silk);
   --transition-slow:   400ms var(--ease-silk);
   --transition-spring: 350ms var(--ease-pounce);
+  --transition-snap:   250ms var(--ease-snap);
 }

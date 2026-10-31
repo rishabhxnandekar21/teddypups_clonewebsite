@@ -12,7 +12,7 @@ export default function FaqPage() {
   const [openItems, setOpenItems] = useState({ 'faq-1': true }); // First open by default per reference
 
   useEffect(() => {
-    document.title = 'Frequently Asked Questions — TeddyPups UAE';
+    document.title = 'Questions & answers — TeddyPups UAE';
   }, []);
 
   const filteredItems = useMemo(() => {

@@ -189,3 +189,41 @@
   font-size: 0.95rem;
   max-width: 48ch;
 }
+
+/* Already Gone Home Showcase */
+.goneHomeSection {
+  margin-top: 5rem;
+  padding-top: 3.5rem;
+  border-top: 2px dashed rgba(42, 23, 14, 0.15);
+}
+
+.goneHomeHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.goneHomeTitle {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: var(--color-cocoa);
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.goneHomeDesc {
+  color: var(--color-cocoa-soft);
+  font-size: 1.05rem;
+  max-width: 65ch;
+  line-height: 1.6;
+}
+
+.sectionHeading {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--color-cocoa);
+}

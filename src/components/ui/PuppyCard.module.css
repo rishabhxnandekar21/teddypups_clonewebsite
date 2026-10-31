@@ -93,6 +93,12 @@
   color: var(--color-cocoa);
 }
 
+.originBadgeGoneHome {
+  background-color: var(--color-blush);
+  color: var(--color-toffee-ink);
+  border-color: var(--color-toffee);
+}
+
 /* Content Area */
 .content {
   padding: 1.25rem;

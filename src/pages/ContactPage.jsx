@@ -16,7 +16,7 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    document.title = 'Visit & Contact — TeddyPups UAE Showroom';
+    document.title = 'Get in touch with us — TeddyPups UAE';
   }, []);
 
   const handleChange = (e) => {
@@ -219,7 +219,7 @@ export default function ContactPage() {
             <div className={styles.submitRow}>
               <button type="submit" className="btn btn-primary btn-lg">
                 <Send size={18} aria-hidden="true" />
-                Send letter to TeddyPups
+                Post my letter
               </button>
             </div>
           </form>

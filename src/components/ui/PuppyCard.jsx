@@ -4,6 +4,8 @@ import PawIcon from '../common/PawIcon.jsx';
 import styles from './PuppyCard.module.css';
 
 export default function PuppyCard({ puppy }) {
+  const isGoneHome = puppy.status === 'gone-home' || puppy.status === 'adopted';
+
   const whatsappInquiryUrl = `https://wa.me/971541676733?text=${encodeURIComponent(
     `Hi TeddyPups! I'm interested in ${puppy.name} (${puppy.breed}). Could you please share more details?`
   )}`;
@@ -21,14 +23,18 @@ export default function PuppyCard({ puppy }) {
           height={300}
         />
 
-        {/* Origin Badge */}
+        {/* Origin / Status Badge */}
         <div className={styles.badgeTopLeft}>
           <span
             className={`${styles.originBadge} ${
-              puppy.origin === 'local' ? styles.originBadgeLocal : styles.originBadgeImported
+              isGoneHome
+                ? styles.originBadgeGoneHome
+                : puppy.origin === 'local'
+                ? styles.originBadgeLocal
+                : styles.originBadgeImported
             }`}
           >
-            {puppy.origin === 'local' ? 'In Dubai' : 'Imported'}
+            {isGoneHome ? 'gone home ♥' : puppy.origin === 'local' ? 'In Dubai' : 'Imported'}
           </span>
         </div>
 
@@ -53,7 +59,7 @@ export default function PuppyCard({ puppy }) {
           </h3>
         </div>
 
-        <p className={styles.breed}>{puppy.breed}</p>
+        <p className={styles.breed}>{puppy.subBreed || puppy.breed}</p>
 
         {/* Specs tags */}
         <div className={styles.specs}>
@@ -62,7 +68,7 @@ export default function PuppyCard({ puppy }) {
             {puppy.genderLabel || (puppy.gender === 'male' ? 'Boy' : 'Girl')}
           </span>
           <span className={styles.chip}>{puppy.age || `${puppy.ageWeeks} wks`}</span>
-          <span className={styles.chip}>🐾 Available</span>
+          <span className={styles.chip}>{isGoneHome ? '♥ Adopted' : '🐾 Available'}</span>
         </div>
 
         {/* Actions */}
@@ -70,16 +76,22 @@ export default function PuppyCard({ puppy }) {
           <Link to={`/puppies/${puppy.slug}`} className={`btn btn-outline btn-sm ${styles.btnSecondary}`}>
             View profile
           </Link>
-          <a
-            href={whatsappInquiryUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`btn btn-whatsapp btn-sm ${styles.btnPrimary}`}
-            aria-label={`Ask about ${puppy.name} on WhatsApp`}
-          >
-            <MessageCircle size={15} aria-hidden="true" />
-            Ask
-          </a>
+          {isGoneHome ? (
+            <Link to={`/puppies/${puppy.slug}`} className={`btn btn-ghost btn-sm ${styles.btnPrimary}`}>
+              Details
+            </Link>
+          ) : (
+            <a
+              href={whatsappInquiryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`btn btn-whatsapp btn-sm ${styles.btnPrimary}`}
+              aria-label={`Ask about ${puppy.name} on WhatsApp`}
+            >
+              <MessageCircle size={15} aria-hidden="true" />
+              Ask
+            </a>
+          )}
         </div>
       </div>
     </article>

@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { puppies } from '../data/puppies.js';
+import { availablePuppies, recentlyAdoptedPuppies } from '../data/puppies.js';
 import PuppyCard from '../components/ui/PuppyCard.jsx';
 import PawIcon from '../components/common/PawIcon.jsx';
 import styles from './PuppiesPage.module.css';
@@ -29,7 +29,7 @@ export default function PuppiesPage() {
   }, []);
 
   const filteredPuppies = useMemo(() => {
-    return puppies.filter(pup => {
+    return availablePuppies.filter(pup => {
       // Filter by origin
       if (selectedOrigin !== 'all' && pup.origin !== selectedOrigin) {
         return false;
@@ -105,11 +105,16 @@ export default function PuppiesPage() {
       </section>
 
       {/* ── Puppies Grid ── */}
-      <main className="container" style={{ marginTop: '2rem' }}>
+      <main className="container" style={{ marginTop: '2.5rem' }}>
         <div className={styles.resultsMeta}>
-          <p className={styles.counter}>
-            Showing {filteredPuppies.length} {filteredPuppies.length === 1 ? 'puppy' : 'puppies'}
-          </p>
+          <h2 className={styles.sectionHeading}>
+            {selectedOrigin === 'all' && selectedBreed === 'All'
+              ? '15 puppies looking for a home'
+              : `Showing ${filteredPuppies.length} available ${
+                  filteredPuppies.length === 1 ? 'puppy' : 'puppies'
+                }`}
+          </h2>
+
           {(selectedOrigin !== 'all' || selectedBreed !== 'All') && (
             <button
               type="button"
@@ -150,18 +155,32 @@ export default function PuppiesPage() {
           </div>
         )}
 
-        {/* ── Alumni Banner Link ── */}
-        <aside className={styles.alumniBanner} aria-label="Alumni gallery link">
-          <div>
-            <h2 className={styles.alumniTitle}>Already gone home ♡</h2>
-            <p className={styles.alumniDesc}>
-              Browse our gallery of happy puppies that have already boarded their flight to their forever families.
+        {/* ── Recently Adopted Section: "Already gone home" ── */}
+        <section className={styles.goneHomeSection} aria-labelledby="already-gone-home-heading">
+          <div className={styles.goneHomeHeader}>
+            <h2 id="already-gone-home-heading" className={styles.goneHomeTitle}>
+              <span>Already gone home</span>
+              <span style={{ color: 'var(--color-toffee)', fontSize: '1.6rem' }} aria-hidden="true">
+                ♥
+              </span>
+            </h2>
+            <p className={styles.goneHomeDesc}>
+              These 5 adorable puppies have recently boarded their flights and joined their loving forever families in the UAE.
             </p>
           </div>
-          <Link to="/gone-home" className="btn btn-primary btn-lg" style={{ flexShrink: 0 }}>
-            View alumni tickets →
-          </Link>
-        </aside>
+
+          <div className={styles.grid}>
+            {recentlyAdoptedPuppies.map(puppy => (
+              <PuppyCard key={puppy.slug} puppy={puppy} />
+            ))}
+          </div>
+
+          <div style={{ marginTop: '3rem', textAlign: 'center' }}>
+            <Link to="/gone-home" className="btn btn-outline btn-lg">
+              View all 27 boarding passes on Gone Home →
+            </Link>
+          </div>
+        </section>
       </main>
     </div>
   );
