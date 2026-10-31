@@ -6,56 +6,65 @@
 export const faqItems = [
   {
     id: 'faq-1',
-    question: 'What breeds do you offer?',
+    question: 'Are your puppies vaccinated and health-checked?',
     answer:
-      'We specialise in premium designer breeds including Maltipoos, Korean Teacup Pomeranians, Korean Teacup Poodles, Shih Tzus, Cavapoos, and more. Our selection includes both locally bred and imported puppies.',
+      'Yes. All our puppies come with a verified health certificate from licensed vets. Every puppy is vaccinated, dewormed, and thoroughly checked before joining your family.',
+    category: 'health',
   },
   {
     id: 'faq-2',
-    question: 'Are your puppies vaccinated and health-checked?',
+    question: 'Can I meet a puppy before I decide?',
     answer:
-      'Yes. Every puppy comes fully vaccinated, microchipped, and with a comprehensive vet health check. You will receive a full health record and vaccination card on adoption day.',
+      'Absolutely! You are welcome to visit our Downtown Dubai showroom to meet available puppies face-to-face, or schedule a live video call.',
+    category: 'visit',
   },
   {
     id: 'faq-3',
-    question: 'Can I visit the puppies in person?',
+    question: 'Can I take my puppy home the same day?',
     answer:
-      'Absolutely! We are located in Downtown Dubai, UAE. Please reach out via WhatsApp or phone to schedule a visit so we can prepare and ensure the best experience for you and your family.',
+      'For puppies currently in our Dubai showroom that have completed all veterinary checks, same-day handover is possible.',
+    category: 'adoption',
   },
   {
     id: 'faq-4',
-    question: 'Do you offer delivery across the UAE?',
+    question: 'Do you import puppies from abroad?',
     answer:
-      'Yes, we can arrange safe delivery across the UAE. Contact us to discuss logistics and ensure a comfortable journey for your new puppy.',
+      'Yes, we work with ethical, verified breeders in South Korea and Europe for rare miniature and teacup breeds upon request.',
+    category: 'import',
   },
   {
     id: 'faq-5',
-    question: 'What is your adoption process?',
+    question: 'How does an imported puppy travel to Dubai?',
     answer:
-      'Our process is simple: browse available puppies online, reach out to us via WhatsApp or phone to express interest, schedule a visit or video call, complete the adoption paperwork, and bring your puppy home!',
+      'Puppies travel in temperature-controlled, authorized pet travel cabins accompanied by professional flight escorts, fully compliant with UAE MOCCAE regulations.',
+    category: 'import',
   },
   {
     id: 'faq-6',
-    question: 'Do you offer international shipping?',
+    question: 'Will I see photos and health details first?',
     answer:
-      'Yes! We have experience arranging international transport for puppies. We work with trusted pet-friendly airlines and ensure all CITES/IATA paperwork is in order. Contact us to discuss your specific destination.',
+      'Yes, you receive complete video footage, veterinary records, weight charts, and parents’ pedigree before making any commitment.',
+    category: 'import',
   },
   {
     id: 'faq-7',
-    question: 'What support do you provide after adoption?',
+    question: 'Do you deliver?',
     answer:
-      'We stay in touch after every adoption. Our team is available via WhatsApp for guidance on feeding, grooming, training, and vet care. We genuinely care about every puppy finding and thriving in their forever home.',
+      'We provide personal chauffeur delivery throughout Dubai, Abu Dhabi, and all other Emirates, right to your doorstep.',
+    category: 'delivery',
   },
   {
     id: 'faq-8',
-    question: 'What documents will I receive with my puppy?',
+    question: 'Which breeds do you usually have?',
     answer:
-      'You will receive a vaccination card, microchip certificate, health certificate from our vet, breed information sheet, and feeding/care guide. International adoptions include additional CITES and airline documentation.',
+      'We specialize in Maltipoos, Pomeranians, Toy & Teacup Poodles, Cavapoos, and Shih-Tzus.',
+    category: 'breeds',
   },
   {
     id: 'faq-9',
-    question: 'Can I reserve a puppy before I am ready to take them home?',
+    question: 'Is there help after my puppy comes home?',
     answer:
-      'Yes, we accept reservations with a deposit to hold your chosen puppy. Please contact us via WhatsApp to discuss availability and terms.',
+      'Yes, our dedicated puppy care concierge is available 24/7 to advise on diet, routine, training, and veterinary support.',
+    category: 'care',
   },
 ];

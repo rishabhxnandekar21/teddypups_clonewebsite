@@ -1,0 +1,275 @@
+/* ============================================================
+   ContactPage Styles (Airmail Stationery Theme)
+   ============================================================ */
+
+.page {
+  padding-bottom: 5rem;
+}
+
+/* Header */
+.header {
+  background-color: var(--color-sand);
+  padding-block: 3.5rem 3rem;
+  border-bottom: 2px solid rgba(42, 23, 14, 0.08);
+  text-align: center;
+}
+
+.headerInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--color-cocoa);
+  line-height: 1.1;
+}
+
+.subhead {
+  font-size: 1.1rem;
+  color: var(--color-cocoa-soft);
+  line-height: 1.6;
+}
+
+/* Layout Grid */
+.layoutGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  margin-top: 3.5rem;
+}
+
+@media (min-width: 1024px) {
+  .layoutGrid {
+    grid-template-columns: 1fr 1.35fr;
+    gap: 3.5rem;
+    align-items: start;
+  }
+}
+
+/* Left Column / Direct Channels */
+.channelsCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.channelCard {
+  background-color: var(--color-milk);
+  border: 2.5px solid var(--color-cocoa);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  box-shadow: 4px 6px 0px rgba(42, 23, 14, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.channelTitle {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-cocoa);
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.infoItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.infoIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--color-sand);
+  border: 1.5px solid var(--color-cocoa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-toffee);
+}
+
+.infoLabel {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-cocoa-soft);
+}
+
+.infoValue {
+  font-weight: 700;
+  color: var(--color-cocoa);
+  font-size: 0.95rem;
+}
+
+.infoValue a {
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.infoValue a:hover {
+  color: var(--color-toffee);
+}
+
+/* Right Column / Airmail Stationery */
+.stationeryCard {
+  position: relative;
+  background-color: #fffdf5;
+  border: 3px solid var(--color-cocoa);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem 2rem;
+  box-shadow: 6px 10px 0px rgba(42, 23, 14, 0.12);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Airmail Border Ribbon (red and blue slashes) */
+.airmailBorder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8px;
+  background: repeating-linear-gradient(
+    45deg,
+    #c2622b,
+    #c2622b 12px,
+    #fffdf5 12px,
+    #fffdf5 20px,
+    #bfddf5 20px,
+    #bfddf5 32px,
+    #fffdf5 32px,
+    #fffdf5 40px
+  );
+  border-top-left-radius: var(--radius-xl);
+  border-top-right-radius: var(--radius-xl);
+}
+
+/* Vintage Postage Stamp */
+.stamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 64px;
+  height: 74px;
+  background-color: var(--color-honey-soft);
+  border: 2px dashed var(--color-toffee);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  transform: rotate(4deg);
+}
+
+.stampPrice {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--color-toffee-ink);
+}
+
+/* Letter Content */
+.letterSalutation {
+  font-family: var(--font-scrawl);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-cocoa);
+  margin-top: 0.5rem;
+}
+
+.letterBody {
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  line-height: 2.2;
+  color: var(--color-cocoa);
+}
+
+.inlineInput {
+  display: inline-block;
+  border: none;
+  border-bottom: 2px dashed var(--color-cocoa);
+  background: transparent;
+  font-family: var(--font-scrawl);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-toffee);
+  padding: 0 0.4rem;
+  margin: 0 0.25rem;
+  outline: none;
+  transition: border-bottom-color var(--transition-fast);
+}
+
+.inlineInput:focus {
+  border-bottom: 2px solid var(--color-toffee);
+}
+
+.inlineSelect {
+  display: inline-block;
+  border: none;
+  border-bottom: 2px dashed var(--color-cocoa);
+  background: transparent;
+  font-family: var(--font-scrawl);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-toffee);
+  padding: 0 0.4rem;
+  margin: 0 0.25rem;
+  outline: none;
+  cursor: pointer;
+}
+
+.letterTextarea {
+  width: 100%;
+  margin-top: 1rem;
+  border: 1.5px solid rgba(42, 23, 14, 0.25);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  color: var(--color-cocoa);
+  resize: vertical;
+  min-height: 100px;
+  outline: none;
+  transition: border-color var(--transition-fast);
+}
+
+.letterTextarea:focus {
+  border-color: var(--color-toffee);
+}
+
+.submitRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.successMsg {
+  background-color: var(--color-honey-soft);
+  border: 2px solid var(--color-toffee);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  font-weight: 600;
+  color: var(--color-cocoa);
+}

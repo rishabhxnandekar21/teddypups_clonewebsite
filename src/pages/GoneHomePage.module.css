@@ -1,0 +1,133 @@
+/* ============================================================
+   GoneHomePage Styles
+   ============================================================ */
+
+.page {
+  padding-bottom: 5rem;
+}
+
+/* Header */
+.header {
+  background-color: var(--color-sand);
+  padding-block: 3.5rem 3rem;
+  border-bottom: 2px solid rgba(42, 23, 14, 0.08);
+  text-align: center;
+}
+
+.headerInner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.85rem;
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: var(--color-cocoa);
+  line-height: 1.1;
+}
+
+.subhead {
+  font-size: 1.1rem;
+  color: var(--color-cocoa-soft);
+  line-height: 1.6;
+}
+
+.headerActions {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 1rem;
+}
+
+/* Filter Pills */
+.filterBar {
+  background-color: var(--color-milk);
+  padding-block: 1.75rem;
+  border-bottom: 1px solid rgba(42, 23, 14, 0.08);
+}
+
+.filterRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+}
+
+.filterPill {
+  padding: 0.45rem 1.1rem;
+  border-radius: var(--radius-full);
+  border: 1.5px solid var(--color-cocoa);
+  background-color: var(--color-milk);
+  color: var(--color-cocoa);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filterPill:hover {
+  background-color: var(--color-sand);
+}
+
+.filterPill.active {
+  background-color: var(--color-toffee);
+  border-color: var(--color-toffee);
+  color: var(--color-milk);
+  box-shadow: 2px 3px 0px rgba(42, 23, 14, 0.15);
+}
+
+/* Tickets Grid */
+.ticketsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .ticketsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .ticketsGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+  }
+}
+
+/* Inquiry Box */
+.inquiryBox {
+  margin-top: 4.5rem;
+  background-color: var(--color-honey-soft);
+  border: 3px solid var(--color-cocoa);
+  border-radius: var(--radius-xl);
+  padding: 3rem 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 5px 8px 0px rgba(42, 23, 14, 0.1);
+}
+
+.inquiryTitle {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--color-cocoa);
+}
+
+.inquiryText {
+  color: var(--color-cocoa-soft);
+  font-size: 1rem;
+  max-width: 50ch;
+  line-height: 1.6;
+}

@@ -1,0 +1,153 @@
+/* ============================================================
+   BoardingTicket Component Styles (Gone Home Alumni)
+   ============================================================ */
+
+.ticket {
+  position: relative;
+  background-color: var(--color-milk);
+  border: 2.5px solid var(--color-cocoa);
+  border-radius: var(--radius-lg);
+  display: flex;
+  min-height: 140px;
+  box-shadow: 4px 6px 0px rgba(42, 23, 14, 0.1);
+  transition: transform var(--transition-spring), box-shadow var(--transition-base);
+  overflow: hidden;
+}
+
+.ticket:hover {
+  transform: translateY(-4px) rotate(-1deg);
+  box-shadow: 6px 12px 0px rgba(42, 23, 14, 0.16);
+}
+
+/* Left / Main Section */
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem;
+  background-color: var(--color-milk);
+}
+
+.photoWrapper {
+  position: relative;
+  width: 72px;
+  height: 72px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2.5px solid var(--color-cocoa);
+  overflow: hidden;
+  box-shadow: 2px 2px 0px rgba(42, 23, 14, 0.15);
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.scriptLabel {
+  font-family: var(--font-scrawl);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--color-toffee);
+}
+
+.pupName {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--color-cocoa);
+  line-height: 1.1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pupMeta {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-cocoa-soft);
+}
+
+.routeLine {
+  font-family: var(--font-scrawl);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-toffee-ink);
+  letter-spacing: 0.04em;
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* Perforation Divider */
+.perforation {
+  position: relative;
+  width: 0;
+  border-left: 2px dashed rgba(42, 23, 14, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notchTop,
+.notchBottom {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-color: var(--color-sand); /* Blends into page background */
+  border: 2.5px solid var(--color-cocoa);
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.notchTop {
+  top: -10px;
+  left: -10px;
+  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+}
+
+.notchBottom {
+  bottom: -10px;
+  left: -10px;
+  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+}
+
+/* Right Stub Section */
+.stub {
+  width: 68px;
+  background-color: var(--color-honey);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  position: relative;
+}
+
+.stubText {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-cocoa);
+}
+
+.stubIcon {
+  position: absolute;
+  bottom: 0.6rem;
+  color: var(--color-toffee-ink);
+}

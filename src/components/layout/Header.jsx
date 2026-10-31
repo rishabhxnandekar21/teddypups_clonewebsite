@@ -1,115 +1,181 @@
-import { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { Menu, X, MessageCircle } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { NavLink, Link, useLocation } from 'react-router-dom';
+import { MessageCircle, Phone, X } from 'lucide-react';
 import { navLinks, BUSINESS } from '../../data/navigation.js';
+import PawIcon from '../common/PawIcon.jsx';
+import ScallopHem from '../common/ScallopHem.jsx';
 import styles from './Header.module.css';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
 
-  const closeMenu = () => setMenuOpen(false);
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  // Prevent background scrolling when mobile drawer is open
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [menuOpen]);
 
   return (
     <>
-      <header className={styles.header}>
-        <div className={styles.header__inner}>
-          {/* Logo */}
-          <Link to="/" className={styles.header__logo} onClick={closeMenu}>
-            <img src="/brand/logo.png" alt="TeddyPups UAE logo" width={40} height={40} />
-            <span className={styles['header__logo-text']}>TeddyPups</span>
-          </Link>
+      <div className={styles.headerWrapper}>
+        <header className={styles.header} id="site-header">
+          <div className={styles.header__inner}>
+            {/* Logo */}
+            <Link to="/" className={styles.header__logo}>
+              <img
+                src="/brand/logo.png"
+                alt="TeddyPups UAE logo"
+                className={styles.header__logoImg}
+                width={44}
+                height={44}
+              />
+              <span className={styles.header__logoText}>TeddyPups</span>
+            </Link>
 
-          {/* Desktop navigation */}
-          <nav className={styles.header__nav} aria-label="Main navigation">
-            {navLinks.map(link => (
-              <NavLink
-                key={link.href}
-                to={link.href}
-                className={({ isActive }) =>
-                  [styles['header__nav-link'], isActive ? styles.active : ''].join(' ').trim()
-                }
+            {/* Desktop Navigation */}
+            <nav className={styles.header__nav} aria-label="Main navigation">
+              {navLinks.map(link => (
+                <NavLink
+                  key={link.href}
+                  to={link.href}
+                  className={({ isActive }) =>
+                    [styles.header__navLink, isActive ? styles.active : ''].join(' ').trim()
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      <span>{link.label}</span>
+                      {isActive && (
+                        <span className={styles.header__activePaw}>
+                          <PawIcon size={12} />
+                        </span>
+                      )}
+                    </>
+                  )}
+                </NavLink>
+              ))}
+            </nav>
+
+            {/* Actions */}
+            <div className={styles.header__actions}>
+              <a
+                href={BUSINESS.whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`btn btn-whatsapp btn-sm ${styles.header__cta}`}
               >
-                {link.label}
-              </NavLink>
-            ))}
-          </nav>
+                <MessageCircle size={16} aria-hidden="true" />
+                WhatsApp us
+              </a>
 
-          {/* Actions */}
-          <div className={styles.header__actions}>
-            <a
-              href={BUSINESS.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`btn btn-whatsapp btn-sm ${styles.header__cta}`}
-            >
-              <MessageCircle size={16} aria-hidden="true" />
-              WhatsApp Us
-            </a>
-            <button
-              className={styles['header__menu-btn']}
-              onClick={() => setMenuOpen(true)}
-              aria-label="Open navigation menu"
-              aria-expanded={menuOpen}
-            >
-              <Menu size={24} aria-hidden="true" />
-            </button>
+              <button
+                className={styles.header__menuBtn}
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open navigation menu"
+                aria-expanded={menuOpen}
+              >
+                <PawIcon size={16} color="var(--color-toffee)" />
+                <span>Menu</span>
+              </button>
+            </div>
           </div>
-        </div>
-      </header>
 
-      {/* Mobile menu */}
+          {/* Scalloped hem beneath the header */}
+          <div className={styles.scallopBar}>
+            <ScallopHem color="var(--color-milk)" height={14} />
+          </div>
+        </header>
+      </div>
+
+      {/* Honey Mobile Menu Drawer */}
       {menuOpen && (
         <div
-          className={styles['mobile-menu']}
+          className={styles.mobileMenu}
           role="dialog"
           aria-modal="true"
-          aria-label="Navigation menu"
+          aria-label="Site navigation"
         >
-          <div className={styles['mobile-menu__header']}>
-            <Link to="/" className={styles.header__logo} onClick={closeMenu}>
-              <img src="/brand/logo.png" alt="TeddyPups UAE logo" width={40} height={40} />
-              <span className={styles['header__logo-text']}>TeddyPups</span>
-            </Link>
+          <div className={styles.mobileMenu__head}>
+            <span className={styles.mobileMenu__tagline}>where to, friend?</span>
             <button
-              className={styles['header__menu-btn']}
-              onClick={closeMenu}
-              aria-label="Close navigation menu"
+              className={styles.mobileMenu__closeBtn}
+              onClick={() => setMenuOpen(false)}
+              aria-label="Close menu"
             >
-              <X size={24} aria-hidden="true" />
+              <X size={16} aria-hidden="true" />
+              <span>Close</span>
             </button>
           </div>
 
-          <nav className={styles['mobile-menu__nav']} aria-label="Mobile navigation">
+          <nav className={styles.mobileMenu__nav} aria-label="Mobile navigation">
             {navLinks.map(link => (
               <NavLink
                 key={link.href}
                 to={link.href}
                 className={({ isActive }) =>
-                  [styles['mobile-menu__link'], isActive ? styles.active : '']
-                    .join(' ')
-                    .trim()
+                  [styles.mobileMenu__link, isActive ? styles.active : ''].join(' ').trim()
                 }
-                onClick={closeMenu}
               >
-                {link.label}
+                {({ isActive }) => (
+                  <>
+                    <span>{link.label}</span>
+                    {isActive && <PawIcon size={24} color="var(--color-toffee)" />}
+                  </>
+                )}
               </NavLink>
             ))}
           </nav>
 
-          <div className={styles['mobile-menu__footer']}>
+          <div className={styles.mobileMenu__footer}>
             <a
               href={BUSINESS.whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-whatsapp"
-              onClick={closeMenu}
+              className="btn btn-whatsapp btn-lg"
+              style={{ width: '100%' }}
             >
-              <MessageCircle size={18} aria-hidden="true" />
-              WhatsApp Us
+              <MessageCircle size={20} aria-hidden="true" />
+              WhatsApp us
+            </a>
+            <a href={`tel:${BUSINESS.phone.replace(/\s/g, '')}`} className={styles.mobileMenu__phone}>
+              {BUSINESS.phone}
             </a>
           </div>
         </div>
       )}
+
+      {/* Mobile Fixed Bottom Bar */}
+      <aside className={styles.bottomBar} aria-label="Quick contact actions">
+        <a
+          href={BUSINESS.whatsappUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`btn btn-whatsapp btn-sm ${styles.bottomBar__whatsapp}`}
+        >
+          <MessageCircle size={16} aria-hidden="true" />
+          WhatsApp us
+        </a>
+        <a
+          href={`tel:${BUSINESS.phone.replace(/\s/g, '')}`}
+          className={`btn btn-outline btn-sm ${styles.bottomBar__call}`}
+          aria-label="Call TeddyPups"
+        >
+          <Phone size={15} aria-hidden="true" />
+          Call
+        </a>
+      </aside>
     </>
   );
 }

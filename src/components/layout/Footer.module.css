@@ -1,17 +1,34 @@
 /* ============================================================
-   Footer Component
+   TeddyPups UAE — Footer Styles
    ============================================================ */
 
 .footer {
   background-color: var(--color-night);
   color: var(--color-honey-soft);
-  padding-block: 3.5rem 2rem;
+  position: relative;
+  padding-top: 2rem;
+  padding-bottom: 5.5rem; /* Space for mobile sticky bottom bar */
+}
+
+@media (min-width: 1024px) {
+  .footer {
+    padding-bottom: 3rem;
+  }
+}
+
+.scallopTop {
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  line-height: 0;
+  pointer-events: none;
 }
 
 .footer__inner {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 3rem;
+  gap: 2.5rem;
   max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--gutter);
@@ -31,7 +48,7 @@
   }
 }
 
-/* Brand column */
+/* Brand Column */
 .footer__brand {
   display: flex;
   flex-direction: column;
@@ -41,115 +58,126 @@
 .footer__logo {
   display: flex;
   align-items: center;
-  gap: 0.625rem;
+  gap: 0.75rem;
   text-decoration: none;
 }
 
-.footer__logo img {
-  height: 2.25rem;
-  width: auto;
-  filter: brightness(0) invert(1) opacity(0.9);
+.footer__logoImg {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--color-honey);
+  object-fit: cover;
 }
 
-.footer__logo-text {
+.footer__logoText {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 800;
   color: var(--color-milk);
   line-height: 1;
 }
 
 .footer__tagline {
+  font-family: var(--font-scrawl);
+  font-size: 1.125rem;
+  color: var(--color-honey);
+}
+
+.footer__desc {
   font-size: 0.9375rem;
-  color: var(--color-honey-soft);
+  color: rgba(251, 227, 180, 0.8);
   line-height: 1.6;
-  max-width: 32ch;
+  max-width: 34ch;
 }
 
 .footer__social {
   display: flex;
   gap: 0.75rem;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 }
 
-.footer__social-link {
+.footer__socialLink {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: var(--radius-full);
   border: 1px solid rgba(251, 227, 180, 0.25);
   color: var(--color-honey-soft);
   text-decoration: none;
-  transition: border-color var(--transition-fast), color var(--transition-fast),
-    background-color var(--transition-fast);
+  transition: all var(--transition-fast);
 }
 
-.footer__social-link:hover {
+.footer__socialLink:hover {
   border-color: var(--color-honey);
   color: var(--color-honey);
-  background-color: rgba(242, 190, 107, 0.1);
+  background-color: rgba(242, 190, 107, 0.12);
+  transform: translateY(-2px);
 }
 
-/* Nav columns */
-.footer__col-heading {
+/* Navigation Columns */
+.footer__colHeading {
   font-family: var(--font-body);
   font-size: 0.8125rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 800;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--color-honey);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .footer__nav {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: 0.65rem;
 }
 
-.footer__nav-link {
+.footer__navLink {
   font-size: 0.9375rem;
-  color: var(--color-honey-soft);
+  color: rgba(251, 227, 180, 0.85);
   text-decoration: none;
-  transition: color var(--transition-fast);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+  display: inline-block;
 }
 
-.footer__nav-link:hover {
+.footer__navLink:hover {
   color: var(--color-milk);
+  transform: translateX(4px);
 }
 
-/* Contact column */
+/* Contact Details */
 .footer__contact {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
+  gap: 0.75rem;
+  font-style: normal;
 }
 
-.footer__contact-item {
+.footer__contactItem {
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
+  gap: 0.65rem;
   font-size: 0.9375rem;
-  color: var(--color-honey-soft);
+  color: rgba(251, 227, 180, 0.85);
 }
 
-.footer__contact-item a {
+.footer__contactItem a {
   color: inherit;
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
-.footer__contact-item a:hover {
+.footer__contactItem a:hover {
   color: var(--color-milk);
 }
 
-/* Bottom bar */
+/* Bottom Bar */
 .footer__bottom {
   margin-top: 3rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(251, 227, 180, 0.12);
+  border-top: 1px solid rgba(251, 227, 180, 0.15);
   max-width: var(--container-max);
   margin-inline: auto;
   padding-inline: var(--gutter);
@@ -177,5 +205,5 @@
 
 .footer__copy {
   font-size: 0.8125rem;
-  color: rgba(251, 227, 180, 0.5);
+  color: rgba(251, 227, 180, 0.6);
 }

@@ -1,20 +1,119 @@
-import { useEffect } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { MessageCircle } from 'lucide-react';
 import { alumni } from '../data/alumni.js';
-import styles from './Placeholder.module.css';
+import { BUSINESS } from '../data/navigation.js';
+import BoardingTicket from '../components/ui/BoardingTicket.jsx';
+import PawIcon from '../components/common/PawIcon.jsx';
+import styles from './GoneHomePage.module.css';
 
 export default function GoneHomePage() {
+  const [filter, setFilter] = useState('all');
+
   useEffect(() => {
-    document.title = 'Gone Home — TeddyPups UAE';
+    document.title = 'Gone Home ♡ — TeddyPups UAE Alumni';
   }, []);
 
+  const filteredAlumni = useMemo(() => {
+    if (filter === 'local') {
+      return alumni.filter(a => a.routeType === 'local');
+    }
+    if (filter === 'international') {
+      return alumni.filter(a => a.routeType === 'international');
+    }
+    return alumni;
+  }, [filter]);
+
   return (
-    <section className={styles.placeholder}>
-      <span className={styles.placeholder__badge}>Phase 2 — Placeholder</span>
-      <p className={styles.placeholder__tag}>boarded their flight</p>
-      <h1 className={styles.placeholder__title}>Gone Home</h1>
-      <p className={styles.placeholder__desc}>
-        {alumni.length} alumni boarding passes loaded. Full grid implementation in Phase 3.
-      </p>
-    </section>
+    <div className={styles.page}>
+      {/* ── Header ── */}
+      <section className={styles.header} aria-labelledby="gone-home-title">
+        <div className={`container ${styles.headerInner}`}>
+          <div className="section-eyebrow">
+            <PawIcon size={14} color="var(--color-toffee)" />
+            <span>boarded their flight</span>
+          </div>
+
+          <h1 className={styles.title} id="gone-home-title">
+            Gone home ♡
+          </h1>
+
+          <p className={styles.subhead}>
+            Every puppy here has already joined a loving family. Looking for one just like them? Tell us — we'll help you find your match.
+          </p>
+
+          <div className={styles.headerActions}>
+            <Link to="/puppies" className="btn btn-primary">
+              See available puppies
+            </Link>
+            <a
+              href={BUSINESS.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-outline"
+            >
+              <MessageCircle size={16} aria-hidden="true" />
+              Ask about a breed
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Route Filter Bar ── */}
+      <section className={styles.filterBar} aria-label="Alumni route filters">
+        <div className="container">
+          <div className={styles.filterRow}>
+            <button
+              type="button"
+              className={`${styles.filterPill} ${filter === 'all' ? styles.active : ''}`}
+              onClick={() => setFilter('all')}
+            >
+              All boarding passes ({alumni.length})
+            </button>
+            <button
+              type="button"
+              className={`${styles.filterPill} ${filter === 'local' ? styles.active : ''}`}
+              onClick={() => setFilter('local')}
+            >
+              Dubai Showroom Handover
+            </button>
+            <button
+              type="button"
+              className={`${styles.filterPill} ${filter === 'international' ? styles.active : ''}`}
+              onClick={() => setFilter('international')}
+            >
+              International Flight Arrivals
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Tickets Gallery ── */}
+      <main className="container">
+        <div className={styles.ticketsGrid}>
+          {filteredAlumni.map(alumnus => (
+            <BoardingTicket key={alumnus.id} alumnus={alumnus} />
+          ))}
+        </div>
+
+        {/* ── Bottom Inquiry Box ── */}
+        <aside className={styles.inquiryBox} aria-label="Request an alumni breed match">
+          <PawIcon size={32} color="var(--color-toffee)" />
+          <h2 className={styles.inquiryTitle}>Fell in love with one of our alumni?</h2>
+          <p className={styles.inquiryText}>
+            Our ethical breeders in South Korea, Europe, and Dubai frequently have new litters of Maltipoos, Poodles, and Pomeranians. Send us the name of your favorite alumnus!
+          </p>
+          <a
+            href={BUSINESS.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-whatsapp btn-lg"
+          >
+            <MessageCircle size={18} aria-hidden="true" />
+            Request a match on WhatsApp
+          </a>
+        </aside>
+      </main>
+    </div>
   );
 }
