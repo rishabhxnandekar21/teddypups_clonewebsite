@@ -1,0 +1,223 @@
+/* ── DoorCard.module.css ── */
+
+.door {
+  list-style: none;
+  position: relative;
+}
+
+.doorLink {
+  border-radius: 1rem;
+  text-decoration: none;
+  display: block;
+  outline: none;
+}
+
+.doorPlate {
+  text-align: center;
+  margin-bottom: 0.8rem;
+  display: block;
+}
+
+.doorName {
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(1.45rem, 2vw, 2rem);
+  line-height: 1;
+  display: block;
+  color: var(--color-cocoa);
+  transition: color 0.3s ease;
+}
+
+.doorMeta {
+  color: var(--ink-soft, #7a5840);
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: block;
+}
+
+.doorFrame {
+  aspect-ratio: 4 / 5.2;
+  border: 3px solid var(--color-cocoa);
+  background: #3b2215;
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  display: block;
+  position: relative;
+}
+
+/* Threshold plank at bottom of frame */
+.doorFrame::after {
+  content: "";
+  border: 3px solid var(--color-cocoa);
+  background: #dc9a52;
+  border-radius: 0.35rem;
+  height: 0.6rem;
+  position: absolute;
+  bottom: -0.6rem;
+  left: -0.55rem;
+  right: -0.55rem;
+  z-index: 3;
+}
+
+.doorWay {
+  --door-open: 78deg;
+  perspective: 700px;
+  perspective-origin: 0;
+  border-radius: 999px 999px 0 0;
+  position: absolute;
+  inset: -3px -3px 0;
+  overflow: hidden;
+}
+
+.doorRoom {
+  border-radius: inherit;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background-color: rgb(120, 88, 56);
+}
+
+.doorRoom img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.45s var(--ease-silk);
+  display: block;
+}
+
+.doorLeaf {
+  border: 3px solid var(--color-cocoa);
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 calc(25% - 1.5px),
+    rgba(42, 23, 14, 0.18) calc(25% - 1.5px) 25%
+  ), var(--door, #a24a1a);
+  transform-origin: 0;
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  transition: transform 1.05s cubic-bezier(0.3, 1.32, 0.48, 1) 50ms;
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
+/* Inner moulded wood frame */
+.doorLeaf::before {
+  content: "";
+  border: 2.5px solid rgba(255, 253, 248, 0.28);
+  border-radius: 999px 999px 0.5rem 0.5rem;
+  position: absolute;
+  inset: 12% 14% 9%;
+  pointer-events: none;
+}
+
+/* Peephole paw silhouette */
+.doorPeephole {
+  color: rgba(255, 253, 248, 0.45);
+  width: 22%;
+  position: absolute;
+  top: 19%;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+/* Brass door knob */
+.doorKnob {
+  aspect-ratio: 1;
+  border: 2.5px solid var(--color-cocoa);
+  background: var(--color-honey);
+  border-radius: 50%;
+  width: 0.85rem;
+  position: absolute;
+  top: 56%;
+  right: 11%;
+  box-shadow: 1px 1px 2px rgba(42, 23, 14, 0.3);
+}
+
+/* Hover & Focus interactions: 3D door swing open */
+.doorLink:hover .doorLeaf,
+.doorLink:focus-visible .doorLeaf,
+.door[data-open="true"] .doorLeaf {
+  transform: rotateY(var(--door-open, 78deg));
+}
+
+.doorLink:hover .doorRoom img,
+.doorLink:focus-visible .doorRoom img,
+.door[data-open="true"] .doorRoom img {
+  transform: scale(1.04);
+}
+
+.doorLink:hover .doorName,
+.doorLink:focus-visible .doorName {
+  color: var(--color-toffee-deep);
+}
+
+/* Status / Available badge */
+.doorTag {
+  z-index: 2;
+  border: 2px solid var(--color-cocoa);
+  background: var(--color-milk);
+  color: var(--color-cocoa);
+  border-radius: 999px;
+  padding: 0.05rem 0.65rem 0.15rem;
+  font-size: 0.9rem;
+  position: absolute;
+  top: 16%;
+  right: -0.7rem;
+  transform: rotate(7deg);
+  box-shadow: 2px 3px rgba(42, 23, 14, 0.2);
+  font-family: var(--font-scrawl, "Shantell Sans", cursive);
+  pointer-events: none;
+  font-weight: 600;
+}
+
+/* "Meet them all" door */
+.doorAll {
+  align-self: stretch;
+  align-items: flex-end;
+  display: flex;
+}
+
+.doorAll .doorLink {
+  width: 100%;
+}
+
+.doorFrameAll {
+  background: transparent;
+  border: 3px dashed var(--color-cocoa);
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  aspect-ratio: 4 / 5.2;
+  display: grid;
+  place-items: center;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.doorFrameAll:hover {
+  background: rgba(251, 227, 180, 0.35);
+}
+
+.doorAllText {
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-color: var(--color-toffee);
+  text-underline-offset: 0.18em;
+  padding: 1rem;
+  font-size: clamp(1.6rem, 2.4vw, 2.4rem);
+  line-height: 1.1;
+  text-decoration-thickness: 0.08em;
+  font-family: var(--font-plush, "Fraunces", serif);
+  color: var(--color-cocoa);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .doorLeaf {
+    transition: none !important;
+  }
+  .doorRoom img {
+    transition: none !important;
+  }
+}

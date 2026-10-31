@@ -1,190 +1,233 @@
-/* ============================================================
-   BoardingTicket Component Styles (Gone Home Alumni)
-   ============================================================ */
+/* ── BoardingTicket.module.css (Gone Home Alumni) ── */
 
 .ticket {
+  rotate: var(--tilt, 0deg);
+  transition: rotate 0.45s var(--ease-pounce);
+  list-style: none;
   position: relative;
-  background-color: var(--color-milk);
-  border: 2.5px solid var(--color-cocoa);
-  border-radius: var(--radius-lg);
-  display: flex;
-  min-height: 130px;
-  box-shadow: 4px 6px 0px rgba(42, 23, 14, 0.1);
-  transition: transform var(--transition-spring), box-shadow var(--transition-base);
-  overflow: hidden;
-  max-width: 100%;
+  transform-origin: 2.6rem -0.6rem;
+  animation: tagSwing 1.7s var(--ease-silk) both;
 }
 
 .ticket:hover {
-  transform: translateY(-4px) rotate(-1deg);
-  box-shadow: 6px 12px 0px rgba(42, 23, 14, 0.16);
+  rotate: 0deg;
+  animation: tagNudge 1.3s var(--ease-silk);
 }
 
-/* Left / Main Section */
-.main {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 0.85rem;
-  background-color: var(--color-milk);
-  min-width: 0; /* Prevents flex children from causing overflow */
-}
-
-@media (min-width: 480px) {
-  .main {
-    gap: 1.15rem;
-    padding: 1.15rem;
+@keyframes tagSwing {
+  0% {
+    rotate: calc(-7deg * var(--swing, 1));
+    opacity: 0;
+  }
+  12% {
+    opacity: 1;
+  }
+  30% {
+    rotate: calc(4deg * var(--swing, 1));
+  }
+  50% {
+    rotate: calc(-2.2deg * var(--swing, 1));
+  }
+  70% {
+    rotate: calc(1deg * var(--swing, 1));
+  }
+  86% {
+    rotate: calc(-0.4deg * var(--swing, 1));
+  }
+  100% {
+    rotate: 0deg;
   }
 }
 
-.photoWrapper {
-  position: relative;
-  width: 58px;
-  height: 58px;
-  flex-shrink: 0;
+@keyframes tagNudge {
+  0% {
+    rotate: 0deg;
+  }
+  25% {
+    rotate: calc(1.6deg * var(--swing, 1));
+  }
+  55% {
+    rotate: calc(-0.9deg * var(--swing, 1));
+  }
+  80% {
+    rotate: calc(0.3deg * var(--swing, 1));
+  }
+  100% {
+    rotate: 0deg;
+  }
+}
+
+/* Luggage Tag Brass Grommet / Ring */
+.tagRing {
+  z-index: 10;
+  aspect-ratio: 1;
+  border: 3.5px solid var(--color-cocoa);
+  background: radial-gradient(circle, transparent 0 0.55rem, var(--color-honey) 0.6rem);
   border-radius: 50%;
-  border: 2px solid var(--color-cocoa);
+  width: 2.2rem;
+  position: absolute;
+  top: -1.2rem;
+  left: 1.5rem;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+}
+
+.ticketLink {
+  filter: drop-shadow(5px 7px rgba(42, 23, 14, 0.16));
+  min-height: 9.5rem;
+  transition: transform 0.45s var(--ease-pounce), filter 0.45s var(--ease-silk);
+  border-radius: 1rem;
+  display: flex;
+  position: relative;
+  text-decoration: none;
+  outline: none;
+}
+
+.ticketLink:hover {
+  filter: drop-shadow(8px 12px rgba(42, 23, 14, 0.22));
+  transform: translateY(-4px);
+}
+
+/* Main Ticket Body */
+.ticketMain {
+  border: 3px solid var(--color-cocoa);
+  border-right: 0;
+  border-radius: 1rem 0 0 1rem;
+  background: #fff8ea;
+  flex: 1;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+  padding: 0.95rem 1rem;
+  display: flex;
+  -webkit-mask:
+    radial-gradient(circle at 100% 0, transparent 0.62rem, #000 0.66rem) 100% 0 / 51% 51% no-repeat,
+    radial-gradient(circle at 100% 100%, transparent 0.62rem, #000 0.66rem) 100% 100% / 51% 51% no-repeat,
+    linear-gradient(#000, #000) 0 / 50% 100% no-repeat;
+  mask:
+    radial-gradient(circle at 100% 0, transparent 0.62rem, #000 0.66rem) 100% 0 / 51% 51% no-repeat,
+    radial-gradient(circle at 100% 100%, transparent 0.62rem, #000 0.66rem) 100% 100% / 51% 51% no-repeat,
+    linear-gradient(#000, #000) 0 / 50% 100% no-repeat;
+}
+
+.ticketPhoto {
+  aspect-ratio: 1;
+  border: 3px solid var(--color-cocoa);
+  background: var(--color-honey-soft);
+  border-radius: 50%;
+  flex: none;
+  width: clamp(5.4rem, 22vw, 6.6rem);
+  position: relative;
   overflow: hidden;
-  box-shadow: 2px 2px 0px rgba(42, 23, 14, 0.15);
 }
 
-@media (min-width: 480px) {
-  .photoWrapper {
-    width: 70px;
-    height: 70px;
-    border-width: 2.5px;
-  }
-}
-
-.photo {
+.ticketPhoto img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.info {
-  display: flex;
-  flex-direction: column;
+.ticketBody {
   gap: 0.15rem;
   min-width: 0;
+  display: grid;
   flex: 1;
 }
 
-.scriptLabel {
-  font-family: var(--font-scrawl);
-  font-size: 0.8rem;
+.ticketKicker {
+  color: var(--color-toffee-ink, #a24a1a);
+  font-family: var(--font-scrawl, "Shantell Sans", cursive);
+  font-size: 0.9rem;
   font-weight: 700;
-  color: var(--color-toffee);
 }
 
-.pupName {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 800;
+.ticketName {
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(1.4rem, 2vw, 1.75rem);
+  line-height: 1.05;
   color: var(--color-cocoa);
-  line-height: 1.1;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.pupMeta {
-  font-size: 0.8rem;
+.ticketMeta {
+  color: var(--color-cocoa-soft, #7a5840);
+  font-size: 0.9rem;
   font-weight: 600;
-  color: var(--color-cocoa-soft);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.routeLine {
-  font-family: var(--font-scrawl);
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: var(--color-toffee-ink);
-  letter-spacing: 0.02em;
-  margin-top: 0.2rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-
-/* Perforation Divider */
-.perforation {
-  position: relative;
-  width: 0;
-  border-left: 2px dashed rgba(42, 23, 14, 0.3);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.notchTop,
-.notchBottom {
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  background-color: var(--color-sand);
-  border: 2.5px solid var(--color-cocoa);
-  border-radius: 50%;
-  z-index: 2;
-}
-
-.notchTop {
-  top: -9px;
-  left: -9px;
-  clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
-}
-
-.notchBottom {
-  bottom: -9px;
-  left: -9px;
-  clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-}
-
-/* Right Stub Section */
-.stub {
-  width: 52px;
-  background-color: var(--color-honey);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0.35rem;
-  position: relative;
-  flex-shrink: 0;
-}
-
-@media (min-width: 480px) {
-  .stub {
-    width: 64px;
-    padding: 0.5rem;
-  }
-}
-
-.stubText {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
+.ticketRoute {
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-cocoa);
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  display: flex;
 }
 
-@media (min-width: 480px) {
-  .stubText {
-    font-size: 0.85rem;
+.ticketRoute svg {
+  fill: none;
+  width: 2.6rem;
+  stroke: var(--color-toffee-deep);
+  stroke-width: 2.4px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 3 4;
+}
+
+.ticketRoute svg path + path {
+  stroke-dasharray: none;
+}
+
+/* Tear-away Ticket Stub */
+.ticketStub {
+  background: var(--color-honey);
+  transform-origin: 0 0;
+  width: 3.4rem;
+  transition: transform 0.5s var(--ease-pounce);
+  border: 3px solid var(--color-cocoa);
+  border-left: 3px dashed rgba(42, 23, 14, 0.55);
+  border-radius: 0 1rem 1rem 0;
+  flex: none;
+  display: grid;
+  place-items: center;
+  -webkit-mask:
+    radial-gradient(circle at 0 0, transparent 0.62rem, #000 0.66rem) 0 0 / 51% 51% no-repeat,
+    radial-gradient(circle at 0 100%, transparent 0.62rem, #000 0.66rem) 0 100% / 51% 51% no-repeat,
+    linear-gradient(#000, #000) 100% / 50% 100% no-repeat;
+  mask:
+    radial-gradient(circle at 0 0, transparent 0.62rem, #000 0.66rem) 0 0 / 51% 51% no-repeat,
+    radial-gradient(circle at 0 100%, transparent 0.62rem, #000 0.66rem) 0 100% / 51% 51% no-repeat,
+    linear-gradient(#000, #000) 100% / 50% 100% no-repeat;
+}
+
+.ticketLink:hover .ticketStub {
+  transform: rotate(7deg);
+}
+
+.ticketStubText {
+  writing-mode: vertical-rl;
+  letter-spacing: 0.06em;
+  color: var(--color-cocoa);
+  font-size: 1rem;
+  transform: rotate(180deg);
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket,
+  .ticketLink,
+  .ticketStub {
+    transition: none !important;
+    animation: none !important;
   }
-}
-
-.stubIcon {
-  position: absolute;
-  bottom: 0.5rem;
-  color: var(--color-toffee-ink);
 }

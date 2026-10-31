@@ -1,0 +1,252 @@
+/* ============================================================
+   TeddyPups UAE — Splash & Page Transition Curtain
+   ============================================================ */
+
+.curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  pointer-events: none;
+  visibility: hidden;
+  overflow: clip;
+}
+
+.curtain:is([data-state='intro'], [data-state='covering'], [data-state='covered'], [data-state='snap'], [data-state='lifting']) {
+  visibility: visible;
+}
+
+.curtain:is([data-state='covering'], [data-state='covered'], [data-state='snap']) {
+  pointer-events: auto;
+  cursor: progress;
+}
+
+.blanket {
+  background: repeating-linear-gradient(45deg, transparent 0 46px, rgba(42, 23, 14, 0.07) 46px 48px),
+              repeating-linear-gradient(-45deg, transparent 0 46px, rgba(42, 23, 14, 0.07) 46px 48px),
+              radial-gradient(circle at 50% 46%, var(--color-milk) 0, transparent 60%),
+              var(--color-honey-soft);
+  will-change: transform;
+  place-items: center;
+  display: grid;
+  position: absolute;
+  inset: 0;
+  transform: translateY(calc(100% + 44px));
+}
+
+.edge {
+  display: block;
+  position: absolute;
+  left: 0;
+}
+
+.edgeTop {
+  top: -39px;
+  width: 100%;
+  height: 40px;
+}
+
+.edgeBottom {
+  bottom: -39px;
+  width: 100%;
+  height: 40px;
+  transform: scaleY(-1);
+}
+
+.curtain[data-state='intro'] {
+  animation: 0s linear 1.04s forwards tp-curtain-rest;
+}
+
+.curtain[data-state='intro'] .blanket {
+  animation: 0.48s cubic-bezier(0.65, 0, 0.3, 1) 0.56s forwards tp-curtain-lift;
+  transform: translate(0);
+}
+
+.curtain[data-state='covering'] .blanket {
+  animation: 0.3s cubic-bezier(0.22, 1, 0.36, 1) both tp-curtain-cover;
+}
+
+.curtain:is([data-state='covered'], [data-state='snap']) .blanket {
+  transform: translate(0);
+}
+
+.curtain[data-state='lifting'] .blanket {
+  animation: 0.46s cubic-bezier(0.65, 0, 0.3, 1) both tp-curtain-lift;
+}
+
+.stage {
+  width: min(44rem, 86vw);
+  height: clamp(9rem, 24vw, 12rem);
+  position: relative;
+}
+
+.runner {
+  width: clamp(6.5rem, 15vw, 9rem);
+  position: absolute;
+  bottom: 1.4rem;
+  left: 0;
+}
+
+.runnerSvg {
+  width: 100%;
+  height: auto;
+}
+
+.prints {
+  height: 2.2rem;
+  position: absolute;
+  inset: auto 0 1.1rem;
+}
+
+.print {
+  width: clamp(1rem, 2.4vw, 1.45rem);
+  fill: var(--color-toffee);
+  opacity: 0;
+  position: absolute;
+}
+
+.note {
+  white-space: nowrap;
+  color: var(--color-toffee-ink);
+  font-family: var(--font-scrawl, 'Shantell Sans', cursive);
+  font-size: clamp(1.05rem, 2.4vw, 1.45rem);
+  position: absolute;
+  bottom: -1.2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Animations active when not idle */
+.curtain:not([data-state='idle']) .runner {
+  animation: 1.15s cubic-bezier(0.32, 0.1, 0.4, 1) both tp-runner-x;
+}
+
+.curtain:not([data-state='idle']) .print {
+  animation: 1s ease-out both tp-print-step;
+}
+
+.curtain:not([data-state='idle']) .runnerLegFn,
+.curtain:not([data-state='idle']) .runnerLegBf {
+  animation: 0.32s ease-in-out infinite alternate tp-runner-leg-a;
+}
+
+.curtain:not([data-state='idle']) .runnerLegFf,
+.curtain:not([data-state='idle']) .runnerLegBn {
+  animation: 0.32s ease-in-out infinite alternate tp-runner-leg-b;
+}
+
+.curtain:not([data-state='idle']) .runnerBody {
+  animation: 0.16s ease-in-out infinite alternate tp-runner-bob;
+}
+
+.curtain:not([data-state='idle']) .runnerTail {
+  animation: 0.22s ease-in-out infinite alternate tp-runner-wag;
+}
+
+.curtain:not([data-state='idle']) .runnerEar {
+  animation: 0.16s ease-in-out infinite alternate tp-runner-ear;
+}
+
+/* ── Keyframes ── */
+@keyframes tp-curtain-rest {
+  to {
+    visibility: hidden;
+  }
+}
+
+@keyframes tp-curtain-lift {
+  0% {
+    transform: translate(0);
+  }
+  to {
+    transform: translateY(calc(-100% - 44px));
+  }
+}
+
+@keyframes tp-curtain-cover {
+  0% {
+    transform: translateY(calc(100% + 44px));
+  }
+  to {
+    transform: translate(0);
+  }
+}
+
+@keyframes tp-runner-x {
+  0% {
+    transform: translateX(-40%);
+  }
+  to {
+    transform: translateX(calc(min(44rem, 86vw) / 1.5625));
+  }
+}
+
+@keyframes tp-print-step {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  14% {
+    opacity: 0.7;
+    transform: scale(1.08);
+  }
+  26% {
+    transform: scale(1);
+  }
+  70% {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes tp-runner-leg-a {
+  0% {
+    transform: rotate(24deg);
+  }
+  to {
+    transform: rotate(-22deg);
+  }
+}
+
+@keyframes tp-runner-leg-b {
+  0% {
+    transform: rotate(-22deg);
+  }
+  to {
+    transform: rotate(24deg);
+  }
+}
+
+@keyframes tp-runner-bob {
+  0% {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes tp-runner-wag {
+  0% {
+    transform: rotate(-16deg);
+  }
+  to {
+    transform: rotate(14deg);
+  }
+}
+
+@keyframes tp-runner-ear {
+  0% {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(8deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .curtain {
+    display: none !important;
+  }
+}

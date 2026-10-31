@@ -7,6 +7,8 @@ import BoardingTicket from '../components/ui/BoardingTicket.jsx';
 import PawIcon from '../components/common/PawIcon.jsx';
 import styles from './GoneHomePage.module.css';
 
+const TILTS = [-1.4, 1.2, -1.8, 1.5, -1.2, 1.8, -1.5, 1.3];
+
 export default function GoneHomePage() {
   const [filter, setFilter] = useState('all');
 
@@ -90,11 +92,16 @@ export default function GoneHomePage() {
 
       {/* ── Tickets Gallery ── */}
       <main className="container">
-        <div className={styles.ticketsGrid}>
-          {filteredAlumni.map(alumnus => (
-            <BoardingTicket key={alumnus.id} alumnus={alumnus} />
+        <ul className={styles.ticketsGrid} aria-label="Puppies who have gone home">
+          {filteredAlumni.map((alumnus, idx) => (
+            <BoardingTicket
+              key={alumnus.id}
+              alumnus={alumnus}
+              index={idx}
+              tilt={TILTS[idx % TILTS.length]}
+            />
           ))}
-        </div>
+        </ul>
 
         {/* ── Bottom Inquiry Box ── */}
         <aside className={styles.inquiryBox} aria-label="Request an alumni breed match">

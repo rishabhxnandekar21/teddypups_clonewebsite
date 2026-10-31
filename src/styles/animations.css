@@ -1,0 +1,174 @@
+/* ============================================================
+   TeddyPups UAE — Global Animation Architecture & Motion Tokens
+   Centralized keyframes, transitions & micro-interaction utilities
+   ============================================================ */
+
+/* ── Curtain & Splash Sequence ── */
+
+@keyframes tp-curtain-lift {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(calc(-100% - 44px));
+  }
+}
+
+@keyframes tp-curtain-cover {
+  0% {
+    transform: translateY(calc(100% + 44px));
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes tp-curtain-rest {
+  to {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@keyframes tp-print-step {
+  0% {
+    opacity: 0;
+    transform: scale(0.4) rotate(var(--print-rot, 0deg));
+  }
+  60% {
+    opacity: 0.9;
+    transform: scale(1.08) rotate(var(--print-rot, 0deg));
+  }
+  100% {
+    opacity: 0.75;
+    transform: scale(1) rotate(var(--print-rot, 0deg));
+  }
+}
+
+/* ── Brand Logo Hop ── */
+
+@keyframes tp-doodle-hop {
+  0%, 100% {
+    transform: scale(1) rotate(0deg);
+  }
+  40% {
+    transform: scale(1.06) rotate(-6deg) translateY(-2px);
+  }
+  70% {
+    transform: scale(0.98) rotate(2deg) translateY(0);
+  }
+}
+
+/* ── Gentle Float / Ambient Bob ── */
+
+@keyframes tp-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ── Spring Pop In ── */
+
+@keyframes tp-pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ── Smooth Fade In ── */
+
+@keyframes tp-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   Micro-Interaction Utility Classes
+   ============================================================ */
+
+/* Tactile Button Physical Press */
+.btn {
+  min-height: 3.125rem;
+  transition: transform 0.35s var(--ease-pounce),
+              background-color 0.25s ease,
+              border-color 0.25s ease,
+              box-shadow 0.35s var(--ease-silk),
+              color 0.2s ease !important;
+}
+
+.btn:active {
+  transform: scale(0.96) !important;
+}
+
+.btn-primary {
+  background-color: var(--color-toffee-deep) !important;
+  color: var(--color-milk) !important;
+  border-color: var(--color-cocoa) !important;
+  box-shadow: 0 0.35rem 0 0 var(--color-cocoa) !important;
+}
+
+.btn-primary:hover {
+  box-shadow: 0 0.55rem 0 0 var(--color-cocoa) !important;
+  transform: translateY(-2px) rotate(-0.5deg) !important;
+}
+
+.btn-whatsapp {
+  background-color: var(--color-whatsapp) !important;
+  color: #ffffff !important;
+  border-color: var(--color-cocoa) !important;
+  box-shadow: 0 0.35rem 0 0 var(--color-cocoa) !important;
+}
+
+.btn-whatsapp:hover {
+  background-color: var(--color-whatsapp-hover) !important;
+  box-shadow: 0 0.55rem 0 0 var(--color-cocoa) !important;
+  transform: translateY(-2px) rotate(0.5deg) !important;
+}
+
+.btn-outline,
+.btn-ghost {
+  border: 2px solid var(--color-cocoa) !important;
+}
+
+.btn-outline:hover,
+.btn-ghost:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 0.35rem 0 0 var(--color-cocoa) !important;
+}
+
+/* ============================================================
+   Accessibility: Reduced Motion
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .tp-curtain {
+    display: none !important;
+  }
+}

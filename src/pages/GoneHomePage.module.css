@@ -87,18 +87,29 @@
   cursor: pointer;
   max-width: 100%;
   text-align: center;
-  transition: all var(--transition-fast);
+  transition: transform 0.25s var(--ease-pounce),
+              background-color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease,
+              color 0.2s ease;
 }
 
 .filterPill:hover {
   background-color: var(--color-sand);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(42, 23, 14, 0.08);
+}
+
+.filterPill:active {
+  transform: scale(0.95);
 }
 
 .filterPill.active {
   background-color: var(--color-toffee);
   border-color: var(--color-toffee);
   color: var(--color-milk);
-  box-shadow: 2px 3px 0px rgba(42, 23, 14, 0.15);
+  box-shadow: 2px 3px 0px rgba(42, 23, 14, 0.18);
+  transform: translateY(-1px);
 }
 
 /* Tickets Grid */

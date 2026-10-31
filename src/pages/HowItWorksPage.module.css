@@ -86,70 +86,99 @@
   font-weight: 700;
   color: var(--color-cocoa);
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: transform 0.28s var(--ease-pounce),
+              background-color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.25s var(--ease-silk),
+              color 0.2s ease;
 }
 
 .switchTab:hover {
   background-color: var(--color-sand);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(42, 23, 14, 0.08);
+}
+
+.switchTab:active {
+  transform: scale(0.96);
 }
 
 .switchTab.active {
   background-color: var(--color-toffee);
   border-color: var(--color-toffee);
   color: var(--color-milk);
-  box-shadow: 3px 5px 0px rgba(42, 23, 14, 0.15);
+  box-shadow: 3px 5px 0px rgba(42, 23, 14, 0.18);
+  transform: translateY(-1px);
 }
 
 /* Timeline Cards */
 .timelineGrid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .timelineGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1.25rem;
+  margin-top: clamp(2rem, 4vw, 3rem);
+  list-style: none;
+  padding: 0;
 }
 
 @media (min-width: 1024px) {
   .timelineGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
   }
 }
 
 .timelineCard {
-  background-color: var(--color-cream);
-  border: 2.5px solid var(--color-cocoa);
-  border-radius: var(--radius-lg);
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  box-shadow: 4px 6px 0px rgba(42, 23, 14, 0.08);
+  border: 3px solid var(--color-cocoa);
+  background: var(--color-milk);
+  transition: transform 0.4s var(--ease-pounce),
+              rotate 0.4s var(--ease-pounce),
+              box-shadow 0.4s var(--ease-silk);
+  border-radius: 1.6rem;
+  align-content: start;
+  gap: 0.5rem;
+  padding: 1.5rem 1.4rem 1.6rem;
+  display: grid;
   position: relative;
+  box-shadow: 6px 8px rgba(42, 23, 14, 0.1);
+}
+
+.timelineCard:hover {
+  transform: translateY(-4px) rotate(-0.6deg);
+  box-shadow: 9px 12px rgba(42, 23, 14, 0.12);
+}
+
+.stepIcon {
+  background: var(--tint, #fbe3b4);
+  width: 4rem;
+  height: 4rem;
+  color: var(--color-toffee-deep);
+  border-radius: 46% 54% 52% 48% / 55% 45%;
+  place-items: center;
+  display: grid;
+  margin-bottom: 0.25rem;
 }
 
 .stepNum {
-  font-family: var(--font-display);
-  font-size: 2.25rem;
-  font-weight: 900;
-  color: var(--color-toffee);
-  line-height: 1;
+  color: var(--color-toffee-ink);
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0.6rem;
 }
 
 .stepName {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.2;
   color: var(--color-cocoa);
 }
 
 .stepDetails {
   font-size: 0.95rem;
   color: var(--color-cocoa-soft);
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 /* Promise Section */

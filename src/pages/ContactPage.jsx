@@ -1,19 +1,25 @@
-import { useState, useEffect } from 'react';
-import { Phone, Mail, MapPin, Clock, MessageCircle, Send } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Phone, Mail, MapPin, Clock, MessageCircle, RotateCcw } from 'lucide-react';
+import { availablePuppies } from '../data/puppies.js';
 import { BUSINESS } from '../data/navigation.js';
 import PawIcon from '../components/common/PawIcon.jsx';
 import styles from './ContactPage.module.css';
+
+const PAW_PATH = "M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0 4.5-1.1 6.4-1.1s3.8 1.1 6.4 1.1c5 0 9.2-2.9 9.2-8.3 0-7.2-8-15.5-15.6-15.5zM19.28 26.71C21.07 30.08 20.42 33.92 17.84 35.29C15.25 36.67 11.71 35.05 9.92 31.69C8.13 28.32 8.78 24.48 11.36 23.11C13.95 21.73 17.49 23.35 19.28 26.71ZM29.62 15.64C30.32 19.62 28.46 23.26 25.47 23.79C22.48 24.32 19.48 21.53 18.78 17.56C18.08 13.58 19.94 9.94 22.93 9.41C25.92 8.88 28.92 11.67 29.62 15.64ZM45.22 17.56C44.52 21.53 41.52 24.32 38.53 23.79C35.54 23.26 33.68 19.62 34.38 15.64C35.08 11.67 38.08 8.88 41.07 9.41C44.06 9.94 45.92 13.58 45.22 17.56ZM54.08 31.69C52.29 35.05 48.75 36.67 46.16 35.29C43.58 33.92 42.93 30.08 44.72 26.71C46.51 23.35 50.05 21.73 52.64 23.11C55.22 24.48 55.87 28.32 54.08 31.69Z";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
     email: '',
-    location: '',
-    puppyInterest: 'Any puppy (not sure yet)',
+    area: '',
+    puppy: '',
     message: '',
   });
-  const [submitted, setSubmitted] = useState(false);
+
+  const [phase, setPhase] = useState('writing'); // 'writing' | 'sealing' | 'posting' | 'sent'
+  const [minHeight, setMinHeight] = useState(undefined);
+  const postRef = useRef(null);
 
   useEffect(() => {
     document.title = 'Get in touch with us — TeddyPups UAE';
@@ -24,12 +30,55 @@ export default function ContactPage() {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const getWhatsAppHref = () => {
+    const puppyText = formData.puppy ? formData.puppy : 'any puppy (not sure yet)';
+    const text = `Hi TeddyPups! My name is ${formData.name || 'Friend'}. I live in ${formData.area || 'Dubai'}. I am curious about ${puppyText}. ${formData.message ? `Note: ${formData.message}` : ''}`;
+    return `https://wa.me/971541676733?text=${encodeURIComponent(text)}`;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simulate send / generate pre-filled WhatsApp link
-    const whatsappText = `Hello TeddyPups! My name is ${formData.name || 'Friend'}. I live in ${formData.location || 'UAE'}. I am curious about: ${formData.puppyInterest}. Note: ${formData.message || 'Looking forward to hearing from you!'}`;
-    window.open(`https://wa.me/971541676733?text=${encodeURIComponent(whatsappText)}`, '_blank');
-    setSubmitted(true);
+
+    const isReduced = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (isReduced) {
+      window.open(getWhatsAppHref(), '_blank');
+      setPhase('sent');
+      return;
+    }
+
+    if (postRef.current) {
+      setMinHeight(postRef.current.offsetHeight);
+    }
+
+    setPhase('sealing');
+
+    const t1 = setTimeout(() => {
+      setPhase('posting');
+    }, 750);
+
+    const t2 = setTimeout(() => {
+      setMinHeight(undefined);
+      setPhase('sent');
+      window.open(getWhatsAppHref(), '_blank');
+    }, 1750);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
+  };
+
+  const handleReset = () => {
+    setFormData({
+      name: '',
+      phone: '',
+      email: '',
+      area: '',
+      puppy: '',
+      message: '',
+    });
+    setPhase('writing');
   };
 
   return (
@@ -99,12 +148,28 @@ export default function ContactPage() {
               <div className={styles.infoList}>
                 <div className={styles.infoItem}>
                   <div className={styles.infoIcon}>
+                    <MessageCircle size={18} aria-hidden="true" />
+                  </div>
+                  <div>
+                    <span className={styles.infoLabel}>WhatsApp Concierge</span>
+                    <p className={styles.infoValue}>
+                      <a href={BUSINESS.whatsappUrl} target="_blank" rel="noopener noreferrer">
+                        {BUSINESS.phone}
+                      </a>
+                    </p>
+                  </div>
+                </div>
+
+                <div className={styles.infoItem}>
+                  <div className={styles.infoIcon}>
                     <Phone size={18} aria-hidden="true" />
                   </div>
                   <div>
-                    <span className={styles.infoLabel}>Phone & Call</span>
+                    <span className={styles.infoLabel}>Call Us</span>
                     <p className={styles.infoValue}>
-                      <a href={`tel:${BUSINESS.phone.replace(/\s/g, '')}`}>{BUSINESS.phone}</a>
+                      <a href={`tel:${BUSINESS.phone.replace(/\s+/g, '')}`}>
+                        {BUSINESS.phone}
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -124,105 +189,192 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* ── Right Column: Vintage Airmail Stationery Letterform ── */}
-          <form className={styles.stationeryCard} onSubmit={handleSubmit} aria-label="Adoption Inquiry Letter">
-            <div className={styles.airmailBorder} aria-hidden="true" />
-
-            {/* Postage Stamp */}
-            <div className={styles.stamp} aria-hidden="true">
-              <PawIcon size={24} color="var(--color-toffee-ink)" />
-              <span className={styles.stampPrice}>AIR MAIL</span>
-            </div>
-
-            <p className={styles.letterSalutation}>Dear TeddyPups,</p>
-
-            <div className={styles.letterBody}>
-              <span>my name is</span>
-              <input
-                type="text"
-                name="name"
-                required
-                className={styles.inlineInput}
-                placeholder="your name"
-                style={{ width: '160px' }}
-                value={formData.name}
-                onChange={handleChange}
-                aria-label="Your name"
-              />
-              <span>, and you can reach me on</span>
-              <input
-                type="tel"
-                name="phone"
-                required
-                className={styles.inlineInput}
-                placeholder="+971 50 123 4567"
-                style={{ width: '180px' }}
-                value={formData.phone}
-                onChange={handleChange}
-                aria-label="Your phone number"
-              />
-              <span>or by email at</span>
-              <input
-                type="email"
-                name="email"
-                className={styles.inlineInput}
-                placeholder="email (optional)"
-                style={{ width: '180px' }}
-                value={formData.email}
-                onChange={handleChange}
-                aria-label="Your email"
-              />
-              <span>. I live in</span>
-              <input
-                type="text"
-                name="location"
-                className={styles.inlineInput}
-                placeholder="e.g. Dubai Marina"
-                style={{ width: '170px' }}
-                value={formData.location}
-                onChange={handleChange}
-                aria-label="Your living location"
-              />
-              <span>, and I'm curious about</span>
-              <select
-                name="puppyInterest"
-                className={styles.inlineSelect}
-                value={formData.puppyInterest}
-                onChange={handleChange}
-                aria-label="Puppy interest selection"
+          {/* ── Right Column: Scene 5 Airmail Letterfold & Postbox ── */}
+          <div
+            ref={postRef}
+            className={styles.postContainer}
+            data-phase={phase}
+            style={{ minHeight }}
+          >
+            {/* Phase: writing, sealing, posting */}
+            {phase !== 'sent' && (
+              <form
+                onSubmit={handleSubmit}
+                noValidate={false}
+                className={styles.letterform}
+                aria-hidden={phase !== 'writing' ? 'true' : undefined}
               >
-                <option value="Any puppy (not sure yet)">any puppy (not sure yet) ▼</option>
-                <option value="Maltipoo">Maltipoo ▼</option>
-                <option value="Teacup Pomeranian">Teacup Pomeranian ▼</option>
-                <option value="Korean Teacup Poodle">Korean Teacup Poodle ▼</option>
-                <option value="Cavapoo">Cavapoo ▼</option>
-                <option value="Shih-Tzu">Shih-Tzu ▼</option>
-              </select>
-              <span>.</span>
+                {/* Vintage Postage Stamp */}
+                <span aria-hidden="true" className={styles.letterStamp}>
+                  <svg viewBox="0 0 64 64" width={36} height={36} fill="currentColor">
+                    <path d={PAW_PATH} />
+                  </svg>
+                </span>
 
-              <textarea
-                name="message"
-                className={styles.letterTextarea}
-                placeholder="Anything else you'd like to tell us about your family, home, or questions..."
-                value={formData.message}
-                onChange={handleChange}
-                aria-label="Additional notes"
-              />
-            </div>
+                <p className={styles.letterGreeting}>Dear TeddyPups,</p>
 
-            {submitted && (
-              <div className={styles.successMsg} role="status">
-                ✓ Thank you! Opening WhatsApp to send your letter directly to our concierge team...
+                <p className={styles.letterLine}>
+                  my name is{' '}
+                  <span className={styles.blank} style={{ '--size': '16ch' }}>
+                    <input
+                      name="name"
+                      aria-label="Your name (required)"
+                      autoComplete="name"
+                      required
+                      minLength={2}
+                      maxLength={80}
+                      placeholder="your name"
+                      value={formData.name}
+                      onChange={handleChange}
+                    />
+                  </span>
+                  , and you can reach me on{' '}
+                  <span className={styles.blank} style={{ '--size': '16ch' }}>
+                    <input
+                      name="phone"
+                      aria-label="Phone or WhatsApp number with country code (required)"
+                      type="tel"
+                      inputMode="tel"
+                      autoComplete="tel"
+                      required
+                      placeholder="+971 50 123 4567"
+                      value={formData.phone}
+                      onChange={handleChange}
+                    />
+                  </span>{' '}
+                  or by email at{' '}
+                  <span className={styles.blank} style={{ '--size': '20ch' }}>
+                    <input
+                      name="email"
+                      aria-label="Email (optional)"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="optional"
+                      value={formData.email}
+                      onChange={handleChange}
+                    />
+                  </span>
+                  .
+                </p>
+
+                <p className={styles.letterLine}>
+                  I live in{' '}
+                  <span className={styles.blank} style={{ '--size': '14ch' }}>
+                    <input
+                      name="area"
+                      aria-label="Your area (optional)"
+                      autoComplete="address-level2"
+                      maxLength={80}
+                      placeholder="e.g. Dubai Marina"
+                      value={formData.area}
+                      onChange={handleChange}
+                    />
+                  </span>
+                  , and I'm curious about{' '}
+                  <span className={styles.blank}>
+                    <select
+                      name="puppy"
+                      aria-label="Puppy you're interested in (optional)"
+                      value={formData.puppy}
+                      onChange={handleChange}
+                    >
+                      <option value="">any puppy (not sure yet)</option>
+                      {availablePuppies.map(pup => (
+                        <option key={pup.slug} value={`${pup.name} (${pup.breed}, ${pup.gender})`}>
+                          {pup.name} ({pup.breed}, {pup.gender === 'male' ? 'boy' : 'girl'})
+                        </option>
+                      ))}
+                    </select>
+                  </span>
+                  .
+                </p>
+
+                <textarea
+                  name="message"
+                  rows={4}
+                  maxLength={2000}
+                  placeholder="Anything else you'd like to tell us…"
+                  className={styles.letterNote}
+                  aria-label="Your message (optional)"
+                  value={formData.message}
+                  onChange={handleChange}
+                />
+
+                <div className={styles.letterSign}>
+                  <p>with love, a future puppy parent</p>
+                  <button type="submit" className="btn btn-primary btn-lg">
+                    {phase === 'sealing' ? 'Sealing letter…' : 'Post my letter'}
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* 3D Envelope & Postbox Animation (sealing & posting) */}
+            {(phase === 'sealing' || phase === 'posting') && (
+              <div aria-hidden="true" className={styles.postScene}>
+                {/* Envelope */}
+                <svg viewBox="0 0 160 112" className={styles.envelope}>
+                  <rect x="4" y="18" width="152" height="90" rx="6" fill="#fffdf8" stroke="#2a170e" strokeWidth="4" />
+                  <path d="M6 104 64 62M154 104 96 62" fill="none" stroke="#2a170e" strokeWidth="3" strokeLinecap="round" />
+                  <path className={styles.envelopeFlap} d="M6 22 80 74 154 22" fill="#fbe3b4" stroke="#2a170e" strokeWidth="4" strokeLinejoin="round" />
+                  <circle cx="80" cy="72" r="11" fill="#a24a1a" stroke="#2a170e" strokeWidth="3" />
+                </svg>
+
+                {/* Red Postbox */}
+                <svg viewBox="0 0 200 260" className={styles.postbox}>
+                  <rect x="86" y="170" width="28" height="86" fill="#5a3a28" stroke="#2a170e" strokeWidth="4" />
+                  <path d="M30 70a70 54 0 0 1 140 0v104H30z" fill="#c2622b" stroke="#2a170e" strokeWidth="5" strokeLinejoin="round" />
+                  <rect x="58" y="86" width="84" height="14" rx="7" fill="#2a170e" />
+                  <path d="M44 128h112" stroke="#2a170e" strokeWidth="3" strokeLinecap="round" opacity="0.35" />
+                  <g className={styles.postboxFlag}>
+                    <path d="M170 120V64" stroke="#2a170e" strokeWidth="5" strokeLinecap="round" />
+                    <path d="M170 64h22v16h-22" fill="#f2be6b" stroke="#2a170e" strokeWidth="4" strokeLinejoin="round" />
+                  </g>
+                </svg>
               </div>
             )}
 
-            <div className={styles.submitRow}>
-              <button type="submit" className="btn btn-primary btn-lg">
-                <Send size={18} aria-hidden="true" />
-                Post my letter
-              </button>
-            </div>
-          </form>
+            {/* Phase: sent */}
+            {phase === 'sent' && (
+              <div role="status" className={styles.sentCard} tabIndex={-1}>
+                {/* Sent Postbox with upright yellow flag */}
+                <svg viewBox="0 0 200 150" aria-hidden="true" className={styles.sentBox}>
+                  <rect x="86" y="96" width="28" height="52" fill="#5a3a28" stroke="#2a170e" strokeWidth="4" />
+                  <path d="M30 50a70 44 0 0 1 140 0v52H30z" fill="#c2622b" stroke="#2a170e" strokeWidth="5" strokeLinejoin="round" />
+                  <rect x="58" y="58" width="84" height="12" rx="6" fill="#2a170e" />
+                  <g>
+                    <path d="M170 92V22" stroke="#2a170e" strokeWidth="5" strokeLinecap="round" />
+                    <path d="M170 22h22v16h-22" fill="#f2be6b" stroke="#2a170e" strokeWidth="4" strokeLinejoin="round" />
+                  </g>
+                </svg>
+
+                <h3 className={styles.sentTitle}>Message received!</h3>
+                <p className={styles.sentBody}>
+                  Thank you — our team will get back to you promptly. For the quickest reply, message us on WhatsApp.
+                </p>
+
+                <div className={styles.sentActions}>
+                  <a
+                    href={getWhatsAppHref()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-whatsapp"
+                  >
+                    <MessageCircle size={18} aria-hidden="true" />
+                    WhatsApp us
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleReset}
+                    className="btn btn-outline"
+                  >
+                    <RotateCcw size={16} aria-hidden="true" />
+                    Write another note
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </main>
     </div>

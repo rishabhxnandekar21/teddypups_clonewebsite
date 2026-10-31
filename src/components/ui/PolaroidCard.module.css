@@ -1,83 +1,127 @@
-/* ============================================================
-   PolaroidCard Component Styles (Happy Families)
-   ============================================================ */
+/* ── PolaroidCard.module.css ── */
 
-.polaroid {
-  position: relative;
-  background-color: #ffffff;
-  padding: 0.85rem 0.85rem 1.35rem 0.85rem;
-  border-radius: 4px;
-  box-shadow: 4px 8px 18px rgba(42, 23, 14, 0.12);
-  display: flex;
-  flex-direction: column;
-  transition: transform var(--transition-spring), box-shadow var(--transition-base);
+.polaroidBtn {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
   cursor: pointer;
+  display: block;
+  width: 100%;
+  outline: none;
 }
 
-.polaroid:hover {
-  transform: scale(1.03) translateY(-4px) !important;
-  box-shadow: 8px 16px 28px rgba(42, 23, 14, 0.18);
+.polaroid {
+  rotate: var(--tilt, 0deg);
+  transition: rotate 0.5s var(--ease-pounce), transform 0.5s var(--ease-pounce), box-shadow 0.4s var(--ease-silk);
+  background: #fffefb;
+  border-radius: 0.2rem;
+  padding: 0.6rem 0.6rem 0;
+  display: block;
+  position: relative;
+  box-shadow: 0 1px 1px rgba(42, 23, 14, 0.12), 0 10px 20px -8px rgba(42, 23, 14, 0.36);
+}
+
+.polaroidBtn:hover .polaroid,
+.polaroidBtn:focus-visible .polaroid {
+  transform: translateY(-6px);
+  rotate: 0deg;
+  box-shadow: 0 1px 1px rgba(42, 23, 14, 0.12), 0 18px 30px -14px rgba(42, 23, 14, 0.42);
   z-index: 10;
 }
 
-/* Simulated translucent washi tape */
+.polaroidBtn:active .polaroid {
+  transform: translateY(-2px);
+}
+
+/* ── 5 Washi Tape Variations ── */
 .tape {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%) rotate(-1deg);
-  width: 70px;
-  height: 22px;
-  background-color: rgba(191, 221, 245, 0.75); /* Sky blue washi tape */
-  backdrop-filter: blur(2px);
-  border-left: 2px dashed rgba(255, 255, 255, 0.6);
-  border-right: 2px dashed rgba(255, 255, 255, 0.6);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   z-index: 2;
+  background:
+    repeating-linear-gradient(0deg, transparent 0 3px, rgba(255, 255, 255, 0.15) 3px 5px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.28), transparent 30%, rgba(255, 255, 255, 0.18) 70%, transparent),
+    var(--tape, #f6d79a);
+  width: clamp(4rem, 34%, 6.2rem);
+  height: 1.35rem;
+  position: absolute;
+  opacity: 0.88;
+  clip-path: polygon(0 10%, 3% 0, 50% 4%, 97% 0, 100% 14%, 98% 40%, 100% 66%, 97% 100%, 50% 96%, 3% 100%, 0 86%, 2% 52%);
   pointer-events: none;
+  transition: transform 0.35s var(--ease-pounce), opacity 0.3s;
 }
 
-.tapeBlush {
-  background-color: rgba(249, 205, 191, 0.75); /* Blush pink washi tape */
+.tapeCenter {
+  top: -0.7rem;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
 }
 
-.imageWrapper {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  background-color: var(--color-sand);
+.tapeLeft {
+  top: -0.55rem;
+  left: 10%;
+  transform: rotate(-9deg);
+}
+
+.tapeRight {
+  top: -0.55rem;
+  right: 10%;
+  transform: rotate(8deg);
+}
+
+.tapeTL {
+  width: clamp(3.2rem, 26%, 4.6rem);
+  top: 0.05rem;
+  left: -0.85rem;
+  transform: rotate(-40deg);
+}
+
+.tapeTR {
+  width: clamp(3.2rem, 26%, 4.6rem);
+  top: 0.05rem;
+  right: -0.85rem;
+  transform: rotate(40deg);
+}
+
+/* Photo */
+.photoWrapper {
+  background: #e8dfd3;
+  border-radius: 1px;
+  display: block;
+  position: relative;
   overflow: hidden;
-  border: 1px solid rgba(42, 23, 14, 0.08);
+  aspect-ratio: 4 / 4.6;
+  box-shadow: inset 0 0 0 1px rgba(42, 23, 14, 0.08);
 }
 
-.image {
+.photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 300ms var(--ease-silk);
+  display: block;
+  transition: transform 0.4s var(--ease-silk);
 }
 
-.polaroid:hover .image {
-  transform: scale(1.03);
+.polaroidBtn:hover .photo {
+  transform: scale(1.02);
 }
 
-.captionArea {
-  margin-top: 0.85rem;
-  text-align: center;
-}
-
+/* Caption */
 .caption {
-  font-family: var(--font-scrawl);
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--color-cocoa);
-  line-height: 1.3;
+  min-height: 2.6rem;
+  color: var(--color-cocoa-soft, #7a5840);
+  text-align: center;
+  overflow-wrap: anywhere;
+  padding: 0.55rem 0.2rem 0.6rem;
+  font-size: 0.92rem;
+  line-height: 1.25;
+  font-family: var(--font-scrawl, "Shantell Sans", cursive);
+  display: block;
+  font-weight: 600;
 }
 
-.tag {
-  display: inline-block;
-  margin-top: 0.35rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--color-toffee);
-  letter-spacing: 0.03em;
+@media (prefers-reduced-motion: reduce) {
+  .polaroid,
+  .photo {
+    transition: none !important;
+  }
 }

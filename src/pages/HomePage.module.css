@@ -162,36 +162,65 @@
   line-height: 1.6;
 }
 
-/* ── Meet the Pups Section (tp-meet) ── */
+/* ── Meet the Pups Section (tp-meet 3D Wooden Doors) ── */
 .meetSection {
-  background-color: var(--color-cream);
-  padding-block: 5rem;
+  background: linear-gradient(180deg, #fff1d8 0%, #fbe3b4 100%);
+  padding-top: clamp(4rem, 8vh, 6rem);
+  padding-bottom: clamp(4rem, 8vh, 6rem);
   position: relative;
+  overflow: hidden;
 }
 
-.puppiesGrid {
+.meetHead {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.25rem 2rem;
+  width: 100%;
+  max-width: 110rem;
+  margin-inline: auto;
+  display: flex;
+  margin-bottom: clamp(2.5rem, 5vh, 4rem);
+}
+
+.meetHeading {
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  font-weight: 800;
+  color: var(--color-cocoa);
+  line-height: 1.05;
+}
+
+.meetSubhead {
+  font-size: clamp(1.05rem, 1.8vw, 1.2rem);
+  color: var(--ink-soft, #7a5840);
+  margin-top: 0.75rem;
+  max-width: 44ch;
+  line-height: 1.5;
+}
+
+.doorsGrid {
+  padding-inline: var(--gutter);
+  grid-template-columns: repeat(auto-fill, minmax(min(11.5rem, 42vw), 1fr));
+  gap: 3.75rem 2.25rem;
+  max-width: 110rem;
+  margin-inline: auto;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .puppiesGrid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  list-style: none;
+  padding: 0;
 }
 
 @media (min-width: 1024px) {
-  .puppiesGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+  .doorsGrid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
-.seeAllRow {
-  margin-top: 3rem;
-  display: flex;
-  justify-content: center;
+@media (min-width: 1366px) {
+  .doorsGrid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4rem 2.5rem;
+  }
 }
 
 /* ── Two Ways to Meet Section (tp-paths) ── */
@@ -268,118 +297,112 @@
   color: var(--color-cocoa);
 }
 
-/* ── Your Puppy Journey (tp-chat) ── */
+/* ── Your Puppy Journey (tp-chat interactive mockup) ── */
 .journeySection {
-  background-color: var(--color-sand);
-  padding-block: 5rem;
-}
-
-.stepsGrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-}
-
-@media (min-width: 640px) {
-  .stepsGrid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-}
-
-.stepCard {
-  background-color: var(--color-milk);
-  border: 2.5px solid var(--color-cocoa);
-  border-radius: var(--radius-lg);
-  padding: 2rem 1.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  background: linear-gradient(180deg, #f7d18d 0%, #f0b866 100%);
+  padding-block: clamp(4.5rem, 10vh, 7rem) clamp(4rem, 9vh, 6rem);
   position: relative;
-  box-shadow: 3px 5px 0px rgba(42, 23, 14, 0.08);
 }
 
-.stepNumber {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--color-toffee);
-  line-height: 1;
-}
-
-.stepTitle {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: var(--color-cocoa);
-}
-
-.stepDesc {
-  font-size: 0.925rem;
-  color: var(--color-cocoa-soft);
-  line-height: 1.6;
-}
-
-/* ── Trust Section (tp-passport) ── */
-.trustSection {
-  background-color: var(--color-milk);
-  padding-block: 5rem;
-}
-
-.trustGrid {
+.chatGrid {
+  max-width: 110rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 3.5rem;
+  align-items: center;
 }
 
-@media (min-width: 640px) {
-  .trustGrid {
-    grid-template-columns: repeat(2, 1fr);
+@media (min-width: 960px) {
+  .chatGrid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 24rem);
+    column-gap: clamp(3rem, 6vw, 6rem);
   }
 }
 
-@media (min-width: 1024px) {
-  .trustGrid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-.trustItem {
-  background-color: var(--color-cream);
-  border: 2px solid var(--color-cocoa);
-  border-radius: var(--radius-lg);
-  padding: 1.75rem 1.25rem;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.85rem;
-  box-shadow: 3px 5px 0px rgba(42, 23, 14, 0.06);
-}
-
-.trustItemIcon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-color: var(--color-sky);
-  border: 2px solid var(--color-cocoa);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-cocoa);
-}
-
-.trustItemTitle {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
+.chatHeading {
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
   font-weight: 800;
   color: var(--color-cocoa);
+  line-height: 1.05;
 }
 
-.trustItemDesc {
-  font-size: 0.875rem;
-  color: var(--color-cocoa-soft);
+.chatLede {
+  font-size: clamp(1.1rem, 1.8vw, 1.25rem);
+  color: var(--ink-soft, #7a5840);
+  margin-top: 1rem;
+  max-width: 42ch;
   line-height: 1.5;
+}
+
+.chatSteps {
+  gap: 1.75rem;
+  margin-top: 2.5rem;
+  display: grid;
+  list-style: none;
+  padding: 0;
+}
+
+.chatStep {
+  grid-template-columns: 3.4rem 1fr;
+  align-content: start;
+  column-gap: 1.1rem;
+  display: grid;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.35s ease;
+  padding: 0.5rem;
+  border-radius: 1rem;
+}
+
+.chatStep:hover,
+.chatStep[data-active="true"] {
+  opacity: 1;
+}
+
+.chatNum {
+  border: 3px solid var(--color-cocoa);
+  background: var(--color-milk);
+  width: 3.4rem;
+  height: 3.4rem;
+  color: var(--color-cocoa);
+  transition: background-color 0.4s, color 0.4s, transform 0.5s var(--ease-pounce);
+  border-radius: 50%;
+  grid-row: span 2;
+  place-items: center;
+  font-size: 1.75rem;
+  display: grid;
+  font-family: var(--font-plush, "Fraunces", serif);
+}
+
+.chatStep[data-active="true"] .chatNum {
+  background: var(--color-toffee-deep);
+  color: var(--color-milk);
+  transform: scale(1.1);
+}
+
+.chatTitle {
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(1.5rem, 2.2vw, 2.2rem);
+  line-height: 1.05;
+  color: var(--color-cocoa);
+}
+
+.chatText {
+  max-width: 40ch;
+  color: var(--ink-soft, #7a5840);
+  margin-top: 0.45rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ── Trust Section (tp-passport PassportBook) ── */
+.trustSection {
+  background: linear-gradient(180deg, #f0b866 0%, #a65a30 100%);
+  position: relative;
+  overflow: hidden;
 }
 
 /* ── Happy Families Preview (tp-dusk) ── */

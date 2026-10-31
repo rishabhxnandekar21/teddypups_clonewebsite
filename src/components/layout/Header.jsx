@@ -54,16 +54,10 @@ export default function Header() {
                     [styles.header__navLink, isActive ? styles.active : ''].join(' ').trim()
                   }
                 >
-                  {({ isActive }) => (
-                    <>
-                      <span>{link.label}</span>
-                      {isActive && (
-                        <span className={styles.header__activePaw}>
-                          <PawIcon size={12} />
-                        </span>
-                      )}
-                    </>
-                  )}
+                  <span>{link.label}</span>
+                  <span className={styles.header__navPaw} aria-hidden="true">
+                    <PawIcon size={12} color="var(--color-toffee)" />
+                  </span>
                 </NavLink>
               ))}
             </nav>

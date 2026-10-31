@@ -1,35 +1,59 @@
 import styles from './PolaroidCard.module.css';
 
-export default function PolaroidCard({ moment, rotation = 0, isBlush = false }) {
+const TAPE_POSITIONS = [
+  styles.tapeCenter,
+  styles.tapeLeft,
+  styles.tapeRight,
+  styles.tapeTL,
+  styles.tapeTR,
+];
+
+const TAPE_COLORS = ['#f6d79a', '#f9cdbf', '#cfe5f6', '#e8dfd3', '#d9ecd0'];
+
+export default function PolaroidCard({
+  moment,
+  index = 0,
+  tilt = 0,
+  onClick,
+}) {
+  const tapeClass = TAPE_POSITIONS[index % TAPE_POSITIONS.length];
+  const tapeColor = TAPE_COLORS[index % TAPE_COLORS.length];
+
   return (
-    <figure
-      className={styles.polaroid}
-      style={{ transform: `rotate(${rotation}deg)` }}
-      aria-label={moment.caption}
+    <button
+      type="button"
+      className={styles.polaroidBtn}
+      onClick={onClick}
+      aria-label={`View photo: ${moment.caption || 'Happy puppy family'}`}
     >
-      {/* Washi tape strip */}
-      <div
-        className={`${styles.tape} ${isBlush ? styles.tapeBlush : ''}`}
-        aria-hidden="true"
-      />
+      <figure
+        className={styles.polaroid}
+        style={{
+          '--tilt': `${tilt}deg`,
+          '--tape': tapeColor,
+          '--i': index,
+        }}
+      >
+        {/* Washi Tape Strip */}
+        <span aria-hidden="true" className={`${styles.tape} ${tapeClass}`} />
 
-      {/* Photo */}
-      <div className={styles.imageWrapper}>
-        <img
-          src={moment.image}
-          alt={moment.caption}
-          className={styles.image}
-          loading="lazy"
-          width={300}
-          height={300}
-        />
-      </div>
+        {/* Photo */}
+        <span className={styles.photoWrapper}>
+          <img
+            src={moment.image}
+            alt={moment.caption || 'Happy TeddyPups family'}
+            className={styles.photo}
+            loading={index < 8 ? 'eager' : 'lazy'}
+            width={300}
+            height={345}
+          />
+        </span>
 
-      {/* Handwritten caption */}
-      <figcaption className={styles.captionArea}>
-        <p className={styles.caption}>{moment.caption}</p>
-        {moment.tag && <span className={styles.tag}>#{moment.tag}</span>}
-      </figcaption>
-    </figure>
+        {/* Caption */}
+        <figcaption className={styles.caption}>
+          {moment.caption}
+        </figcaption>
+      </figure>
+    </button>
   );
 }

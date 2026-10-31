@@ -1,15 +1,36 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { featuredReview, moments } from '../data/families.js';
 import PolaroidCard from '../components/ui/PolaroidCard.jsx';
+import LightboxModal from '../components/ui/LightboxModal.jsx';
 import PawIcon from '../components/common/PawIcon.jsx';
 import styles from './HappyFamiliesPage.module.css';
 
-const ROTATIONS = [-2, 1.8, -1.2, 2.5, -1.8, 1.5, -2.2, 2];
+const TILTS = [-2.2, 1.6, -1.4, 2.4, -2.0, 1.8, -1.8, 2.2, -2.5, 1.5];
 
 export default function HappyFamiliesPage() {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   useEffect(() => {
     document.title = 'Happy Families ♡ — TeddyPups UAE Client Stories';
   }, []);
+
+  const openPhoto = (idx) => {
+    setCurrentIndex(idx);
+    setLightboxOpen(true);
+  };
+
+  const closePhoto = () => {
+    setLightboxOpen(false);
+  };
+
+  const prevPhoto = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : moments.length - 1));
+  };
+
+  const nextPhoto = () => {
+    setCurrentIndex((prev) => (prev < moments.length - 1 ? prev + 1 : 0));
+  };
 
   return (
     <div className={styles.page}>
@@ -57,12 +78,23 @@ export default function HappyFamiliesPage() {
             <PolaroidCard
               key={moment.id}
               moment={moment}
-              rotation={ROTATIONS[idx % ROTATIONS.length]}
-              isBlush={idx % 2 === 1}
+              index={idx}
+              tilt={TILTS[idx % TILTS.length]}
+              onClick={() => openPhoto(idx)}
             />
           ))}
         </div>
       </main>
+
+      {/* ── Interactive Lightbox Modal ── */}
+      <LightboxModal
+        isOpen={lightboxOpen}
+        photos={moments}
+        currentIndex={currentIndex}
+        onClose={closePhoto}
+        onPrev={prevPhoto}
+        onNext={nextPhoto}
+      />
     </div>
   );
 }

@@ -1,0 +1,42 @@
+{
+  "viewportsTested": [
+    "1440x900_primary",
+    "1366x768_secondary",
+    "1600x900_additional"
+  ],
+  "lightboxModalTest": true,
+  "luggageTagTest": true,
+  "faqStarsCount": 9,
+  "passportStampsCount": 4,
+  "overflowErrors": [],
+  "consoleErrors": [],
+  "screenshotsCaptured": [
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\01_homepage_1440x900_primary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\02_puppies_1440x900_primary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\03_puppy_detail_1440x900_primary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\04_gone_home_1440x900_primary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\05_happy_families_1440x900_primary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\06_how_it_works_1440x900_primary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\07_faq_1440x900_primary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\08_contact_1440x900_primary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\01_homepage_1366x768_secondary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\02_puppies_1366x768_secondary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\03_puppy_detail_1366x768_secondary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\04_gone_home_1366x768_secondary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\05_happy_families_1366x768_secondary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\06_how_it_works_1366x768_secondary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\07_faq_1366x768_secondary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\08_contact_1366x768_secondary.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\01_homepage_1600x900_additional.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\02_puppies_1600x900_additional.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\03_puppy_detail_1600x900_additional.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\04_gone_home_1600x900_additional.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\05_happy_families_1600x900_additional.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\06_how_it_works_1600x900_additional.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\07_faq_1600x900_additional.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\08_contact_1600x900_additional.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\09_lightbox_active_1440x900.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\10_boarding_pass_hover_1440x900.png",
+    "D:\\Rish\\Projects\\TeddyPupsUAE\\audit_screenshots\\local_milestone5\\11_contact_filled_1440x900.png"
+  ]
+}

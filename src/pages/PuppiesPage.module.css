@@ -80,18 +80,29 @@
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all var(--transition-fast);
+  transition: transform 0.25s var(--ease-pounce),
+              background-color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease,
+              color 0.2s ease;
 }
 
 .filterPill:hover {
   background-color: var(--color-sand);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(42, 23, 14, 0.08);
+}
+
+.filterPill:active {
+  transform: scale(0.95);
 }
 
 .filterPill.active {
   background-color: var(--color-toffee);
   border-color: var(--color-toffee);
   color: var(--color-milk);
-  box-shadow: 2px 3px 0px rgba(42, 23, 14, 0.15);
+  box-shadow: 2px 3px 0px rgba(42, 23, 14, 0.18);
+  transform: translateY(-1px);
 }
 
 .resultsMeta {
@@ -190,35 +201,66 @@
   max-width: 48ch;
 }
 
-/* Already Gone Home Showcase */
-.goneHomeSection {
+/* ── Recently Adopted Strip: "Already gone home" ── */
+.goneHomeStrip {
   margin-top: 5rem;
-  padding-top: 3.5rem;
-  border-top: 2px dashed rgba(42, 23, 14, 0.15);
+  background: radial-gradient(circle at 1px 1px, rgba(42, 23, 14, 0.08) 1px, transparent 1.6px) 0 0 / 26px 26px, var(--color-honey-soft);
+  padding: clamp(3rem, 6vh, 4.5rem) clamp(1.5rem, 4vw, 3rem);
+  border-radius: var(--radius-xl);
+  border: 3px solid var(--color-cocoa);
+  box-shadow: 6px 8px 0px rgba(42, 23, 14, 0.12);
 }
 
-.goneHomeHeader {
+.goneHomeInner {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+  gap: 2.5rem;
+}
+
+@media (min-width: 900px) {
+  .goneHomeInner {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.goneHomeContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 0 0 32%;
 }
 
 .goneHomeTitle {
-  font-family: var(--font-display);
-  font-size: 2.25rem;
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
   font-weight: 800;
   color: var(--color-cocoa);
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
+  line-height: 1.1;
 }
 
 .goneHomeDesc {
   color: var(--color-cocoa-soft);
   font-size: 1.05rem;
-  max-width: 65ch;
-  line-height: 1.6;
+  line-height: 1.5;
+}
+
+.goneHomeRow {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 1.25rem;
+  flex: 1;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.goneHomeItem {
+  list-style: none;
+}
+
+.goneHomeItem img {
+  filter: saturate(0.75) sepia(0.12);
 }
 
 .sectionHeading {

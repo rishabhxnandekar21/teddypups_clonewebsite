@@ -1,11 +1,13 @@
 import { Outlet } from 'react-router-dom';
 import Header from './Header.jsx';
 import Footer from './Footer.jsx';
+import Curtain from '../common/Curtain.jsx';
 import styles from './PageLayout.module.css';
 
 export default function PageLayout() {
   return (
     <div className={styles.layout}>
+      <Curtain />
       <Header />
       <main className={styles.layout__main} id="main-content" tabIndex={-1}>
         <Outlet />

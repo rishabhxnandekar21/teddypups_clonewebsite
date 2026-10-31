@@ -1,47 +1,61 @@
-import PawIcon from '../common/PawIcon.jsx';
+import { Link } from 'react-router-dom';
 import styles from './BoardingTicket.module.css';
 
-export default function BoardingTicket({ alumnus }) {
+export default function BoardingTicket({ alumnus, index = 0, tilt = 0 }) {
+  const genderLabel = alumnus.gender === 'male' ? 'boy' : alumnus.gender === 'female' ? 'girl' : alumnus.gender;
+  const targetHref = alumnus.slug ? `/puppies/${alumnus.slug}` : `/puppies`;
+
   return (
-    <article className={styles.ticket} aria-label={`Boarding pass for ${alumnus.name}`}>
-      {/* Left main ticket body */}
-      <div className={styles.main}>
-        <div className={styles.photoWrapper}>
-          <img
-            src={alumnus.image}
-            alt={`${alumnus.name} the ${alumnus.breed}`}
-            className={styles.photo}
-            loading="lazy"
-            width={72}
-            height={72}
-          />
-        </div>
+    <li
+      className={styles.ticket}
+      style={{
+        '--tilt': `${tilt}deg`,
+        '--i': index,
+      }}
+    >
+      {/* Brass Grommet Ring for Luggage Tag */}
+      <span aria-hidden="true" className={styles.tagRing} />
 
-        <div className={styles.info}>
-          <span className={styles.scriptLabel}>one ticket home</span>
-          <h3 className={styles.pupName}>{alumnus.name}</h3>
-          <p className={styles.pupMeta}>
-            {alumnus.breed}, {alumnus.gender === 'male' ? 'boy' : 'girl'}
-          </p>
-          <div className={styles.routeLine} aria-label={`Route: ${alumnus.route}`}>
-            <span>{alumnus.route.replace(/-+>/, '➔')}</span>
-          </div>
-        </div>
-      </div>
+      <Link
+        to={targetHref}
+        className={styles.ticketLink}
+        aria-label={`View boarding pass for ${alumnus.name}, ${alumnus.breed} ${genderLabel}`}
+      >
+        {/* Main Ticket Section */}
+        <span className={styles.ticketMain}>
+          <span className={styles.ticketPhoto}>
+            <img
+              src={alumnus.image}
+              alt={`${alumnus.name}, ${genderLabel} ${alumnus.breed} puppy`}
+              loading="lazy"
+              decoding="async"
+              width={100}
+              height={100}
+            />
+          </span>
 
-      {/* Perforation line with semi-circular notches */}
-      <div className={styles.perforation} aria-hidden="true">
-        <span className={styles.notchTop} />
-        <span className={styles.notchBottom} />
-      </div>
-
-      {/* Right honey stub */}
-      <div className={styles.stub} aria-hidden="true">
-        <span className={styles.stubText}>admit one</span>
-        <span className={styles.stubIcon}>
-          <PawIcon size={14} color="var(--color-toffee-ink)" />
+          <span className={styles.ticketBody}>
+            <span className={styles.ticketKicker}>one ticket home</span>
+            <span className={styles.ticketName}>{alumnus.name}</span>
+            <span className={styles.ticketMeta}>
+              {alumnus.breed}, {genderLabel}
+            </span>
+            <span className={styles.ticketRoute}>
+              <span>TeddyPups</span>
+              <svg viewBox="0 0 60 12" aria-hidden="true">
+                <path d="M2 6h46" />
+                <path d="M44 2l6 4-6 4" />
+              </svg>
+              <span>home ♥</span>
+            </span>
+          </span>
         </span>
-      </div>
-    </article>
+
+        {/* Tear-away Admit One Stub */}
+        <span aria-hidden="true" className={styles.ticketStub}>
+          <span className={styles.ticketStubText}>admit one</span>
+        </span>
+      </Link>
+    </li>
   );
 }

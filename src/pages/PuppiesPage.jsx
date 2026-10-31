@@ -155,30 +155,28 @@ export default function PuppiesPage() {
           </div>
         )}
 
-        {/* ── Recently Adopted Section: "Already gone home" ── */}
-        <section className={styles.goneHomeSection} aria-labelledby="already-gone-home-heading">
-          <div className={styles.goneHomeHeader}>
-            <h2 id="already-gone-home-heading" className={styles.goneHomeTitle}>
-              <span>Already gone home</span>
-              <span style={{ color: 'var(--color-toffee)', fontSize: '1.6rem' }} aria-hidden="true">
-                ♥
-              </span>
-            </h2>
-            <p className={styles.goneHomeDesc}>
-              These 5 adorable puppies have recently boarded their flights and joined their loving forever families in the UAE.
-            </p>
-          </div>
+        {/* ── Recently Adopted Section: "Already gone home" Strip ── */}
+        <section className={styles.goneHomeStrip} aria-labelledby="gone-title">
+          <div className={styles.goneHomeInner}>
+            <div className={styles.goneHomeContent}>
+              <h2 id="gone-title" className={styles.goneHomeTitle}>
+                Already gone home
+              </h2>
+              <p className={styles.goneHomeDesc}>
+                These puppies have found their families.
+              </p>
+              <Link to="/gone-home" className="btn btn-primary" style={{ alignSelf: 'flex-start', marginTop: '1rem' }}>
+                See the puppies who've gone home
+              </Link>
+            </div>
 
-          <div className={styles.grid}>
-            {recentlyAdoptedPuppies.map(puppy => (
-              <PuppyCard key={puppy.slug} puppy={puppy} />
-            ))}
-          </div>
-
-          <div style={{ marginTop: '3rem', textAlign: 'center' }}>
-            <Link to="/gone-home" className="btn btn-outline btn-lg">
-              View all 27 boarding passes on Gone Home →
-            </Link>
+            <ul className={styles.goneHomeRow} aria-label="Some puppies who have gone home">
+              {recentlyAdoptedPuppies.map(puppy => (
+                <li key={puppy.slug} className={styles.goneHomeItem}>
+                  <PuppyCard puppy={puppy} />
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
       </main>

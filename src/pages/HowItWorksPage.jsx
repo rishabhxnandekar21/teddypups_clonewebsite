@@ -1,53 +1,69 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, Shield, CheckCircle, Truck, Building } from 'lucide-react';
+import { MessageCircle, Shield, CheckCircle, Truck, Building, Search, Heart, Sparkles, Plane, Home } from 'lucide-react';
 import { BUSINESS } from '../data/navigation.js';
 import PawIcon from '../components/common/PawIcon.jsx';
 import styles from './HowItWorksPage.module.css';
 
 const STEPS_LOCAL = [
   {
-    step: '01',
+    step: '1',
     title: 'Explore our puppies',
-    desc: 'Browse our live gallery of available puppies or WhatsApp us to ask about specific miniature designer breeds.',
+    desc: 'Browse our website to view the available puppies. Each listing includes photos, breed details, age, and health information.',
+    tint: '#fbe3b4',
+    icon: Search,
   },
   {
-    step: '02',
+    step: '2',
     title: 'Choose your puppy',
-    desc: 'Receive updated video clips, photos, veterinary certificates, and personal guidance on puppy personality.',
+    desc: 'Once you find a puppy you love, open their profile for more information or to enquire further. You can also reach out to us directly if you have any questions.',
+    tint: '#fde6de',
+    icon: Heart,
   },
   {
-    step: '03',
+    step: '3',
     title: 'Meet before you choose',
-    desc: 'Visit our welcoming Downtown Dubai showroom for an unhurried, private play session with your chosen pup.',
+    desc: 'Spend time bonding before making your decision.',
+    tint: '#e3f0fb',
+    icon: Building,
   },
   {
-    step: '04',
+    step: '4',
     title: 'Pick-up or delivery',
-    desc: 'Complete simple adoption documentation and bring your puppy home the same day, or book private chauffeur delivery.',
+    desc: 'Pick up your puppy from us or have them delivered to your home within Dubai. Our delivery service is safe and reliable, ensuring your puppy arrives comfortably.',
+    tint: '#e6f2df',
+    icon: Truck,
   },
 ];
 
 const STEPS_IMPORT = [
   {
-    step: '01',
+    step: '1',
     title: 'Reserve your puppy',
-    desc: 'Share your dream breed, color, gender, and size preferences with our international breeding concierge.',
+    desc: 'Browse our selection of available breeds and place a reservation for the teacup puppy that captures your heart. Our reservation-only model ensures that each puppy is specifically sourced to meet your preferences.',
+    tint: '#fbe3b4',
+    icon: Sparkles,
   },
   {
-    step: '02',
+    step: '2',
     title: 'Personalized consultation',
-    desc: 'Review high-resolution videos, parents’ pedigree documents, and certified veterinary pre-export screenings.',
+    desc: "Once your reservation is confirmed, we will work closely with you to finalize details and provide updates on your puppy's journey.",
+    tint: '#fde6de',
+    icon: MessageCircle,
   },
   {
-    step: '03',
-    title: 'Import & arrival',
-    desc: 'We secure UAE MOCCAE import permits and arrange in-cabin flight nanny transport with temperature control.',
+    step: '3',
+    title: 'Import and arrival',
+    desc: 'We manage all aspects of the import process, including health checks, travel arrangements, and necessary documentation. Your puppy will be carefully transported and will arrive ready to join your family.',
+    tint: '#e3f0fb',
+    icon: Plane,
   },
   {
-    step: '04',
+    step: '4',
     title: 'Welcome home',
-    desc: 'Airport customs clearance handled seamlessly. Meet your new companion directly at our showroom or at your doorstep.',
+    desc: 'Upon arrival, we provide support to help your new puppy acclimate to their new environment. Our team is available for any additional assistance and to ensure a smooth transition into your home.',
+    tint: '#e6f2df',
+    icon: Home,
   },
 ];
 
@@ -112,15 +128,25 @@ export default function HowItWorksPage() {
             </button>
           </div>
 
-          <div className={styles.timelineGrid}>
-            {currentSteps.map(item => (
-              <div key={item.step} className={styles.timelineCard}>
-                <span className={styles.stepNum}>{item.step}</span>
-                <h3 className={styles.stepName}>{item.title}</h3>
-                <p className={styles.stepDetails}>{item.desc}</p>
-              </div>
-            ))}
-          </div>
+          <ol className={styles.timelineGrid}>
+            {currentSteps.map((item, idx) => {
+              const IconComp = item.icon;
+              return (
+                <li
+                  key={item.step}
+                  className={styles.timelineCard}
+                  style={{ '--tint': item.tint, '--i': idx }}
+                >
+                  <span aria-hidden="true" className={styles.stepIcon}>
+                    <IconComp size={26} strokeWidth={2.2} />
+                  </span>
+                  <span className={styles.stepNum}>Step {item.step}</span>
+                  <h3 className={styles.stepName}>{item.title}</h3>
+                  <p className={styles.stepDetails}>{item.desc}</p>
+                </li>
+              );
+            })}
+          </ol>
         </div>
       </section>
 

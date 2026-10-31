@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, ShieldCheck, HeartHandshake, Plane, Stethoscope, Sparkles } from 'lucide-react';
-import { puppies } from '../data/puppies.js';
+import { MessageCircle, HeartHandshake, Plane } from 'lucide-react';
+import { availablePuppies } from '../data/puppies.js';
 import { faqItems } from '../data/faq.js';
 import { moments } from '../data/families.js';
 import { BUSINESS } from '../data/navigation.js';
-import PuppyCard from '../components/ui/PuppyCard.jsx';
 import AccordionItem from '../components/ui/AccordionItem.jsx';
 import PolaroidCard from '../components/ui/PolaroidCard.jsx';
 import PawIcon from '../components/common/PawIcon.jsx';
 import SplashCurtain from '../components/common/SplashCurtain.jsx';
+import DoorCard from '../components/home/DoorCard.jsx';
+import PhoneMockup from '../components/home/PhoneMockup.jsx';
+import PassportBook from '../components/home/PassportBook.jsx';
 import styles from './HomePage.module.css';
 
 const ARCH_PUPPIES = [
@@ -21,15 +23,34 @@ const ARCH_PUPPIES = [
   { name: 'Snow', breed: 'Maltipoo', img: '/media/maltipoo-female-2.jpg' },
 ];
 
+const DOOR_PALETTE = ['#a24a1a', '#5a3a28', '#d4893f', '#b8644a', '#7a4a2e'];
+
+const JOURNEY_STEPS = [
+  {
+    num: '1',
+    title: 'Choose your breed',
+    text: "Select your preferred breed or tell us what you're looking for. We'll guide you based on availability and your lifestyle.",
+  },
+  {
+    num: '2',
+    title: 'Get photos & details',
+    text: "Receive high-definition video clips, veterinary health cards, weight documentation, and parents' pedigree records.",
+  },
+  {
+    num: '3',
+    title: 'Secure & safe delivery',
+    text: 'Pick up your puppy in our Downtown Dubai showroom, or enjoy doorstep chauffeur delivery across all UAE Emirates.',
+  },
+];
+
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
     document.title = 'TeddyPups UAE — Premium Teacup Puppies in Dubai';
   }, []);
 
-  // First 6 puppies for homepage showcase
-  const featuredPuppies = puppies.slice(0, 6);
   // First 4 moments for Happy Families preview
   const featuredMoments = moments.slice(0, 4);
   // First 4 FAQ items for FAQ preview
@@ -91,28 +112,33 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 2. Meet the Pups Section (tp-meet) ── */}
+      {/* ── 2. Meet the Pups Section (tp-meet 3D Wooden Doors) ── */}
       <section className={styles.meetSection} aria-labelledby="meet-title">
         <div className="container">
-          <div className={styles.sectionHeader}>
-            <span className={styles.eyebrow}>hand-picked companions</span>
-            <h2 className={styles.heading} id="meet-title">Meet the pups</h2>
-            <p className={styles.subhead}>
-              Every puppy is vaccinated, microchipped, and veterinary health-certified before joining your family.
-            </p>
-          </div>
-
-          <div className={styles.puppiesGrid}>
-            {featuredPuppies.map(puppy => (
-              <PuppyCard key={puppy.slug} puppy={puppy} />
-            ))}
-          </div>
-
-          <div className={styles.seeAllRow}>
+          <header className={styles.meetHead}>
+            <div>
+              <h2 className={styles.meetHeading} id="meet-title">
+                Meet the pups
+              </h2>
+              <p className={styles.meetSubhead}>
+                Real puppies, real photos, looking for their families right now.
+              </p>
+            </div>
             <Link to="/puppies" className="btn btn-primary btn-lg">
-              See all available puppies →
+              See all available puppies
             </Link>
-          </div>
+          </header>
+
+          <ol className={styles.doorsGrid} aria-label="Puppies looking for a family">
+            {availablePuppies.map((puppy, i) => (
+              <DoorCard
+                key={puppy.slug}
+                puppy={puppy}
+                color={DOOR_PALETTE[i % DOOR_PALETTE.length]}
+              />
+            ))}
+            <DoorCard isAll={true} />
+          </ol>
         </div>
       </section>
 
@@ -187,95 +213,58 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 4. Your Puppy Journey (tp-chat) ── */}
+      {/* ── 4. Your Puppy Journey (tp-chat Interactive Phone Mockup) ── */}
       <section className={styles.journeySection} aria-labelledby="journey-title">
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <span className={styles.eyebrow}>the journey home</span>
-            <h2 className={styles.heading} id="journey-title">Your puppy journey</h2>
-            <p className={styles.subhead}>
-              From your very first message to settling in at home, our dedicated puppy concierge guides every step.
+        <div className={styles.chatGrid}>
+          {/* Left Column: Interactive Story Steps */}
+          <div className={styles.chatStory}>
+            <h2 className={styles.chatHeading} id="journey-title">
+              Your puppy journey
+            </h2>
+            <p className={styles.chatLede}>
+              A premium, step-by-step concierge experience. We make adoption simple, secure, and purely joyful.
             </p>
+
+            <ol className={styles.chatSteps} role="tablist" aria-label="Journey steps">
+              {JOURNEY_STEPS.map((step, idx) => (
+                <li
+                  key={step.num}
+                  className={styles.chatStep}
+                  data-active={activeStep === idx}
+                  role="tab"
+                  tabIndex={0}
+                  aria-selected={activeStep === idx}
+                  onClick={() => setActiveStep(idx)}
+                  onMouseEnter={() => setActiveStep(idx)}
+                  onKeyDown={e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setActiveStep(idx);
+                    }
+                  }}
+                >
+                  <span className={styles.chatNum} aria-hidden="true">
+                    {step.num}
+                  </span>
+                  <div>
+                    <h3 className={styles.chatTitle}>{step.title}</h3>
+                    <p className={styles.chatText}>{step.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
 
-          <div className={styles.stepsGrid}>
-            <div className={styles.stepCard}>
-              <span className={styles.stepNumber}>01</span>
-              <h3 className={styles.stepTitle}>Choose your breed</h3>
-              <p className={styles.stepDesc}>
-                Explore our curated selection of hypoallergenic Maltipoos, micro Poodles, and fluffy Pomeranians online or via WhatsApp.
-              </p>
-            </div>
-
-            <div className={styles.stepCard}>
-              <span className={styles.stepNumber}>02</span>
-              <h3 className={styles.stepTitle}>Get photos & details</h3>
-              <p className={styles.stepDesc}>
-                Receive high-definition video clips, veterinary health cards, weight documentation, and parents’ pedigree records.
-              </p>
-            </div>
-
-            <div className={styles.stepCard}>
-              <span className={styles.stepNumber}>03</span>
-              <h3 className={styles.stepTitle}>Secure & safe delivery</h3>
-              <p className={styles.stepDesc}>
-                Pick up your puppy in our Downtown Dubai showroom, or enjoy doorstep chauffeur delivery across all UAE Emirates.
-              </p>
-            </div>
+          {/* Right Column: Interactive Phone Mockup */}
+          <div className={styles.chatSide}>
+            <PhoneMockup activeStep={activeStep} onSelectBreed={() => setActiveStep(0)} />
           </div>
         </div>
       </section>
 
-      {/* ── 5. Why Families Trust TeddyPups (tp-passport) ── */}
-      <section className={styles.trustSection} aria-labelledby="trust-title">
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <span className={styles.eyebrow}>peace of mind guaranteed</span>
-            <h2 className={styles.heading} id="trust-title">Why families trust TeddyPups</h2>
-          </div>
-
-          <div className={styles.trustGrid}>
-            <div className={styles.trustItem}>
-              <div className={styles.trustItemIcon}>
-                <ShieldCheck size={24} aria-hidden="true" />
-              </div>
-              <h3 className={styles.trustItemTitle}>100% Health Guarantee</h3>
-              <p className={styles.trustItemDesc}>
-                Every puppy is covered with a comprehensive veterinary health warranty and MOCCAE clearance.
-              </p>
-            </div>
-
-            <div className={styles.trustItem}>
-              <div className={styles.trustItemIcon}>
-                <Stethoscope size={24} aria-hidden="true" />
-              </div>
-              <h3 className={styles.trustItemTitle}>Licensed Vet Check</h3>
-              <p className={styles.trustItemDesc}>
-                Full vaccinations, microchipping, and thorough clinical examinations before handover.
-              </p>
-            </div>
-
-            <div className={styles.trustItem}>
-              <div className={styles.trustItemIcon}>
-                <Sparkles size={24} aria-hidden="true" />
-              </div>
-              <h3 className={styles.trustItemTitle}>Ethical Pedigrees</h3>
-              <p className={styles.trustItemDesc}>
-                Sourced exclusively from reputable, licensed home breeders with genuine pedigree records.
-              </p>
-            </div>
-
-            <div className={styles.trustItem}>
-              <div className={styles.trustItemIcon}>
-                <MessageCircle size={24} aria-hidden="true" />
-              </div>
-              <h3 className={styles.trustItemTitle}>24/7 Concierge Care</h3>
-              <p className={styles.trustItemDesc}>
-                Direct WhatsApp assistance for diet, training, grooming, and routine after adoption.
-              </p>
-            </div>
-          </div>
-        </div>
+      {/* ── 5. Why Families Trust TeddyPups (tp-passport PassportBook) ── */}
+      <section className={styles.trustSection}>
+        <PassportBook />
       </section>
 
       {/* ── 6. Happy Families Preview (tp-dusk) ── */}
@@ -294,8 +283,8 @@ export default function HomePage() {
               <PolaroidCard
                 key={moment.id}
                 moment={moment}
-                rotation={idx % 2 === 0 ? -2 : 2.5}
-                isBlush={idx % 2 === 1}
+                index={idx}
+                tilt={idx % 2 === 0 ? -2 : 2.5}
               />
             ))}
           </div>
