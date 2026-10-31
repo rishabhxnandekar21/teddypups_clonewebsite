@@ -1,0 +1,20 @@
+/* ============================================================
+   PageLayout Component
+   ============================================================ */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.layout__main {
+  flex: 1;
+  padding-top: var(--header-h);
+}
+
+@media (max-width: 1023px) {
+  .layout__main {
+    padding-top: var(--header-h-mobile);
+  }
+}
