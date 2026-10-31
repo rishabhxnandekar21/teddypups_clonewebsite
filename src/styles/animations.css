@@ -59,6 +59,97 @@
   }
 }
 
+/* ── Hero & Scroll Keyframes ── */
+
+@keyframes tp-sunrise {
+  0% {
+    opacity: 0;
+    translate: -50% 16%;
+  }
+}
+
+@keyframes tp-peek {
+  0% {
+    translate: 0 100%;
+  }
+}
+
+@keyframes tp-pop-up {
+  0% {
+    opacity: 0.6;
+    translate: 0 108%;
+    scale: 0.92;
+  }
+  65% {
+    opacity: 1;
+    scale: 1.04;
+  }
+  100% {
+    opacity: 1;
+    translate: 0;
+    scale: 1;
+  }
+}
+
+@keyframes tp-plane-bob {
+  50% {
+    translate: 0 -6px;
+    rotate: -3deg;
+  }
+}
+
+@keyframes tp-twinkle {
+  0%, 100% {
+    opacity: 0.35;
+    transform: scale(0.8) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1) rotate(20deg);
+  }
+}
+
+/* ── Mascot Life Keyframes ── */
+
+@keyframes tp-breathe {
+  50% {
+    scale: 1 1.014;
+  }
+}
+
+@keyframes tp-blink-open {
+  0%, 92%, 97%, 100% {
+    opacity: 1;
+  }
+  94.5% {
+    opacity: 0;
+  }
+}
+
+@keyframes tp-blink-shut {
+  0%, 92%, 97%, 100% {
+    opacity: 0;
+  }
+  94.5% {
+    opacity: 1;
+  }
+}
+
+@keyframes tp-ear-twitch {
+  0%, 84%, 100% {
+    rotate: 0deg;
+  }
+  87% {
+    rotate: -11deg;
+  }
+  90% {
+    rotate: 5deg;
+  }
+  93% {
+    rotate: -2deg;
+  }
+}
+
 /* ── Gentle Float / Ambient Bob ── */
 
 @keyframes tp-float {

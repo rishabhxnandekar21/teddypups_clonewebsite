@@ -1,0 +1,254 @@
+/* ── HeroSection.module.css ── */
+
+.hero {
+  position: relative;
+  min-height: calc(100svh - var(--header-h, 4.5rem));
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, var(--sky-top, #fffdf8), var(--sky-bottom, #fff1d8));
+  overflow-x: clip;
+}
+
+/* Radiant warm sun in background */
+.heroSun {
+  aspect-ratio: 1;
+  width: min(86vw, 58rem);
+  border-radius: 50%;
+  position: absolute;
+  top: 4%;
+  left: 50%;
+  translate: -50% 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--color-honey, #f2be6b) 42%, transparent) 0%,
+    color-mix(in oklab, var(--color-honey-soft, #fbe3b4) 30%, transparent) 38%,
+    transparent 66%
+  );
+  animation: tp-sunrise 2.6s var(--ease-silk) both;
+  z-index: 1;
+}
+
+/* Copy Block */
+.heroCopy {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+  padding-top: clamp(1rem, 4.5vh, 3.75rem);
+  padding-inline: var(--gutter, 1.5rem);
+  max-width: var(--container-max, 1200px);
+  margin-inline: auto;
+}
+
+.heroNote {
+  color: var(--color-toffee-ink, #5a3825);
+  font-family: var(--font-scrawl, cursive);
+  font-size: clamp(1.1rem, 1.7vw, 1.5rem);
+  font-weight: 700;
+  display: inline-block;
+  position: relative;
+}
+
+.heroUnderline {
+  position: absolute;
+  bottom: -0.45rem;
+  left: 0;
+  height: 0.75rem;
+  width: 100%;
+  color: var(--color-toffee, #d4893f);
+  pointer-events: none;
+}
+
+.heroTitle {
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(2.6rem, min(8.6vw, 10.5vh), 7.6rem);
+  font-weight: 900;
+  color: var(--color-cocoa, #2a170e);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  max-width: 15ch;
+  margin: clamp(0.5rem, 1.6vh, 1.1rem) auto 0;
+}
+
+.heroLine {
+  display: block;
+}
+
+.heroLine2 {
+  color: var(--color-toffee-deep, #a24a1a);
+}
+
+.heroLede {
+  color: var(--ink-soft, #7a5840);
+  font-size: clamp(1.05rem, 1.25vw, 1.28rem);
+  line-height: 1.5;
+  max-width: 48ch;
+  margin: clamp(0.9rem, 2.2vh, 1.4rem) auto 0;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: clamp(1.1rem, 3vh, 2rem);
+}
+
+/* Stage Area with Arched Puppy Tiles & Mascot */
+.heroStage {
+  --quilt-h: clamp(4.5rem, 12vh, 8rem);
+  --tw: clamp(15rem, min(30vw, 46vh), 27rem);
+  --rise: clamp(0.75rem, 2.4vh, 1.75rem);
+  flex: 1;
+  min-height: clamp(14rem, 38vh, 25rem);
+  margin-top: clamp(0.5rem, 2vh, 1.5rem);
+  position: relative;
+  z-index: 10;
+}
+
+/* Lineup list of puppies */
+.lineup {
+  position: absolute;
+  inset: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  pointer-events: auto;
+}
+
+.lineupTags {
+  z-index: 31;
+  pointer-events: none;
+}
+
+.lineupSeat {
+  --h0: calc(var(--w) * var(--seat-k, 1) * 1.25);
+  --h: calc(var(--h0) + var(--rise, 0px));
+  position: absolute;
+  left: var(--x);
+  bottom: calc(var(--quilt-h) - (1 - var(--peek)) * var(--h0));
+  width: calc(var(--w) * var(--seat-k, 1));
+  translate: -50% 0;
+  rotate: var(--tilt, 0deg);
+  transform-origin: center bottom;
+}
+
+.lineupPup {
+  display: block;
+  border-radius: 999px 999px 0 0;
+  position: relative;
+  text-decoration: none;
+  animation: tp-peek 0.75s var(--ease-pounce, cubic-bezier(0.34, 1.56, 0.64, 1)) backwards;
+  animation-delay: calc(0.5s + var(--i, 0) * 80ms);
+  transition: translate 0.5s var(--ease-pounce);
+}
+
+.lineupPhoto {
+  display: block;
+  height: var(--h);
+  border: 3px solid var(--color-cocoa, #2a170e);
+  border-bottom: 0;
+  border-radius: 999px 999px 0 0;
+  background: var(--color-honey-soft, #fbe3b4);
+  box-shadow: inset 0 0 0 4px var(--color-milk, #fffdf8);
+  overflow: hidden;
+  position: relative;
+  transition: translate 0.45s var(--ease-pounce, cubic-bezier(0.34, 1.56, 0.64, 1));
+}
+
+.lineupPhoto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease-silk);
+}
+
+/* Hover on seat brings puppy up and tilts */
+.lineupPup:is(:hover, :focus-visible) .lineupPhoto {
+  translate: 0 -12%;
+}
+
+.lineupPup:is(:hover, :focus-visible) .lineupPhoto img {
+  transform: scale(1.06);
+}
+
+/* Periodic Duck / Pop state */
+.lineupPup[data-state="duck"] .lineupPhoto {
+  opacity: 0.6;
+  translate: 0 108%;
+  scale: 0.92;
+  transition: translate 0.34s var(--ease-snap, cubic-bezier(0.4, 0, 0.2, 1)),
+              scale 0.34s var(--ease-snap),
+              opacity 0.34s ease-in;
+}
+
+.lineupPup[data-state="pop"] .lineupPhoto {
+  animation: tp-pop-up 0.58s var(--ease-pounce) both;
+}
+
+/* Hover Name Bubble */
+.lineupGhost {
+  display: block;
+  height: var(--h);
+  position: relative;
+}
+
+.lineupName {
+  position: absolute;
+  bottom: calc(100% + 0.4rem);
+  left: 50%;
+  translate: var(--tag-x, -50%) 0.4rem;
+  border: 2.5px solid var(--color-cocoa, #2a170e);
+  background: var(--color-milk, #fffdf8);
+  color: var(--color-cocoa, #2a170e);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease, translate 0.35s var(--ease-pounce);
+  border-radius: 999px;
+  padding: 0.15rem 0.8rem;
+  font-size: 0.95rem;
+  font-family: var(--font-scrawl, cursive);
+  font-weight: 700;
+  box-shadow: 2px 3px 0 rgba(42, 23, 14, 0.12);
+  pointer-events: none;
+}
+
+/* Active tag when hovered */
+.lineupGhost[data-tag="show"] .lineupName {
+  opacity: 1;
+  translate: var(--tag-x, -50%) -12%;
+}
+
+/* Peeking Center Mascot Teddy */
+.heroTeddy {
+  position: absolute;
+  left: calc(50% - var(--tw) * 0.7067);
+  bottom: calc(var(--quilt-h) + 26px - var(--tw) * 0.2733);
+  width: var(--tw);
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* Scalloped Quilt Bottom Boundary */
+.quilt {
+  position: absolute;
+  inset: auto 0 0;
+  height: var(--quilt-h);
+  background: repeating-linear-gradient(45deg, transparent 0 46px, rgba(42, 23, 14, 0.07) 46px 48px),
+              repeating-linear-gradient(-45deg, transparent 0 46px, rgba(42, 23, 14, 0.07) 46px 48px),
+              var(--quilt, #fff1d8);
+  border-top: 0;
+  z-index: 25;
+}
+
+.quiltEdge {
+  display: block;
+  position: absolute;
+  top: -39px;
+  left: 0;
+  width: 100%;
+  height: 40px;
+}

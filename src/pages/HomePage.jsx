@@ -1,29 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, HeartHandshake, Plane } from 'lucide-react';
-import { availablePuppies } from '../data/puppies.js';
+import { MessageCircle } from 'lucide-react';
 import { faqItems } from '../data/faq.js';
 import { moments } from '../data/families.js';
 import { BUSINESS } from '../data/navigation.js';
 import AccordionItem from '../components/ui/AccordionItem.jsx';
 import PolaroidCard from '../components/ui/PolaroidCard.jsx';
-import PawIcon from '../components/common/PawIcon.jsx';
+import LightboxModal from '../components/ui/LightboxModal.jsx';
 import SplashCurtain from '../components/common/SplashCurtain.jsx';
-import DoorCard from '../components/home/DoorCard.jsx';
+import MascotPup from '../components/common/MascotPup.jsx';
+import HeroSection from '../components/home/HeroSection.jsx';
+import DoorsSection from '../components/home/DoorsSection.jsx';
+import TwoWaysSection from '../components/home/TwoWaysSection.jsx';
 import PhoneMockup from '../components/home/PhoneMockup.jsx';
 import PassportBook from '../components/home/PassportBook.jsx';
 import styles from './HomePage.module.css';
-
-const ARCH_PUPPIES = [
-  { name: 'Max', breed: 'Maltipoo', img: '/media/maltipoo-max-male.webp' },
-  { name: 'Luna', breed: 'Korean Teacup', img: '/media/korean-teacup-maltipoo-female.jpg' },
-  { name: 'Coco', breed: 'Pomeranian', img: '/media/pomeranian-female.jpg' },
-  { name: 'Teddy', breed: 'Cavapoo', img: '/media/maltipoo-cavapoo-male.jpg' },
-  { name: 'Leo', breed: 'Toy Poodle', img: '/media/poodle-leo-male.jpg' },
-  { name: 'Snow', breed: 'Maltipoo', img: '/media/maltipoo-female-2.jpg' },
-];
-
-const DOOR_PALETTE = ['#a24a1a', '#5a3a28', '#d4893f', '#b8644a', '#7a4a2e'];
 
 const JOURNEY_STEPS = [
   {
@@ -46,6 +37,7 @@ const JOURNEY_STEPS = [
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
 
   useEffect(() => {
     document.title = 'TeddyPups UAE — Premium Teacup Puppies in Dubai';
@@ -62,156 +54,13 @@ export default function HomePage() {
       <SplashCurtain />
 
       {/* ── 1. Hero Section (tp-hero) ── */}
-      <section className={styles.hero} aria-labelledby="hero-title">
-        <div className={styles.heroInner}>
-          <div className={styles.heroBadge}>
-            <PawIcon size={16} color="var(--color-toffee)" />
-            <span>every puppy is family</span>
-          </div>
-
-          <h1 className={styles.heroTitle} id="hero-title">
-            Premium teacup puppies in Dubai
-          </h1>
-
-          <p className={styles.heroSubhead}>
-            Meet your new best friend in our Dubai showroom, or order a rare miniature breed from trusted breeders worldwide.
-          </p>
-
-          <div className={styles.heroActions}>
-            <Link to="/puppies" className="btn btn-primary btn-lg">
-              View available puppies
-            </Link>
-            <a
-              href={BUSINESS.whatsappUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-outline btn-lg"
-            >
-              <MessageCircle size={18} aria-hidden="true" />
-              Enquire on WhatsApp
-            </a>
-          </div>
-
-          {/* Arched Puppy Carousel / Gallery */}
-          <div className={styles.archesGallery} aria-label="Featured miniature puppy breeds">
-            {ARCH_PUPPIES.map(item => (
-              <div key={item.name} className={styles.archCard}>
-                <img
-                  src={item.img}
-                  alt={`${item.name} the ${item.breed}`}
-                  className={styles.archImage}
-                  width={200}
-                  height={300}
-                />
-                <div className={styles.archOverlay}>
-                  <p className={styles.archTitle}>{item.breed}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HeroSection />
 
       {/* ── 2. Meet the Pups Section (tp-meet 3D Wooden Doors) ── */}
-      <section className={styles.meetSection} aria-labelledby="meet-title">
-        <div className="container">
-          <header className={styles.meetHead}>
-            <div>
-              <h2 className={styles.meetHeading} id="meet-title">
-                Meet the pups
-              </h2>
-              <p className={styles.meetSubhead}>
-                Real puppies, real photos, looking for their families right now.
-              </p>
-            </div>
-            <Link to="/puppies" className="btn btn-primary btn-lg">
-              See all available puppies
-            </Link>
-          </header>
+      <DoorsSection />
 
-          <ol className={styles.doorsGrid} aria-label="Puppies looking for a family">
-            {availablePuppies.map((puppy, i) => (
-              <DoorCard
-                key={puppy.slug}
-                puppy={puppy}
-                color={DOOR_PALETTE[i % DOOR_PALETTE.length]}
-              />
-            ))}
-            <DoorCard isAll={true} />
-          </ol>
-        </div>
-      </section>
-
-      {/* ── 3. Two Ways to Meet (tp-paths) ── */}
-      <section className={styles.pathsSection} aria-labelledby="paths-title">
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <span className={styles.eyebrow}>simple, bespoke adoption</span>
-            <h2 className={styles.heading} id="paths-title">Two ways to meet your puppy</h2>
-            <p className={styles.subhead}>
-              Whether you are ready to visit us today in Dubai or looking for a specific teacup bloodline from overseas.
-            </p>
-          </div>
-
-          <div className={styles.pathsGrid}>
-            {/* Track A */}
-            <div className={styles.pathCard}>
-              <div className={styles.pathIcon}>
-                <HeartHandshake size={26} aria-hidden="true" />
-              </div>
-              <h3 className={styles.pathTitle}>Puppies in Dubai</h3>
-              <p className={styles.pathDesc}>
-                Visit our Downtown Dubai showroom to cuddle and meet available puppies in a calm, welcoming environment.
-              </p>
-              <div className={styles.pathList}>
-                <div className={styles.pathListItem}>
-                  <PawIcon size={14} color="var(--color-toffee)" />
-                  <span>Downtown Dubai showroom visit</span>
-                </div>
-                <div className={styles.pathListItem}>
-                  <PawIcon size={14} color="var(--color-toffee)" />
-                  <span>Face-to-face bonding with your pup</span>
-                </div>
-                <div className={styles.pathListItem}>
-                  <PawIcon size={14} color="var(--color-toffee)" />
-                  <span>Same-day handover for cleared pups</span>
-                </div>
-              </div>
-              <Link to="/puppies" className="btn btn-outline" style={{ marginTop: 'auto' }}>
-                Browse Dubai puppies
-              </Link>
-            </div>
-
-            {/* Track B */}
-            <div className={styles.pathCard}>
-              <div className={styles.pathIcon}>
-                <Plane size={26} aria-hidden="true" />
-              </div>
-              <h3 className={styles.pathTitle}>Imported for you</h3>
-              <p className={styles.pathDesc}>
-                Order rare Korean and European miniature breeds with certified bloodlines and in-cabin flight concierge delivery.
-              </p>
-              <div className={styles.pathList}>
-                <div className={styles.pathListItem}>
-                  <PawIcon size={14} color="var(--color-toffee)" />
-                  <span>Exclusive South Korean & EU breeders</span>
-                </div>
-                <div className={styles.pathListItem}>
-                  <PawIcon size={14} color="var(--color-toffee)" />
-                  <span>Full video reports & parents pedigree</span>
-                </div>
-                <div className={styles.pathListItem}>
-                  <PawIcon size={14} color="var(--color-toffee)" />
-                  <span>Temperature-controlled cabin travel</span>
-                </div>
-              </div>
-              <Link to="/how-it-works" className="btn btn-primary" style={{ marginTop: 'auto' }}>
-                How import works
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── 3. Two Ways to Meet Your Puppy (tp-paths) ── */}
+      <TwoWaysSection />
 
       {/* ── 4. Your Puppy Journey (tp-chat Interactive Phone Mockup) ── */}
       <section className={styles.journeySection} aria-labelledby="journey-title">
@@ -267,34 +116,73 @@ export default function HomePage() {
         <PassportBook />
       </section>
 
-      {/* ── 6. Happy Families Preview (tp-dusk) ── */}
-      <section className={styles.familiesSection} aria-labelledby="families-title">
+      {/* ── 6. Happy Families Preview (tp-dusk Sunset-to-Dusk Transition) ── */}
+      <section
+        data-pup-scene="true"
+        data-tone="dark"
+        className={`tp-scene tp-dusk ${styles.familiesSection}`}
+        style={{
+          '--sky-top': '#a65a30',
+          '--sky-bottom': '#4d2b19',
+        }}
+        aria-labelledby="families-title"
+      >
         <div className="container">
-          <div className={styles.sectionHeader}>
-            <span className={styles.eyebrow}>our wall of happy endings</span>
-            <h2 className={styles.heading} id="families-title">Happy families & puppies</h2>
-            <p className={styles.subhead}>
-              Over 64 moments of joy captured across Dubai, Abu Dhabi, and beyond.
-            </p>
+          <div className={styles.duskSky}>
+            <div className={styles.duskHead}>
+              <h2 className={styles.duskHeading} id="families-title">
+                Happy families &amp; puppies
+              </h2>
+              <p className={styles.duskSubhead}>
+                We are truly honored to see our puppies become cherished members of loving families. These heartwarming moments have been shared by our valued clients who welcomed a Teddy Pup into their homes and hearts.
+              </p>
+            </div>
+
+            {/* Testimonial speech bubble */}
+            <figure className={styles.duskNote}>
+              <blockquote>
+                &ldquo;TeddyPups truly made our dream a reality. They supported us at every step of the import journey. Our Maltipoo arrived healthy, cheerful, and absolutely perfect. Having 24/7 support throughout the process gave us complete peace of mind.&rdquo;
+              </blockquote>
+              <figcaption>Sarah M., Dubai, UAE</figcaption>
+            </figure>
+
+            {/* Horizon Mascot */}
+            <div className={styles.duskTeddy}>
+              <MascotPup
+                pose="sitting"
+                facing="left"
+                ariaLabel="Teddy watching over the sunset moments"
+              />
+            </div>
           </div>
 
+          {/* Polaroid Cards Grid */}
           <div className={styles.familiesGrid}>
             {featuredMoments.map((moment, idx) => (
               <PolaroidCard
                 key={moment.id}
                 moment={moment}
                 index={idx}
-                tilt={idx % 2 === 0 ? -2 : 2.5}
+                tilt={idx % 2 === 0 ? -2.2 : 2.5}
+                onClick={() => setLightboxIndex(idx)}
               />
             ))}
           </div>
 
-          <div className={styles.seeAllRow}>
-            <Link to="/happy-families" className="btn btn-outline btn-lg">
-              View all happy family stories →
+          <div className={styles.seeAllRow} style={{ marginTop: '3rem' }}>
+            <Link to="/happy-families" className="btn btn-outline btn-lg" style={{ borderColor: 'rgba(255,253,248,0.7)', color: '#fffdf8' }}>
+              View all happy family stories &rarr;
             </Link>
           </div>
         </div>
+
+        {/* Modal Lightbox */}
+        <LightboxModal
+          moments={featuredMoments}
+          initialIndex={lightboxIndex ?? 0}
+          isOpen={lightboxIndex !== null}
+          onClose={() => setLightboxIndex(null)}
+        />
       </section>
 
       {/* ── 7. FAQ Preview (tp-night) ── */}
@@ -319,7 +207,7 @@ export default function HomePage() {
 
           <div className={styles.seeAllRow}>
             <Link to="/faq" className="btn btn-outline btn-lg">
-              Read all frequently asked questions →
+              Read all frequently asked questions &rarr;
             </Link>
           </div>
         </div>

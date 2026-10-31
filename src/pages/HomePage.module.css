@@ -406,9 +406,112 @@
 }
 
 /* ── Happy Families Preview (tp-dusk) ── */
+/* ── 6. Happy Families Preview (tp-dusk) ── */
 .familiesSection {
-  background-color: var(--color-cream);
-  padding-block: 5rem;
+  background: linear-gradient(to bottom, var(--sky-top, #a65a30), var(--sky-bottom, #4d2b19));
+  padding-top: clamp(4rem, 8vh, 6.5rem);
+  padding-bottom: clamp(4rem, 8vh, 6.5rem);
+  position: relative;
+  overflow-x: clip;
+  color: var(--color-milk, #fffdf8);
+}
+
+.duskSky {
+  gap: 2.25rem;
+  max-width: 110rem;
+  margin-inline: auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: end;
+  position: relative;
+  margin-bottom: clamp(3rem, 6vh, 4.5rem);
+}
+
+@media (min-width: 1024px) {
+  .duskSky {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 31rem);
+  }
+}
+
+.duskHead {
+  display: flex;
+  flex-direction: column;
+}
+
+.duskHeading {
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 900;
+  color: var(--color-milk, #fffdf8);
+  line-height: 1.1;
+}
+
+.duskSubhead {
+  color: rgba(255, 253, 248, 0.85);
+  font-size: clamp(1.05rem, 1.25vw, 1.25rem);
+  line-height: 1.6;
+  max-width: 48ch;
+  margin-top: 1.25rem;
+}
+
+/* Testimonial speech bubble note */
+.duskNote {
+  border: 3px solid var(--color-cocoa, #2a170e);
+  background: var(--color-milk, #fffdf8);
+  max-width: 34rem;
+  color: var(--color-cocoa, #2a170e);
+  border-radius: 1.8rem 1.8rem 1.8rem 0.35rem;
+  padding: 1.3rem 1.5rem 1.2rem;
+  position: relative;
+  rotate: 1.2deg;
+  box-shadow: 7px 9px rgba(20, 10, 5, 0.35);
+  margin: 0;
+}
+
+.duskNote blockquote {
+  font-family: var(--font-plush, serif);
+  font-size: clamp(1.02rem, 1.25vw, 1.18rem);
+  line-height: 1.5;
+  margin: 0;
+  font-style: italic;
+}
+
+.duskNote figcaption {
+  color: var(--color-toffee-ink, #5a3825);
+  font-family: var(--font-scrawl, cursive);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-top: 0.7rem;
+}
+
+.duskNote::after {
+  content: "";
+  border: 3px solid var(--color-cocoa, #2a170e);
+  background: var(--color-milk, #fffdf8);
+  border-top: 0;
+  border-left: 0;
+  width: 1.6rem;
+  height: 1.6rem;
+  position: absolute;
+  bottom: -1.05rem;
+  left: 2.2rem;
+  rotate: 45deg;
+}
+
+.duskTeddy {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .duskTeddy {
+    display: block;
+    width: clamp(9rem, 11vw, 12rem);
+    position: absolute;
+    bottom: -0.4rem;
+    right: 4%;
+    pointer-events: none;
+    z-index: 5;
+  }
 }
 
 .familiesGrid {

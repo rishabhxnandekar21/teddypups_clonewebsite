@@ -6,7 +6,7 @@ const PAW_PATH = "M32 30.5c-7.6 0-15.6 8.3-15.6 15.5 0 5.4 4.2 8.3 9.2 8.3 2.6 0
 export default function DoorCard({ puppy, color = '#a24a1a', isAll = false }) {
   if (isAll) {
     return (
-      <li className={`${styles.door} ${styles.doorAll}`} data-open="false">
+      <li className={`${styles.door} ${styles.doorAll} tp-door`} data-open="false">
         <Link className={styles.doorLink} to="/puppies" aria-label="Meet all available puppies">
           <span className={styles.doorPlate}>
             <span className={styles.doorName}>All puppies</span>
@@ -25,7 +25,7 @@ export default function DoorCard({ puppy, color = '#a24a1a', isAll = false }) {
   const metaText = `${puppy.breed}, ${genderLabel}, ${puppy.ageMonths || 3} months, with video`;
 
   return (
-    <li className={styles.door} data-open="false">
+    <li className={`${styles.door} tp-door`} data-open="false">
       <Link
         className={styles.doorLink}
         style={{ '--door': color }}

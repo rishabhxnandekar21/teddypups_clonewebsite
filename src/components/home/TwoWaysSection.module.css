@@ -1,0 +1,339 @@
+/* ── TwoWaysSection.module.css ── */
+
+.paths {
+  position: relative;
+  background: linear-gradient(to bottom, var(--sky-top, #fbe3b4), var(--sky-bottom, #f7d18d));
+  padding-block: clamp(4.5rem, 11vh, 8rem) clamp(3rem, 8vh, 6rem);
+  overflow-x: clip;
+}
+
+.container {
+  width: 100%;
+  max-width: 110rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter, 1.5rem);
+}
+
+.pathsTitle {
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 900;
+  color: var(--color-cocoa, #2a170e);
+  text-align: center;
+  max-width: 15ch;
+  margin-inline: auto;
+  line-height: 1.1;
+}
+
+/* Central Fork Post and Branches */
+.fork {
+  gap: 2.5rem;
+  margin-top: clamp(2.5rem, 6vh, 4.5rem);
+  display: grid;
+  position: relative;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 1024px) {
+  .fork {
+    grid-template-columns: 1fr 1fr;
+    column-gap: clamp(9rem, 16vw, 15rem);
+    padding-bottom: 8.5rem;
+  }
+}
+
+/* Center Wooden Post */
+.forkPost {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .forkPost {
+    border: 3px solid var(--color-cocoa, #2a170e);
+    background: repeating-linear-gradient(90deg, transparent 0 5px, rgba(42, 23, 14, 0.12) 5px 6px),
+                linear-gradient(90deg, #d38f45, #b8742f);
+    border-radius: 0.6rem 0.6rem 0.2rem 0.2rem;
+    width: 1.5rem;
+    display: block;
+    position: absolute;
+    top: -2.2rem;
+    bottom: 2.6rem;
+    left: 50%;
+    translate: -50% 0;
+    z-index: 1;
+  }
+}
+
+/* Sitting Teddy Mascot at Center Post */
+.forkTeddy {
+  justify-self: center;
+  width: clamp(9rem, 40vw, 12rem);
+  position: relative;
+  z-index: 10;
+}
+
+@media (min-width: 1024px) {
+  .forkTeddy {
+    width: clamp(11rem, 13vw, 13.5rem);
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    translate: -46% 0;
+  }
+}
+
+/* Individual Branch Ways */
+.way {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 5;
+}
+
+.wayLeft {
+  align-items: flex-start;
+  text-align: left;
+}
+
+@media (min-width: 1024px) {
+  .wayLeft {
+    text-align: right;
+    align-items: flex-end;
+  }
+}
+
+.wayRight {
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Wooden Directional Arrow Signs */
+.sign {
+  --wood: linear-gradient(#e4a85b, #d38f45);
+  border: 3px solid var(--color-cocoa, #2a170e);
+  background: repeating-linear-gradient(0deg, transparent 0 9px, rgba(42, 23, 14, 0.09) 9px 10px),
+              var(--wood);
+  height: 4.2rem;
+  color: var(--color-cocoa, #2a170e);
+  white-space: nowrap;
+  isolation: isolate;
+  align-items: center;
+  padding: 0 1.4rem;
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(1.5rem, 2.4vw, 2.35rem);
+  line-height: 1;
+  display: inline-flex;
+  position: relative;
+  box-shadow: 0 7px 0 -3px rgba(42, 23, 14, 0.25);
+  z-index: 2;
+}
+
+.sign::after {
+  content: "";
+  z-index: -1;
+  background: repeating-linear-gradient(-45deg, transparent 0 9px, rgba(42, 23, 14, 0.09) 9px 10px),
+              var(--wood);
+  border: 3px solid var(--color-cocoa, #2a170e);
+  width: 2.95rem;
+  height: 2.95rem;
+  position: absolute;
+  top: 50%;
+}
+
+.signLeft {
+  border-left: 0;
+  padding-left: 0.6rem;
+  rotate: -2deg;
+}
+
+.signLeft::after {
+  border-top: 0;
+  border-right: 0;
+  left: -1.47rem;
+  translate: 0 -50%;
+  rotate: 45deg;
+}
+
+@media (min-width: 1024px) {
+  .signLeft {
+    margin-right: calc(clamp(9rem, 16vw, 15rem) / -2 + 0.4rem);
+  }
+}
+
+.signRight {
+  border-right: 0;
+  padding-right: 0.6rem;
+  rotate: 1.5deg;
+}
+
+.signRight::after {
+  border-bottom: 0;
+  border-left: 0;
+  right: -1.47rem;
+  translate: 0 -50%;
+  rotate: 45deg;
+}
+
+@media (min-width: 1024px) {
+  .signRight {
+    margin-left: calc(clamp(9rem, 16vw, 15rem) / -2 + 0.4rem);
+  }
+}
+
+/* Scene Canvas for Local Window vs Flight Path */
+.wayScene {
+  width: 100%;
+  height: clamp(13rem, 22vw, 19rem);
+  margin-top: 1.75rem;
+  position: relative;
+}
+
+/* Left Branch: Dubai Skyline & Showroom Window */
+.waySkyline {
+  width: 100%;
+  height: 100%;
+  color: color-mix(in oklab, var(--ink, #2a170e) 28%, transparent);
+  position: absolute;
+  inset: auto 0 0;
+  pointer-events: none;
+}
+
+.window {
+  text-align: center;
+  width: clamp(8.5rem, 13vw, 12rem);
+  position: absolute;
+  bottom: 0;
+  left: 32%;
+  translate: -50% 0;
+  margin: 0;
+}
+
+/* Striped fabric awning */
+.window::before {
+  content: "";
+  z-index: 2;
+  border: 3px solid var(--color-cocoa, #2a170e);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-toffee, #d4893f) 0 1.05rem,
+    var(--color-milk, #fffdf8) 1.05rem 2.1rem
+  );
+  border-radius: 0.5rem 0.5rem 0.3rem 0.3rem;
+  height: 1.6rem;
+  margin: 0 -0.8rem -0.2rem;
+  display: block;
+  position: relative;
+}
+
+.windowGlass {
+  aspect-ratio: 4 / 4.6;
+  border: 3px solid var(--color-cocoa, #2a170e);
+  background: var(--color-honey-soft, #fbe3b4);
+  box-shadow: inset 0 0 0 5px var(--color-milk, #fffdf8);
+  border-top: 0;
+  border-radius: 0 0 0.6rem 0.6rem;
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.windowGlass img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease-silk);
+}
+
+.window:hover .windowGlass img {
+  transform: scale(1.05);
+}
+
+.windowCaption {
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  font-family: var(--font-scrawl, cursive);
+  color: var(--color-cocoa, #2a170e);
+  font-weight: 700;
+}
+
+/* Right Branch: Interactive Flight Canvas */
+.flightCanvas {
+  width: 86%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.flightCanvas svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  overflow: visible;
+}
+
+.flightRoute {
+  fill: none;
+  stroke: var(--color-toffee-deep, #a24a1a);
+  stroke-width: 3px;
+  stroke-dasharray: 4 10;
+  stroke-linecap: round;
+}
+
+.flightDot {
+  fill: var(--color-toffee-deep, #a24a1a);
+}
+
+.flightLabel {
+  font-family: var(--font-scrawl, cursive);
+  fill: var(--ink-soft, #7a5840);
+  font-size: 19px;
+  font-weight: 700;
+}
+
+/* Airplane elements */
+.flightBody {
+  fill: var(--color-milk, #fffdf8);
+  stroke: var(--color-cocoa, #2a170e);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.flightWing {
+  fill: var(--color-toffee, #d4893f);
+  stroke: var(--color-cocoa, #2a170e);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+.flightWingFar {
+  fill: var(--color-toffee-deep, #a24a1a);
+}
+
+.flightLine {
+  fill: none;
+  stroke: var(--color-cocoa, #2a170e);
+  stroke-width: 3.5px;
+  stroke-linecap: round;
+}
+
+.flightPorthole {
+  fill: none;
+  stroke: var(--color-cocoa, #2a170e);
+  stroke-width: 4px;
+}
+
+/* Descriptions & CTA Buttons */
+.wayText {
+  max-width: 40ch;
+  color: var(--ink-soft, #7a5840);
+  margin-top: 1.5rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.wayBtn {
+  margin-top: 1.25rem;
+}

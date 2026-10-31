@@ -1,8 +1,20 @@
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Instagram } from 'lucide-react';
+import MascotPup from '../common/MascotPup.jsx';
 import { footerNavLinks, BUSINESS } from '../../data/navigation.js';
-import ScallopHem from '../common/ScallopHem.jsx';
 import styles from './Footer.module.css';
+
+const STARS = [
+  { left: '6%', top: '18%', width: 12.6, delay: '0.00s' },
+  { left: '14%', top: '42%', width: 8.4, delay: '0.40s' },
+  { left: '23%', top: '12%', width: 9.8, delay: '0.80s' },
+  { left: '31%', top: '30%', width: 7.0, delay: '1.20s' },
+  { left: '44%', top: '9%', width: 11.2, delay: '1.60s' },
+  { left: '52%', top: '36%', width: 7.7, delay: '2.00s' },
+  { left: '63%', top: '15%', width: 10.5, delay: '2.40s' },
+  { left: '71%', top: '40%', width: 7.0, delay: '2.80s' },
+  { left: '92%', top: '33%', width: 8.4, delay: '3.20s' },
+];
 
 function TikTokIcon({ size = 18 }) {
   return (
@@ -38,35 +50,126 @@ export default function Footer() {
   const year = 2026;
 
   return (
-    <footer className={styles.footer}>
-      {/* Top scalloped hem transition */}
-      <div className={styles.scallopTop}>
-        <ScallopHem color="var(--color-night)" height={14} inverted={true} />
+    <footer className={styles.footer} aria-labelledby="footer-heading">
+      <h2 id="footer-heading" className="sr-only">
+        TeddyPups UAE Footer
+      </h2>
+
+      {/* Top Rolling Hill Contour Boundary */}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 1440 80"
+        preserveAspectRatio="none"
+        className={styles.footerHill}
+      >
+        <path d="M0 80V44c120-30 240-44 360-30s240 46 360 34 240-58 360-46 240 40 360 26v52z" />
+      </svg>
+
+      {/* Starry Night Sky Canvas with Twinkling Stars and Crescent Moon */}
+      <div aria-hidden="true" className={styles.skyCanvas}>
+        {STARS.map((star, idx) => (
+          <svg
+            key={idx}
+            viewBox="0 0 40 40"
+            className={styles.star}
+            style={{
+              left: star.left,
+              top: star.top,
+              width: `${star.width}px`,
+              animationDelay: star.delay,
+            }}
+          >
+            <path
+              d="M20 3c1.6 9.4 7.6 15.4 17 17-9.4 1.6-15.4 7.6-17 17-1.6-9.4-7.6-15.4-17-17 9.4-1.6 15.4-7.6 17-17z"
+              fill="currentColor"
+            />
+          </svg>
+        ))}
+        <span className={styles.moon} />
       </div>
 
-      <div className={styles.footer__inner}>
-        {/* Brand Column */}
-        <div className={styles.footer__brand}>
-          <Link to="/" className={styles.footer__logo}>
-            <img
-              src="/brand/logo.png"
-              alt="TeddyPups UAE logo"
-              className={styles.footer__logoImg}
-              width={44}
-              height={44}
-            />
-            <span className={styles.footer__logoText}>TeddyPups</span>
-          </Link>
-          <p className={styles.footer__tagline}>every puppy is family</p>
-          <p className={styles.footer__desc}>
-            Premium designer teacup & miniature puppies raised with love and certified veterinary care in Dubai, UAE.
+      <div className={styles.footerInner}>
+        {/* Brand & Mascot in 3-Layer Woven Wicker Basket */}
+        <div className={styles.basketCol}>
+          <p className={styles.homeAtLast}>Home, at last.</p>
+          <p className={styles.brandDesc}>
+            TeddyPups U.A.E. is a Dubai-based brand specializing in miniature puppies, offering premium services and worldwide shipping.
           </p>
-          <div className={styles.footer__social}>
+
+          {/* 3-Layer Woven Wicker Basket */}
+          <div className={styles.basket}>
+            {/* 1. Back Basket SVG */}
+            <svg aria-hidden="true" viewBox="0 0 300 240" className={styles.basketBack}>
+              <ellipse cx="212" cy="145" rx="96" ry="12" className={styles.basketHollow} />
+              <path d="M116 145 A96 12 0 0 1 308 145" className={styles.basketRimLine} />
+              <path d="M116 145 A96 12 0 0 1 308 145" className={styles.basketRim} />
+            </svg>
+
+            {/* 2. Middle Mascot Layer: Snug in Basket */}
+            <div className={styles.basketPup}>
+              <MascotPup
+                pose="snug"
+                facing="right"
+                ariaLabel="Teddy resting snug in his wicker basket"
+              />
+            </div>
+
+            {/* 3. Front Basket Weave SVG */}
+            <svg aria-hidden="true" viewBox="0 0 300 240" className={styles.basketFront}>
+              <path
+                d="M116 145 C118 180 126 214 138 232 L286 232 C298 214 306 180 308 145 A96 12 0 0 1 116 145 Z"
+                className={styles.basketBody}
+              />
+              <path
+                d="M121 178 Q212 197 303 178 M127 206 Q212 223 297 206"
+                className={styles.basketWeave}
+              />
+              <path
+                d="M150 164 L158 230 M182 168 L185 232 M212 169 V232 M242 168 L239 232 M274 164 L266 230"
+                className={`${styles.basketWeave} ${styles.basketWeaveStakes}`}
+              />
+              <path d="M116 145 A96 12 0 0 0 308 145" className={styles.basketRimLine} />
+              <path d="M116 145 A96 12 0 0 0 308 145" className={styles.basketRim} />
+            </svg>
+          </div>
+        </div>
+
+        {/* Explore Links */}
+        <div>
+          <p className={styles.colHeading}>Explore</p>
+          <nav className={styles.nav} aria-label="Footer navigation">
+            {footerNavLinks.map((link) => (
+              <Link key={link.href} to={link.href} className={styles.navLink}>
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        {/* Contact Information & Socials */}
+        <div>
+          <p className={styles.colHeading}>Get in Touch</p>
+          <address className={styles.contact}>
+            <div className={styles.contactItem}>
+              <Phone size={16} aria-hidden="true" style={{ flexShrink: 0, marginTop: '0.2rem' }} />
+              <a href={`tel:${BUSINESS.phone.replace(/\s/g, '')}`}>{BUSINESS.phone}</a>
+            </div>
+            <div className={styles.contactItem}>
+              <Mail size={16} aria-hidden="true" style={{ flexShrink: 0, marginTop: '0.2rem' }} />
+              <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
+            </div>
+            <div className={styles.contactItem}>
+              <MapPin size={16} aria-hidden="true" style={{ flexShrink: 0, marginTop: '0.2rem' }} />
+              <span>{BUSINESS.address}</span>
+            </div>
+          </address>
+
+          <div className={styles.socialRow}>
             <a
               href={BUSINESS.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.footer__socialLink}
+              className={styles.socialBtn}
               aria-label="TeddyPups on Instagram"
             >
               <Instagram size={18} aria-hidden="true" />
@@ -75,7 +178,7 @@ export default function Footer() {
               href={BUSINESS.tiktok}
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.footer__socialLink}
+              className={styles.socialBtn}
               aria-label="TeddyPups on TikTok"
             >
               <TikTokIcon size={18} />
@@ -84,52 +187,21 @@ export default function Footer() {
               href={BUSINESS.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className={styles.footer__socialLink}
+              className={styles.socialBtn}
               aria-label="TeddyPups on Facebook"
             >
               <FacebookIcon size={18} />
             </a>
           </div>
         </div>
-
-        {/* Explore Navigation */}
-        <div>
-          <p className={styles.footer__colHeading}>Explore</p>
-          <nav className={styles.footer__nav} aria-label="Footer explore links">
-            {footerNavLinks.map(link => (
-              <Link key={link.href} to={link.href} className={styles.footer__navLink}>
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-
-        {/* Contact Column */}
-        <div>
-          <p className={styles.footer__colHeading}>Get in Touch</p>
-          <address className={styles.footer__contact}>
-            <div className={styles.footer__contactItem}>
-              <Phone size={16} aria-hidden="true" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
-              <a href={`tel:${BUSINESS.phone.replace(/\s/g, '')}`}>{BUSINESS.phone}</a>
-            </div>
-            <div className={styles.footer__contactItem}>
-              <Mail size={16} aria-hidden="true" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
-              <a href={`mailto:${BUSINESS.email}`}>{BUSINESS.email}</a>
-            </div>
-            <div className={styles.footer__contactItem}>
-              <MapPin size={16} aria-hidden="true" style={{ flexShrink: 0, marginTop: '0.15rem' }} />
-              <span>{BUSINESS.address}</span>
-            </div>
-          </address>
-        </div>
       </div>
 
-      {/* Bottom Legal / Copyright */}
-      <div className={styles.footer__bottom}>
-        <p className={styles.footer__copy}>
-          &copy; {year} {BUSINESS.name} All rights reserved.
-        </p>
-        <p className={styles.footer__copy}>Downtown Dubai, United Arab Emirates</p>
+      {/* Copyright Bottom Bar */}
+      <div className={styles.footerInner}>
+        <div className={styles.bottom} style={{ width: '100%' }}>
+          <p>&copy; {year} {BUSINESS.name}. All rights reserved.</p>
+          <p>Downtown Dubai, United Arab Emirates</p>
+        </div>
       </div>
     </footer>
   );

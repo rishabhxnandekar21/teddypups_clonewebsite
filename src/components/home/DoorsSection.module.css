@@ -1,0 +1,141 @@
+/* ── DoorsSection.module.css ── */
+
+.meetSection {
+  position: relative;
+  background-color: var(--color-milk, #fffdf8);
+  width: 100%;
+}
+
+.pinRange {
+  width: 100%;
+  position: relative;
+}
+
+.meetStage {
+  padding-top: clamp(4rem, 9vh, 7rem);
+  padding-bottom: clamp(3rem, 7vh, 5rem);
+  position: relative;
+  width: 100%;
+}
+
+.meetHead {
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.25rem 2rem;
+  width: 100%;
+  max-width: 110rem;
+  margin-inline: auto;
+  padding-inline: var(--gutter, 1.5rem);
+  display: flex;
+}
+
+.meetHeading {
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 900;
+  color: var(--color-cocoa, #2a170e);
+  line-height: 1.08;
+}
+
+.meetSubhead {
+  color: var(--ink-soft, #7a5840);
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  margin-top: 0.6rem;
+  max-width: 44ch;
+  line-height: 1.5;
+}
+
+.meetHall {
+  --floor-h: clamp(5rem, 13vh, 8rem);
+  margin-top: clamp(2rem, 5vh, 3.5rem);
+  position: relative;
+  width: 100%;
+}
+
+/* Default unpinned grid (mobile/tablet) */
+.doorsGrid {
+  list-style: none;
+  margin: 0;
+  padding-inline: var(--gutter, 1.5rem);
+  grid-template-columns: repeat(auto-fill, minmax(min(11rem, 42vw), 1fr));
+  gap: 2.75rem 1.5rem;
+  max-width: 110rem;
+  margin-inline: auto;
+  display: grid;
+}
+
+.meetFloor {
+  display: none;
+}
+
+.meetTeddy {
+  display: none;
+}
+
+/* Desktop Pinned Scroll Treadmill */
+.meetSection[data-pinned="true"] .meetStage {
+  height: 100vh;
+  padding-top: calc(var(--header-h, 4.5rem) + clamp(1rem, 2.5vh, 2rem));
+  flex-direction: column;
+  padding-bottom: 0;
+  display: flex;
+  position: sticky;
+  top: 0;
+  overflow: hidden;
+}
+
+.meetSection[data-pinned="true"] .meetHall {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.meetSection[data-pinned="true"] .doorsGrid {
+  left: 0;
+  bottom: var(--floor-h);
+  align-items: flex-end;
+  gap: clamp(4.5rem, 6vw, 7rem);
+  width: max-content;
+  max-width: none;
+  padding-inline: 36vw 14vw;
+  display: flex;
+  position: absolute;
+  will-change: transform;
+}
+
+.meetSection[data-pinned="true"] :global(.tp-door) {
+  width: var(--door-w, clamp(10rem, min(15vw, 24vh), 16rem));
+  flex-shrink: 0;
+}
+
+.meetSection[data-pinned="true"] :global(.tp-door) span[class*="doorFrame"]::after {
+  display: none;
+}
+
+/* 3D Scrolling Wooden Floor */
+.meetSection[data-pinned="true"] .meetFloor {
+  height: var(--floor-h);
+  border-top: 3px solid var(--color-cocoa, #2a170e);
+  background: linear-gradient(to bottom, rgba(42, 23, 14, 0.16), transparent 22%),
+              repeating-linear-gradient(90deg, transparent 0 calc(11rem - 2px), rgba(42, 23, 14, 0.12) calc(11rem - 2px) 11rem) var(--floor-x, 0) 0 / auto,
+              linear-gradient(#e8b06a, #dc9a52);
+  display: block;
+  position: absolute;
+  inset: auto 0 0;
+  box-shadow: 0 -12px 0 -6px #f5d9a8;
+  z-index: 10;
+}
+
+/* Walking Teddy Mascot along the floor */
+.meetSection[data-pinned="true"] .meetTeddy {
+  top: auto;
+  left: 14vw;
+  right: auto;
+  bottom: calc(var(--floor-h) * 0.42);
+  width: clamp(11rem, min(14vw, 24vh), 14rem);
+  display: block;
+  position: absolute;
+  z-index: 20;
+  pointer-events: none;
+}
