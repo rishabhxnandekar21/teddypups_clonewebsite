@@ -75,7 +75,6 @@ src/
     global.css      CSS reset, base styles, utility classes
     typography.css  Font declarations
   data/             Static content (puppies, faq, alumni, navigation)
-  types/            TypeScript type definitions
   utils/            Helper functions
 
 public/

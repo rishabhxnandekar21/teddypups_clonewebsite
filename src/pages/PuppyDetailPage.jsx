@@ -164,7 +164,7 @@ export default function PuppyDetailPage() {
             </h2>
           </div>
 
-          <div className="puppiesGrid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+          <div className={styles.relatedGrid}>
             {otherPuppies.map(other => (
               <PuppyCard key={other.slug} puppy={other} />
             ))}

@@ -24,7 +24,7 @@ export default function BoardingTicket({ alumnus }) {
             {alumnus.breed}, {alumnus.gender === 'male' ? 'boy' : 'girl'}
           </p>
           <div className={styles.routeLine} aria-label={`Route: ${alumnus.route}`}>
-            <span>{alumnus.route}</span>
+            <span>{alumnus.route.replace(/-+>/, '➔')}</span>
           </div>
         </div>
       </div>

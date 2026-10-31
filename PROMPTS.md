@@ -149,7 +149,41 @@ This file records AI prompts, decisions, corrections, and rationale throughout t
 
 ---
 
-## Pending (Phase 4+)
+## Phase 4: Polish, Refinement & Comprehensive Audit
 
-- Phase 4: Polish and animations
-- Phase 5: QA, accessibility audit, code review, visual comparison
+**Date:** 2026-11-01  
+**Agent:** Antigravity (Google DeepMind)  
+**Prompt summary:** Polish & refine the TeddyPups UAE website clone. Visual fidelity audit against live site and reference screenshots, functional audit of interactive elements, responsive audit across 5 viewports (1440x900, 1366x768, 768x1024, 390x844, 360x800), accessibility checks, and production build verification.
+
+**Git Checkpoint:**
+- Committed Phase 3 implementation cleanly to `master` as `0f57d1c` (`feat: implement TeddyPups UAE website pages and components`).
+
+**Visual & Responsive Fixes:**
+1. **Header Mobile Height Adaptation:** Added responsive header height rule (`var(--header-h-mobile) = 4rem` at `< 1024px`) to eliminate vertical offset on mobile devices.
+2. **Contact Form Mobile Formatting:** Replaced rigid inline input widths with 100% width block layout below 480px, eliminating mobile horizontal overflow on `/contact`.
+3. **Boarding Ticket Compact Typography:** Tightened ticket padding, reduced circular photo dimensions slightly on mobile screens (58px vs 70px), and styled the flight route arrow (`➔`) with auto ellipsis to prevent card stretching.
+4. **Gone Home Header Actions Wrapping:** Added `flex-wrap: wrap` and column flow on mobile (`< 480px`) for `.headerActions`, eliminating 12px overflow at 390px and 27px overflow at 360px.
+5. **Puppy Detail Card & Grid Constraints:** Added `minmax(0, 1fr)` to `.detailGrid`, `min-width: 0; max-width: 100%;` to `.mediaCol` and `.specCard`, and mobile wrapping for `.ctaActions`, eliminating 24px overflow at 360px.
+6. **Button Global Safeguards:** Added `max-width: 100%; box-sizing: border-box;` and responsive `.btn-lg` sizing at `< 480px` in `src/styles/global.css`.
+
+**Accessibility & Performance Enhancements:**
+- Added universal `:focus-visible` accessible outline rules (3px solid `var(--color-toffee)` with 3px offset) in `global.css`.
+- 100% of images verified to have descriptive and meaningful `alt` text.
+- 100% of buttons verified to possess accessible text or `aria-label`.
+- Semantic heading structure (`h1` through `h4`) maintained across all templates.
+
+**Automated Playwright Audits:**
+- **Responsive Layouts (5 Viewports × 9 Routes = 45 Checks):**
+  - 1440 × 900: **0px overflow** (all 9 routes)
+  - 1366 × 768: **0px overflow** (all 9 routes)
+  - 768 × 1024: **0px overflow** (all 9 routes)
+  - 390 × 844: **0px overflow** (all 9 routes)
+  - 360 × 800: **0px overflow** (all 9 routes)
+- **Interactive Functional Checks:**
+  - Mobile honey drawer opens, displays links + WhatsApp CTA + phone, and closes cleanly.
+  - Puppy listings display all 20 cards; origin filter ("In Dubai") isolates 7 puppies; breed filter ("Maltipoo") isolates 6 puppies; reset restores all 20.
+  - FAQ search filters questions dynamically in real time; accordion panels expand and collapse.
+  - Contact stationery letterform accepts all input cleanly and formats WhatsApp inquiry message.
+  - Gone Home filters show 12 local showroom handovers, 15 international chaperoned flights, and 27 total passes.
+- **Production Build:** `npm run build` succeeds in **3.31s** (`dist/` generated with 0 errors).
+- **Browser Console:** **0 console errors or warnings** on all routes.

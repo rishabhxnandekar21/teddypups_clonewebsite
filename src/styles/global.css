@@ -91,6 +91,19 @@ select {
   }
 }
 
+/* ── Accessibility & Focus ── */
+:focus-visible {
+  outline: 3px solid var(--color-toffee);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--color-toffee);
+  outline-offset: 3px;
+}
+
 /* ── Visually Hidden (accessibility) ── */
 .sr-only {
   position: absolute;
@@ -126,6 +139,8 @@ select {
   cursor: pointer;
   border: 2px solid transparent;
   text-decoration: none;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .btn:active {
@@ -188,6 +203,13 @@ select {
 .btn-lg {
   padding: 1rem 2rem;
   font-size: 1.0625rem;
+}
+
+@media (max-width: 480px) {
+  .btn-lg {
+    padding: 0.85rem 1.25rem;
+    font-size: 0.95rem;
+  }
 }
 
 /* ── Card Base ── */
