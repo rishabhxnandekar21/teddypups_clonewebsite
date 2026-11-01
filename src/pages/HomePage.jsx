@@ -54,9 +54,9 @@ export default function HomePage() {
       const scrollOffset = -rect.top;
 
       // Each step has min-height: 380px in CSS, keeping the section pinned
-      if (scrollOffset < 340) {
+      if (scrollOffset < 280) {
         setActiveStep(0);
-      } else if (scrollOffset < 720) {
+      } else if (scrollOffset < 580) {
         setActiveStep(1);
       } else {
         setActiveStep(2);
@@ -218,60 +218,189 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 7. FAQ Preview (tp-night) ── */}
-      <section className={styles.faqSection} aria-labelledby="faq-home-title">
-        <div className="container">
-          <div className={styles.sectionHeader}>
-            <span className={styles.eyebrow}>got questions?</span>
-            <h2 className={styles.heading} id="faq-home-title">Questions, answered</h2>
-          </div>
-
-          <div className={styles.faqContainer}>
-            {featuredFaqs.map((faq, idx) => (
-              <AccordionItem
-                key={faq.id}
-                item={faq}
-                isOpen={openFaq === idx}
-                onToggle={() => setOpenFaq(openFaq === idx ? -1 : idx)}
-                index={idx}
+      {/* ── 7. Questions, answered (tp-night 2-Column Storybook) ── */}
+      <section
+        data-pup-scene="true"
+        data-tone="dark"
+        className={`tp-scene tp-night ${styles.nightSection}`}
+        style={{
+          '--sky-top': '#4d2b19',
+          '--sky-bottom': '#2f1a10',
+        }}
+        aria-labelledby="questions-title"
+      >
+        {/* 11 Golden Twinkling SVG Stars */}
+        <div aria-hidden="true" className={styles.nightStars}>
+          {[
+            { left: '8%', top: '12%', width: 16.2, delay: '0.00s' },
+            { left: '22%', top: '30%', width: 9.0, delay: '0.40s' },
+            { left: '41%', top: '8%', width: 12.6, delay: '0.80s' },
+            { left: '57%', top: '22%', width: 8.1, delay: '1.20s' },
+            { left: '72%', top: '6%', width: 14.4, delay: '1.60s' },
+            { left: '88%', top: '18%', width: 10.8, delay: '2.00s' },
+            { left: '95%', top: '42%', width: 9.0, delay: '2.40s' },
+            { left: '4%', top: '58%', width: 10.8, delay: '2.80s' },
+            { left: '34%', top: '70%', width: 7.2, delay: '3.20s' },
+            { left: '63%', top: '84%', width: 9.9, delay: '3.60s' },
+            { left: '83%', top: '66%', width: 12.6, delay: '4.00s' },
+          ].map((star, i) => (
+            <svg
+              key={i}
+              viewBox="0 0 40 40"
+              className={styles.twinkleStar}
+              style={{
+                left: star.left,
+                top: star.top,
+                width: `${star.width}px`,
+                animationDelay: star.delay,
+              }}
+              aria-hidden="true"
+            >
+              <path
+                d="M20 3c1.6 9.4 7.6 15.4 17 17-9.4 1.6-15.4 7.6-17 17-1.6-9.4-7.6-15.4-17-17 9.4-1.6 15.4-7.6 17-17z"
+                fill="currentColor"
               />
-            ))}
+            </svg>
+          ))}
+        </div>
+
+        <div className={`gutter ${styles.nightGrid}`}>
+          {/* Left Column: Heading, Ghost CTA, Mascot with ? bubble */}
+          <div className={styles.nightIntro}>
+            <h2 id="questions-title" className={`font-plush ${styles.nightHeading}`}>
+              Questions, answered
+            </h2>
+            <Link to="/faq" className={`btn btn-ghost ${styles.nightCta}`}>
+              Read all questions
+            </Link>
+            <div className={styles.nightPup}>
+              <span aria-hidden="true" className={`font-plush ${styles.nightWonder}`}>
+                ?
+              </span>
+              <div
+                data-pup-stop="true"
+                data-pose="sit"
+                data-facing="right"
+                data-act="tilt"
+                className={`pup-stop ${styles.nightTeddy}`}
+              >
+                <MascotPup pose="sitting" facing="right" ariaLabel="Teddy wondering about questions" />
+              </div>
+            </div>
           </div>
 
-          <div className={styles.seeAllRow}>
-            <Link to="/faq" className="btn btn-outline btn-lg">
-              Read all frequently asked questions &rarr;
-            </Link>
-          </div>
+          {/* Right Column: Definition List with 3 reference Q&As */}
+          <dl className={styles.nightList}>
+            <div className={styles.qaItem}>
+              <dt className={`font-plush ${styles.qaQ}`}>
+                <svg viewBox="0 0 40 40" className={styles.qaStar} aria-hidden="true">
+                  <path
+                    d="M20 3c1.6 9.4 7.6 15.4 17 17-9.4 1.6-15.4 7.6-17 17-1.6-9.4-7.6-15.4-17-17 9.4-1.6 15.4-7.6 17-17z"
+                    fill="currentColor"
+                  />
+                </svg>
+                Are your puppies vaccinated and health-checked?
+              </dt>
+              <dd className={styles.qaA}>
+                Yes. All our puppies come with a verified health certificate from licensed vets. Every puppy is vaccinated, dewormed, and thoroughly checked before joining your family.
+              </dd>
+            </div>
+
+            <div className={styles.qaItem}>
+              <dt className={`font-plush ${styles.qaQ}`}>
+                <svg viewBox="0 0 40 40" className={styles.qaStar} aria-hidden="true">
+                  <path
+                    d="M20 3c1.6 9.4 7.6 15.4 17 17-9.4 1.6-15.4 7.6-17 17-1.6-9.4-7.6-15.4-17-17 9.4-1.6 15.4-7.6 17-17z"
+                    fill="currentColor"
+                  />
+                </svg>
+                Can I meet a puppy before I decide?
+              </dt>
+              <dd className={styles.qaA}>
+                Yes. Come meet our locally available puppies in our Downtown Dubai showroom and spend time bonding before making your decision.
+              </dd>
+            </div>
+
+            <div className={styles.qaItem}>
+              <dt className={`font-plush ${styles.qaQ}`}>
+                <svg viewBox="0 0 40 40" className={styles.qaStar} aria-hidden="true">
+                  <path
+                    d="M20 3c1.6 9.4 7.6 15.4 17 17-9.4 1.6-15.4 7.6-17 17-1.6-9.4-7.6-15.4-17-17 9.4-1.6 15.4-7.6 17-17z"
+                    fill="currentColor"
+                  />
+                </svg>
+                Can I take my puppy home the same day?
+              </dt>
+              <dd className={styles.qaA}>
+                Local puppies are available immediately, so you can take your puppy home the same day.
+              </dd>
+            </div>
+          </dl>
         </div>
       </section>
 
-      {/* ── 8. Final CTA (tp-home) ── */}
-      <section className={styles.ctaSection} aria-labelledby="cta-title">
-        <div className="container">
-          <div className={styles.ctaCard}>
-            <span className={styles.eyebrow}>let’s find your match</span>
-            <h2 className={styles.ctaTitle} id="cta-title">
-              Ready to meet your new best friend?
-            </h2>
-            <p className={styles.ctaSubhead}>
-              Our puppy concierge is standing by to help you choose the puppy of your dreams. Reach out on WhatsApp or schedule your visit.
-            </p>
-            <div className={styles.ctaButtons}>
-              <a
-                href={BUSINESS.whatsappUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-whatsapp btn-lg"
-              >
-                <MessageCircle size={20} aria-hidden="true" />
-                WhatsApp us now
-              </a>
-              <Link to="/contact" className="btn btn-outline btn-lg">
-                Visit our showroom
-              </Link>
-            </div>
+      {/* ── 8. Final CTA (tp-home Illustrated House Doorway Scene) ── */}
+      <section
+        data-pup-scene="true"
+        data-tone="dark"
+        className={`tp-scene tp-home ${styles.homeSection}`}
+        style={{
+          '--sky-top': '#2f1a10',
+          '--sky-bottom': '#24130b',
+        }}
+        aria-labelledby="cta-title"
+      >
+        <div className={`gutter ${styles.homeCopy}`}>
+          <h2 id="cta-title" className={`font-plush ${styles.homeHeading}`}>
+            Ready to meet your new best friend?
+          </h2>
+          <p className={styles.homeLede}>
+            Bring home a healthy, happy teacup or designer puppy with expert guidance every step of the way. We help you find the right match and ensure a smooth, safe delivery across the UAE.
+          </p>
+        </div>
+
+        <div className={styles.house}>
+          <span aria-hidden="true" className={`${styles.housePlant} ${styles.housePlantLeft}`} />
+          <span aria-hidden="true" className={styles.houseLamp} />
+          <div className={styles.houseDoorway}>
+            <span className={styles.houseInside}>
+              <img
+                src="/media/maltipoo-max-male.webp"
+                alt="Max, waiting inside"
+                className={styles.houseDoorwayImg}
+              />
+            </span>
+            <span aria-hidden="true" className={styles.houseDoor}>
+              <span className={styles.housePeep} />
+              <span className={styles.houseKnob} />
+            </span>
           </div>
+          <span aria-hidden="true" className={`${styles.housePlant} ${styles.housePlantRight}`} />
+          <span aria-hidden="true" className={`font-scrawl ${styles.houseMat}`}>
+            welcome home
+          </span>
+          <div
+            data-pup-stop="true"
+            data-pose="bow"
+            data-facing="right"
+            className={`pup-stop ${styles.houseTeddy}`}
+          >
+            <MascotPup pose="bow" facing="right" ariaLabel="Teddy bowing at the doorway" />
+          </div>
+        </div>
+
+        <div className={`gutter ${styles.homeActions}`}>
+          <a
+            href={BUSINESS.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-whatsapp"
+          >
+            Enquire on WhatsApp
+          </a>
+          <Link to="/contact" className={`btn btn-ghost ${styles.homeGhost}`}>
+            Visit &amp; contact
+          </Link>
         </div>
       </section>
     </div>

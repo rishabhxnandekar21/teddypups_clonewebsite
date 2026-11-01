@@ -40,15 +40,16 @@ export default function PupLayer() {
     const chatTop  = getDocTop('.tp-chat, [class*="journeySection"]') || 6419;
     const trustTop = getDocTop('[class*="trustSection"]') || 8319;
     const duskTop  = getDocTop('.tp-dusk, [class*="familiesSection"]') || 9214;
-    const faqTop   = getDocTop('[class*="faqSection"]') || 10530;
-    const footerTop = getDocTop('footer') || 11948;
+    const faqTop   = getDocTop('.tp-night, [class*="nightSection"], [class*="faqSection"]') || 10100;
+    const ctaTop   = getDocTop('.tp-home, [class*="homeSection"], [class*="ctaSection"]') || 11300;
+    const footerTop = getDocTop('footer, [class*="footer"]') || 12300;
 
     // Convert document offsets to progress fractions [0, 1]
     const fHero   = 0;
     const fMeetStart = meetTop / docH;
     // Meet is pinned; midpoint and end of meet section
     const meetEl = document.querySelector('.tp-meet, [class*="meetSection"]');
-    const meetHeight = meetEl ? meetEl.offsetHeight : 4400;
+    const meetHeight = meetEl ? meetEl.offsetHeight : 4126;
     const fMeetEnd = (meetTop + meetHeight - 200) / docH;
     const fPathsStart = pathsTop / docH;
     const fPathsEnd = chatTop / docH;
@@ -56,6 +57,7 @@ export default function PupLayer() {
     const fTrust = trustTop / docH;
     const fDusk = duskTop / docH;
     const fFaq = faqTop / docH;
+    const fCta = ctaTop / docH;
     const fFooter = footerTop / docH;
     const fEnd = 1.0;
 
@@ -91,10 +93,12 @@ export default function PupLayer() {
       // 6. Dusk (Happy Families Preview)
       { frac: fDusk,  vpX: Math.min(960, vw - 340), vpY: 580, scale: 0.55, pose: 'sit', facing: 'left' },
       // 7. FAQ Preview
-      { frac: fFaq,   vpX: 160, vpY: 630, scale: 0.55, pose: 'walk', facing: 'right' },
-      // 8. Entering Footer: approaches basket
-      { frac: Math.min(0.96, fFooter), vpX: 40, vpY: 520, scale: 0.85, pose: 'walk', facing: 'left' },
-      // 9. Final snug position inside footer wicker basket
+      { frac: fFaq,   vpX: 160, vpY: 630, scale: 0.55, pose: 'sit', facing: 'right' },
+      // 8. Final CTA (Ready to meet, doorway)
+      { frac: fCta,   vpX: 220, vpY: 640, scale: 0.65, pose: 'bow', facing: 'right' },
+      // 9. Entering Footer: approaches basket
+      { frac: Math.min(0.97, fFooter), vpX: 40, vpY: 520, scale: 0.85, pose: 'walk', facing: 'left' },
+      // 10. Final snug position inside footer wicker basket
       { frac: 1.00, vpX: -26, vpY: 451, scale: 1.013, pose: 'snug', facing: 'right' },
     ];
   };

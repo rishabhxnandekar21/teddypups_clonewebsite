@@ -33,7 +33,7 @@ export default function DoorsSection() {
 
       if (desktop && trackRef.current) {
         const fullTrackWidth = trackRef.current.scrollWidth;
-        const dist = Math.max(0, fullTrackWidth - window.innerWidth + 400);
+        const dist = Math.max(0, fullTrackWidth - window.innerWidth);
         setScrollDist(dist);
       }
     };

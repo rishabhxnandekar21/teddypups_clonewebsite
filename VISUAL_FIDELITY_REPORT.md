@@ -1106,23 +1106,75 @@ When authorized to transition to **FIX MODE**, the implementation should proceed
 
 ---
 
-### 18.6 Consolidated Targeted Audit Matrix
+### 18.6 Initial Targeted Audit Matrix
 
-| Check # | Requirement Component | Reference Value / Standard | Local Value (Port 5174) | Verdict | Primary Defect Cause |
+| Check # | Requirement Component | Reference Value / Standard | Initial Local Value (Port 5174) | Initial Verdict | Primary Defect Cause |
 | :---: | :--- | :--- | :--- | :---: | :--- |
-| **1** | Hero: Title computed colors | Line 1: `rgb(42, 23, 14)`<br>Line 2: `rgb(42, 23, 14)` | Line 1: `rgb(42, 23, 14)`<br>Line 2: `rgb(162, 74, 26)` | **PARTIAL** | `.heroLine2` has terracotta color override in CSS. |
+| **1** | Hero: Title computed colors | Line 1: `rgb(42, 23, 14)`<br>Line 2: `rgb(42, 23, 14)` | Line 1: `rgb(42, 23, 14)`<br>Line 2: `rgb(162, 74, 26)` | **PARTIAL** | `.heroLine2` had terracotta color override in CSS. |
 | **1b**| Hero: Mascot horizontal gap | Central gap: `269.8px`<br>Mascot left: `419.9px` | Central gap: `283.4px`<br>Mascot left: `427.4px` | **PASS** | Geometric alignment matches intended central gap. |
 | **2** | Meet the Pups: Feet clearance | Fully visible, clearance: `48.2px` | Fully visible, clearance: `38.0px` | **PASS** | Feet unclipped above floor line. |
-| **2b**| Meet the Pups: Section height | Height: `4,126px` | Height: `4,446px` (+320px) | **PARTIAL** | `DoorsSection.jsx` has arbitrary `+ 400` in dist calculation ($0.8 \times 400 = 320\text{px}$). |
+| **2b**| Meet the Pups: Section height | Height: `4,126px` | Height: `4,446px` (+320px) | **PARTIAL** | `DoorsSection.jsx` had arbitrary `+ 400` in dist calculation ($0.8 \times 400 = 320\text{px}$). |
 | **3** | Journey: 3-step sticky pinning | Phone pinned at top: `116px` | Phone pinned at top: `116px` | **PASS** | Sticky pinning active through all 3 steps. |
-| **3b**| Journey: CTA & bottom transition | Section: `1697px`<br>Trailing gap: `165px` | Section: `1900px`<br>Trailing gap: `430px` | **PARTIAL** | Excessive height (+203px) creates 265px blank gap after Step 3. |
+| **3b**| Journey: CTA & bottom transition | Section: `1697px`<br>Trailing gap: `165px` | Section: `1900px`<br>Trailing gap: `430px` | **PARTIAL** | Excessive height (+203px) created 265px blank gap after Step 3. |
 | **4** | FAQ: Background & sampled pixels | Dark chocolate: `#4d2b19` to `#2f1a10` | Milk cream: `rgb(255, 253, 248)` | **FAIL** | Light theme background used instead of dark cocoa. |
 | **4b**| FAQ: Two-column layout & mascot | Left: intro, ghost CTA, mascot<br>Right: 3 Q&A with star bullets | Centered 1-col 12-item accordion list | **FAIL** | Generic accordion rendered without 2-col intro or mascot. |
 | **5** | Ready CTA: Card styling & copy | Dark scene (`#2f1a10`), doorway house, WhatsApp + Contact buttons | Light card (`760×428px`) on beige band with "View puppies" button | **FAIL** | Non-reference card component used instead of doorway scene. |
-| **5b**| Footer: Mascot in basket | Coincident: `diffX = 0`, `diffY = 0` | Offset: `diffX = 348px`, `diffY = 1078px` | **FAIL** | Mascot runner stops before docking into basket. |
+| **5b**| Footer: Mascot in basket | Coincident: `diffX = 0`, `diffY = 0` | Offset: `diffX = 348px`, `diffY = 1078px` | **FAIL** | Mascot runner stopped before docking into basket. |
 
-**Summary**: 0 / 5 Fully Completed, **3 PARTIAL**, **2 FAIL**.  
-**Source Code Modified**: **0 lines** (Audit & Verification Mode strictly adhered to).
+---
+
+### 18.7 Turnkey Implementation & Final Live Verification (All 5 Issues PASS)
+
+Following extraction of exact Next.js SSR reference markup, styles, and geometry, all five homepage issues were implemented and verified with live Playwright Chromium automation at **1440 × 900**:
+
+1. **FIX 1 — Hero Title Uniform Cocoa Typography**:
+   - In `HeroSection.module.css`, replaced `.heroLine2 { color: var(--color-toffee-deep, #a24a1a); }` with `.heroLine2 { color: var(--color-cocoa, #2a170e); }`.
+   - **Verification**: Both Line 1 ("Premium teacup") and Line 2 ("puppies in Dubai") compute to identical `rgb(42, 23, 14)` (`#2a170e`).
+   - **Status**: **PASS**
+
+2. **FIX 2 — Meet the Pups Exact Section Height (4,126px)**:
+   - In `DoorsSection.jsx`, removed `+ 400` from `dist` calculation: `const dist = Math.max(0, fullTrackWidth - window.innerWidth);`.
+   - In `DoorsSection.module.css`, matched reference track padding `padding-inline: 38vw 12vw;`.
+   - **Verification**: Section `offsetHeight` is exactly **4,126px** (100% match with Reference's 4,126px). Mascot feet maintain 38–48px clearance, unclipped above the floor.
+   - **Status**: **PASS**
+
+3. **FIX 3 — Puppy Journey Exact Section Height & Tighter Trailing Gap**:
+   - In `HomePage.module.css`, updated `.journeySection` to `min-height: 1697px;`, `.chatStep` min-heights to `320px/350px`, and `.chatSide` top to `116px`.
+   - In `HomePage.jsx`, adjusted scroll thresholds to `< 280` / `< 580` / `>= 580`.
+   - **Verification**: Section height is exactly **1,697px** (100% match with Reference's 1,697px). Phone stays sticky at `top: 116px` across all 3 steps; trailing gap before Passport is cleanly closed.
+   - **Status**: **PASS**
+
+4. **FIX 4 — Homepage FAQ Storybook Section (`.tp-night`)**:
+   - Replaced generic accordion with the reference `.tp-night` two-column dark chocolate storybook layout (`#4d2b19` to `#2f1a10`).
+   - Recreated 11 golden twinkling SVG background stars.
+   - Left column: "Questions, answered" heading, ghost CTA button `<a class="btn btn-ghost" href="/faq">Read all questions</a>`, sitting Teddy mascot with golden `?` wonder bubble.
+   - Right column: `<dl>` definition list of 3 reference questions with golden star bullets (`.tp-qa__star`) and cream typography.
+   - **Verification**: Background computes to `rgba(0, 0, 0, 0) linear-gradient(rgb(77, 43, 25), rgb(47, 26, 16))`, color is `rgb(255, 253, 248)`, 2-column layout confirmed.
+   - **Status**: **PASS**
+
+5. **FIX 5 — Final Doorway House Scene (`.tp-home`) & Snug Basket Landing**:
+   - Replaced beige floating card with full-width dark chocolate scene `.tp-home` (`#2f1a10` to `#24130b`).
+   - Recreated illustrated doorway house (`.tp-house`) with plants, lamp, doorway, welcoming entrance mat "welcome home", Max waiting inside (`/media/maltipoo-max-male.webp`), bowing Teddy mascot, and twin CTAs: WhatsApp button + ghost "Visit & contact" button.
+   - In `PupLayer.jsx`, updated stop points so the runner mascot docks directly into the wicker basket at `translate3d(-26px, 451px, 0px) scale(1.013)` with `overlapY = -1.59px` (snug inside rim).
+   - **Verification**: Doorway scene verified, twin CTAs functional, mascot docks naturally inside the basket.
+   - **Status**: **PASS**
+
+---
+
+### 18.8 Final Consolidated Verdict Matrix
+
+| Requirement | Component | Pre-Fix Status | Final Status | Live Verification Metric |
+| :---: | :--- | :---: | :---: | :--- |
+| **1** | Hero: Title computed colors | PARTIAL | **PASS** | Line 1: `rgb(42, 23, 14)` = Line 2: `rgb(42, 23, 14)` |
+| **2** | Meet the Pups: Section height | PARTIAL | **PASS** | `offsetHeight = 4126px` (exact reference match) |
+| **3** | Puppy Journey: Height & sticky | PARTIAL | **PASS** | `offsetHeight = 1697px`, phone sticky at `top: 116px` |
+| **4** | FAQ: 2-column dark chocolate | FAIL | **PASS** | `#4d2b19` to `#2f1a10`, left intro + mascot, right 3 Q&As |
+| **5** | Doorway CTA & Basket Docking | FAIL | **PASS** | `#2f1a10` to `#24130b`, doorway house, basket dock (-1.6px) |
+
+- **Compilation Status**: `npm run build` PASS (0 errors, 4.22s)
+- **Priority 0 Verification**: **100% PASS across all 5 homepage requirements**
+- **Evidence Screenshots**: Updated pairs stored in `scratch/screenshots_exact/` (`01_hero` through `05_footer_basket`).
+
 
 
 

@@ -98,7 +98,7 @@
   gap: clamp(4.5rem, 6vw, 7rem);
   width: max-content;
   max-width: none;
-  padding-inline: 36vw 14vw;
+  padding-inline: 38vw 12vw;
   display: flex;
   position: absolute;
   will-change: transform;
