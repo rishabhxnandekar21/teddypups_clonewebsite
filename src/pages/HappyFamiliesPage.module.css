@@ -160,8 +160,64 @@
 }
 
 .wallPrint {
+  position: relative;
   display: block;
   width: 100%;
+  text-align: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 0.3rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+.wallPrint:is(:hover, :focus-visible) .polaroid {
+  transform: rotate(0deg) scale(1.02);
+  box-shadow: 0 1px 1px rgba(42, 23, 14, 0.12), 0 18px 30px -14px rgba(42, 23, 14, 0.42);
+}
+
+.wallPrint:active .polaroid {
+  transform: translateY(4px);
+}
+
+.wallPaw {
+  position: absolute;
+  top: -1.25rem;
+  left: 50%;
+  translate: -50%;
+  width: clamp(1.8rem, 24%, 2.6rem);
+  height: clamp(1.8rem, 24%, 2.6rem);
+  color: var(--color-toffee, #d4893f);
+  fill: currentColor;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.wallItem[data-armed][data-revealed] .wallPaw {
+  animation: tp-paw-pat 0.7s calc(var(--d, 0ms) + 0.2s) both;
+}
+
+@keyframes tp-paw-pat { 
+  0% {
+    opacity: 0;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.7, 0.6);
+    transform: translateY(-1.2rem) rotate(-16deg) scale(1.15);
+  }
+  32% {
+    opacity: 0.92;
+    animation-timing-function: cubic-bezier(0.3, 0, 0.3, 1);
+    transform: translateY(0.12rem) rotate(-6deg) scale(1.06, 0.88);
+  }
+  52% {
+    opacity: 0.92;
+    animation-timing-function: cubic-bezier(0.4, 0, 0.8, 0.6);
+    transform: translateY(0px) rotate(-6deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-1rem) rotate(6deg) scale(1.04);
+  }
 }
 
 .polaroid {

@@ -72,28 +72,44 @@ export default function PupLayer() {
     const basketX = basketR ? basketR.left : -26;
     const basketY = basketR ? basketR.top : 451;
 
+    // 1. Hero: peeking sitting state matching center gap
+    const heroX = Math.round(vw * 0.5 - 292.6);
+    const heroY = 531;
+
+    // 2. Meet: Grounded walking-in-place on wooden floor
+    // Scale 0.747 with top at vh - 226 gives paws at vh - 56 (full feet visibility & clearance)
+    const meetX = Math.round(vw * 0.134);
+    const meetY = vh - 226;
+
+    // Dusk staying duration: stays near polaroid note
+    const fDuskStart = fDusk;
+    const fDuskEnd   = Math.max(fDusk + 0.02, (faqTop - 150) / docH);
+
+    // FAQ staying duration: docks at 56px and stays through the section
+    const fFaqStart = faqTop / docH;
+    const fFaqEnd = Math.min(fCta - 0.015, (ctaTop - 150) / docH);
+
     stopsRef.current = [
-      // 1. Hero: sitting peek state matching center gap
-      { frac: 0.00, vpX: Math.round(vw * 0.5 - 212), vpY: 554, scale: 1.0, pose: 'peek', facing: 'right' },
+      // 1. Hero: centered peeking mascot between Arch 3 and Arch 4
+      { frac: 0.00, vpX: heroX, vpY: heroY, scale: 1.38, pose: 'peek', facing: 'right' },
       // Transition into Meet section: walks towards wooden floor
-      { frac: Math.max(0.02, fMeetStart - 0.02), vpX: Math.round(vw * 0.14), vpY: Math.round(vh - 245), scale: 0.60, pose: 'walk', facing: 'right' },
+      { frac: Math.max(0.018, fMeetStart - 0.02), vpX: meetX, vpY: meetY, scale: 0.747, pose: 'walk', facing: 'right' },
       // 2. Meet: Grounded walking-in-place at wooden floor (pinned section)
-      // Mascot stays at vpX: 14vw, vpY: vh - 245 with generous bottom feet clearance
-      { frac: fMeetStart, vpX: Math.round(vw * 0.14), vpY: Math.round(vh - 245), scale: 0.60, pose: 'walk', facing: 'right' },
-      { frac: fMeetEnd,   vpX: Math.round(vw * 0.14), vpY: Math.round(vh - 245), scale: 0.60, pose: 'walk', facing: 'right' },
+      { frac: fMeetStart, vpX: meetX, vpY: meetY, scale: 0.747, pose: 'walk', facing: 'right' },
+      { frac: fMeetEnd,   vpX: meetX, vpY: meetY, scale: 0.747, pose: 'walk', facing: 'right' },
       // 3. Paths: Diagonal movement down wooden signpost, proportional to scroll
-      // Starts near the top of the wooden post (vpX ~560, vpY ~500)
       { frac: fPathsStart, vpX: Math.min(560, vw * 0.42), vpY: 500, scale: 0.58, pose: 'walk', facing: 'right' },
-      // Diagonal movement down along signpost to base (vpX ~680, vpY ~670)
       { frac: fPathsEnd,   vpX: Math.min(680, vw * 0.52), vpY: 670, scale: 0.58, pose: 'walk', facing: 'right' },
       // 4. Puppy Journey (Chat section)
       { frac: fChat,  vpX: 60, vpY: 620, scale: 0.52, pose: 'walk', facing: 'right' },
       // 5. Trust (PassportBook)
       { frac: fTrust, vpX: Math.min(920, vw - 360), vpY: 560, scale: 0.55, pose: 'sit', facing: 'left' },
-      // 6. Dusk (Happy Families Preview)
-      { frac: fDusk,  vpX: Math.min(960, vw - 340), vpY: 580, scale: 0.55, pose: 'sit', facing: 'left' },
-      // 7. FAQ Preview (docks at left 56px inside night column)
-      { frac: fFaq,   vpX: 56, vpY: Math.round(vh * 0.64), scale: 0.55, pose: 'sit', facing: 'right' },
+      // 6. Dusk (Happy Families Preview - stays docked at right)
+      { frac: fDuskStart, vpX: Math.min(960, vw - 340), vpY: 580, scale: 0.55, pose: 'sit', facing: 'left' },
+      { frac: fDuskEnd,   vpX: Math.min(960, vw - 340), vpY: 580, scale: 0.55, pose: 'sit', facing: 'left' },
+      // 7. FAQ Preview (docks at left 56px inside night column and stays docked while reading)
+      { frac: fFaqStart, vpX: 56, vpY: Math.round(vh * 0.58), scale: 0.69, pose: 'sit', facing: 'right' },
+      { frac: fFaqEnd,   vpX: 56, vpY: Math.round(vh * 0.58), scale: 0.69, pose: 'sit', facing: 'right' },
       // 8. Final CTA (Ready to meet, doorway)
       { frac: fCta,   vpX: 220, vpY: 640, scale: 0.65, pose: 'bow', facing: 'right' },
       // 9. Entering Footer: approaches basket
@@ -176,7 +192,7 @@ export default function PupLayer() {
       if (actorRef.current) {
         actorRef.current.style.transform =
           `translate3d(${cx.toFixed(1)}px, ${cy.toFixed(1)}px, 0) scale(${sc.toFixed(3)})`;
-        actorRef.current.style.opacity = progress < 0.015 ? '0' : '1';
+        actorRef.current.style.opacity = (progress < 0.015 || progress > 0.985) ? '0' : '1';
       }
 
       // Pose: snug at final basket stop, peek at hero, otherwise walking or resting

@@ -1,5 +1,5 @@
 // File: src/pages/HowItWorksPage.jsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { BUSINESS } from '../data/navigation.js';
 import MascotPup from '../components/common/MascotPup.jsx';
@@ -7,9 +7,49 @@ import styles from './HowItWorksPage.module.css';
 
 export default function HowItWorksPage() {
   const [activeTab, setActiveTab] = useState('local'); // 'local' | 'imported'
+  const flightContainerRef = useRef(null);
+  const flightPathRef = useRef(null);
+  const flightPlaneRef = useRef(null);
 
   useEffect(() => {
     document.title = 'How it works | TeddyPups U.A.E.';
+  }, []);
+
+  useEffect(() => {
+    const container = flightContainerRef.current;
+    const path = flightPathRef.current;
+    const plane = flightPlaneRef.current;
+    if (!container || !path || !plane) return;
+
+    const updatePlane = () => {
+      const rect = container.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const startY = vh * 0.95;
+      const endY = vh * 0.25 - rect.height;
+      const progress = Math.min(1, Math.max(0, (startY - rect.top) / (startY - endY)));
+
+      const len = path.getTotalLength();
+      const l = Math.min(len, Math.max(0, progress * len));
+      const p = path.getPointAtLength(l);
+      const pNext = path.getPointAtLength(Math.min(len, l + 1));
+      const pPrev = path.getPointAtLength(Math.max(0, l - 1));
+      const angle = (180 * Math.atan2(pNext.y - pPrev.y, pNext.x - pPrev.x)) / Math.PI;
+
+      plane.setAttribute(
+        'transform',
+        `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${angle.toFixed(1)})`
+      );
+      plane.style.opacity = String(Math.min(1, Math.max(0, (progress - 0.11) / 0.06)));
+    };
+
+    updatePlane();
+    window.addEventListener('scroll', updatePlane, { passive: true });
+    window.addEventListener('resize', updatePlane, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', updatePlane);
+      window.removeEventListener('resize', updatePlane);
+    };
   }, []);
 
   return (
@@ -406,9 +446,13 @@ export default function HowItWorksPage() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <div className={styles.flightScene}>
+              <div ref={flightContainerRef} className={styles.flightScene}>
                 <svg viewBox="0 0 660 300" role="img" aria-label="A plane flying puppies from Korea to Dubai">
-                  <path d="M40 250 C 170 40, 470 20, 620 168" className={styles.flightRoute} />
+                  <path
+                    ref={flightPathRef}
+                    d="M40 250 C 170 40, 470 20, 620 168"
+                    className={styles.flightRoute}
+                  />
                   <circle cx="40" cy="250" r="7" className={styles.flightDot} />
                   <circle cx="620" cy="168" r="7" className={styles.flightDot} />
                   <text x="40" y="284" textAnchor="middle" className={styles.flightLabel}>
@@ -417,7 +461,11 @@ export default function HowItWorksPage() {
                   <text x="620" y="202" textAnchor="middle" className={styles.flightLabel}>
                     Dubai
                   </text>
-                  <g transform="translate(410 70)">
+                  <g
+                    ref={flightPlaneRef}
+                    transform="translate(40.0 250.0) rotate(-58.1)"
+                    style={{ opacity: 0 }}
+                  >
                     <g transform="translate(-126 -78)">
                       <path d="M28 60 L8 26 L34 26 L60 54 Z" fill="#d4893f" />
                       <path d="M108 112 L142 156 L172 156 L158 112 Z" fill="#b56e29" />

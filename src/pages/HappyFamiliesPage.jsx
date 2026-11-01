@@ -1,5 +1,5 @@
 // File: src/pages/HappyFamiliesPage.jsx
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { featuredReview, moments } from '../data/families.js';
 import MascotPup from '../components/common/MascotPup.jsx';
 import styles from './HappyFamiliesPage.module.css';
@@ -8,8 +8,12 @@ const TILTS = [-2.2, 1.6, -0.9, 2.4, -2.0, 0.8, -2.6, 1.2, -2.2, 1.6, -0.9, 2.4]
 const TAPES = ['#f6d79a', '#f9cdbf', '#cfe5f6', '#e9dcc4', '#cfe5f6'];
 
 export default function HappyFamiliesPage() {
+  const [revealed, setRevealed] = useState(false);
+
   useEffect(() => {
     document.title = 'Happy families | TeddyPups U.A.E.';
+    const timer = setTimeout(() => setRevealed(true), 60);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -64,6 +68,8 @@ export default function HappyFamiliesPage() {
                     key={moment.id || idx}
                     className={`tp-wall__item ${styles.wallItem}`}
                     style={{ '--d': `${(idx % 4) * 60}ms` }}
+                    data-armed="true"
+                    data-revealed={revealed ? "true" : undefined}
                   >
                     <button
                       type="button"

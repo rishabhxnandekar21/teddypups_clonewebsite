@@ -22,7 +22,7 @@ export default function ContactPage() {
   const postRef = useRef(null);
 
   useEffect(() => {
-    document.title = 'Get in touch with us — TeddyPups UAE';
+    document.title = 'Visit & contact | TeddyPups U.A.E.';
   }, []);
 
   const handleChange = (e) => {

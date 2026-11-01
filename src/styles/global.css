@@ -339,7 +339,7 @@ a:focus-visible {
 }
 
 /* ── Active Scroll Runner Stop Coordination ── */
-html[data-pup] [data-pup-stop] > * {
+html[data-pup] [data-pup-stop]:not([class*="heroTeddy"]):not([class*="basketPup"]):not([class*="nightTeddy"]) > * {
   visibility: hidden;
 }
 

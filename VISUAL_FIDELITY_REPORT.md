@@ -1233,8 +1233,63 @@ Following extraction of exact Next.js SSR reference markup, styles, and geometry
 | `/faq` | Corkboard room, search filter, 9 verified Q&As, note cards with pushpins & animated accordion folding flaps | PASS | 0 errors, search working, 34 interactive items | **PASS** |
 | `/contact` | Postal letterform with interactive blanks, postbox envelope sealing animation, shopfront card, WhatsApp CTA | PASS | 0 errors, form & animations verified | **PASS** |
 
-- **Final Production Build:** `npm run build` passed in 3.61s with **0 errors**.
-- **Remote Sync:** All commits pushed to `origin/master` (latest commit `26f93df`).
+---
+
+## 21. Section 21: Happy Families Wall Photo Fix & How It Works Flight Path Animation
+
+**Audit Date:** 2026-11-01  
+**Viewport:** 1440 × 900, DSF 1.0  
+**Environments Tested:** Reference (`https://puppy.instabizweb.com/`) vs Local Replica (`http://localhost:5174/` and `http://localhost:5173/`).
+
+### 21.1 Defect Investigation & Resolution Summary
+
+| Item | Problem Reported | Root Cause Discovered | Remediation Implemented | Verification Result | Status |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| **1. Happy Families Gallery (`/happy-families`)** | User reported photos not loading below row 1; giant black shapes appeared beneath cards | All 64 images were intact on disk and in data, but `<svg className={styles.wallPaw}>` inside each `.wallPrint` button had **zero CSS rules** defined. Unstyled SVG defaulted to in-flow, 100% width, filled with solid black, pushing the gallery down and disguising itself as broken photo blocks. | 1. Added `.wallPrint` styles (`position: relative; background: transparent; border: 0; padding: 0; cursor: pointer;`).<br>2. Added `.wallPaw` styles (`position: absolute; top: -1.25rem; left: 50%; translate: -50%; width: clamp(1.8rem, 24%, 2.6rem); color: var(--color-toffee); opacity: 0; pointer-events: none; z-index: 3;`).<br>3. Implemented `@keyframes tp-paw-pat` stamp reveal animation matching reference.<br>4. Added `data-armed="true"` and `data-revealed="true"` state to `tp-wall__item`. | Automated Playwright test verified: **64 / 64 images loaded** (`failedCount: 0`). **0 in-flow blocking paw SVGs**. Clean masonry polaroid wall with washi tapes and proper tilts. | **PASS** |
+| **2. How It Works Airplane Flight Path (`/how-it-works#delivery`)** | Aeroplane illustration was static and did not move along the flight path on scroll up and down | Flight SVG airplane `<g>` was statically hardcoded to `transform="translate(410 70)"` without scroll listeners or path interpolation. | 1. Connected `flightContainerRef`, `flightPathRef`, and `flightPlaneRef` in `HowItWorksPage.jsx`.<br>2. Implemented scroll progress formula matching reference chunk: scroll offset `["start 95%", "end 25%"]`.<br>3. Dynamically calculated tangent angle `(180 * Math.atan2(pNext.y - pPrev.y, pNext.x - pPrev.x)) / Math.PI` and set `transform: translate(x y) rotate(deg)` and `opacity: (progress - 0.11) / 0.06`. | Automated Playwright scroll test verified: Plane begins at Korea (`translate(40.0 250.0) rotate(-58.1)`), smoothly glides along arc through center skyline, and arrives at Dubai (`translate(620.0 168.0) rotate(44.5)`). Fully bidirectional on scroll up and down. | **PASS** |
+
+### 21.2 Quantitative Measurements
+
+- **Happy Families (`/happy-families`)**:
+  - Total polaroid items: **64**
+  - Loaded images: **64** (`naturalWidth > 0`)
+  - Failed images: **0**
+  - `.wallPaw` computed style: `position: absolute`, `top: -20px`, `width: 41.6px`, `height: 41.6px`, `opacity: 0`, `zIndex: 3`.
+- **How It Works Airplane Flight (`/how-it-works#delivery`)**:
+  - `scrollY = 1000`: `top: 706px`, `transform: translate(104.7 172.0) rotate(-42.3)`, `opacity: 0.71`
+  - `scrollY = 1400`: `top: 306px`, `transform: translate(352.5 72.4) rotate(-2.4)`, `opacity: 1.0`
+  - `scrollY = 1600`: `top: 106px`, `transform: translate(487.0 89.6) rotate(17.4)`, `opacity: 1.0`
+  - `scrollY = 1800`: `top: -94px`, `transform: translate(605.6 154.7) rotate(40.9)`, `opacity: 1.0`
+  - `scrollY = 2000`: `top: -294px`, `transform: translate(620.0 168.0) rotate(44.5)`, `opacity: 1.0`
+- **Build Status**:
+  - `npm run build`: Exit code 0, 1648 modules transformed, 0 syntax/compilation errors.
+
+
+**Audit Date:** 2026-11-01  
+**Viewport:** 1440 × 900, DSF 1.0  
+**Environments Tested:** Reference (`https://puppy.instabizweb.com/`) vs Local Replica (`http://localhost:5174/` and `http://localhost:5173/`).
+
+### 20.1 User Targeted Issues Resolution Matrix
+
+| Issue | Description | Reference Behavior & Measurements | Local Verified Result | Status |
+| :--- | :--- | :--- | :--- | :---: |
+| **1. Hero Mascot Centering** | Centered in middle gap between Arch 3 & 4 at initial `scrollY = 0` | Head center at `x = 712.5px` (50% midpoint of 1425px screen). Bounding box `x: 419.9px`, `w: 414px`. | Head center at `x = 720.0px` (exact 50% midpoint of 1440px screen). Bounding box `x: 427.42px`, `w: 414px`. Mascot child `visibility: visible`. | **PASS** |
+| **2. Meet the Pups Bottom Feet Clearance** | Feet fully visible, grounded on wooden floor with comfortable clearance | Actor `x: 190px`, `y: 673px`, `scale: 0.747`. Feet touch down at `y = 841px`, yielding **`59px`** clearance from 900px viewport bottom. | Actor `x: 193px`, `y: 674px`, `scale: 0.747`. Feet touch down at `y = 844px`, yielding **`56px`** clearance from 900px viewport bottom. Full visibility, unclipped. | **PASS** |
+| **3. FAQ Mascot Docking & Layout** | Stays docked on left column under CTA / question mark; no drifting across Q&As | Docks at `x: 44px - 56px` inside left column below "Read all questions". Stays parked while reading questions. | Docks at `x: 56px`, `y: 522px`, `scale: 0.69`. Stays parked at `x: 56px` from `faqTop` through the FAQ section. | **PASS** |
+| **4. Footer Basket Mascot Nesting** | Sits snugly nestled between back rim and front woven wicker layers | 3-layer architecture: `.tp-basket__back` (z-index 1), `.tp-basket__pup` (z-index 10), `.tp-basket__front` (z-index 25). | Verified 3-layer architecture: `.basketBack` (z-index 1), `.basketPup` (z-index 10), `.basketFront` (z-index 25). Child `visibility: visible`. Runner hands off cleanly at `progress > 0.985`. | **PASS** |
+| **5. Puppies Page Circular Frame Animation** | Organic circular stroke drawing & expanding circular photo aperture | Frame line with `pathLength="1"`, animated `stroke-dashoffset` 1px → 0px over 1s. Photo aperture `clip-path: circle(0%)` → `circle(75%)` over 0.85s. | Exact organic SVG wash & ink paths implemented. On reveal, `stroke-dashoffset` draws to `0px`, photo expands to `circle(74.8%)`, doodles & stickers pop in at staggered delays (`idx * 70ms`). | **PASS** |
+| **6. Site-Wide Subpages (`/how-it-works`, `/faq`, `/contact`)** | Exact matching DOM sections, headings, routes, and styling | Headings, sections, and routes matched. Added `/visit-and-contact` route alias. Title updated to `Visit & contact \| TeddyPups U.A.E.`. | Both `/contact` and `/visit-and-contact` routes serve the page with matching titles, interactive letters, and shopfront cards. | **PASS** |
+
+### 20.2 Verification Evidence
+- Paired Playwright automated audit script: `scratch/verify_all_final.cjs`
+- Paired screenshots captured and verified:
+  - `scratch/final_ref_hero.png` vs `scratch/final_loc_hero.png`
+  - `scratch/final_ref_meet.png` vs `scratch/final_loc_meet.png`
+  - `scratch/final_ref_faq.png` vs `scratch/final_loc_faq.png`
+  - `scratch/final_ref_footer.png` vs `scratch/final_loc_footer.png`
+  - `scratch/verified_puppies_page.png`
+- Build status: `npm run build` completed cleanly with **0 errors**.
+
 
 
 
