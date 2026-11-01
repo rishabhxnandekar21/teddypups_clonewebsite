@@ -13,9 +13,6 @@ export default function BoardingTicket({ alumnus, index = 0, tilt = 0 }) {
         '--i': index,
       }}
     >
-      {/* Brass Grommet Ring for Luggage Tag */}
-      <span aria-hidden="true" className={styles.tagRing} />
-
       <Link
         to={targetHref}
         className={styles.ticketLink}
@@ -51,9 +48,9 @@ export default function BoardingTicket({ alumnus, index = 0, tilt = 0 }) {
           </span>
         </span>
 
-        {/* Tear-away Admit One Stub */}
+        {/* Tear-away Stub */}
         <span aria-hidden="true" className={styles.ticketStub}>
-          <span className={styles.ticketStubText}>admit one</span>
+          <span className={styles.stubText}>admit one</span>
         </span>
       </Link>
     </li>

@@ -132,7 +132,7 @@
   top: auto;
   left: 14vw;
   right: auto;
-  bottom: calc(var(--floor-h) * 0.42);
+  bottom: calc(var(--floor-h) * 0.49);
   width: clamp(11rem, min(14vw, 24vh), 14rem);
   display: block;
   position: absolute;

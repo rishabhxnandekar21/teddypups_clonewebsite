@@ -73,14 +73,14 @@ export default function PupLayer() {
     const basketY = basketR ? basketR.top : 451;
 
     stopsRef.current = [
-      // 1. Hero: sitting peek state matching hero position
-      { frac: 0.00, vpX: Math.min(427, vw * 0.3), vpY: 548, scale: 1.35, pose: 'peek', facing: 'right' },
+      // 1. Hero: sitting peek state matching center gap
+      { frac: 0.00, vpX: Math.round(vw * 0.5 - 212), vpY: 554, scale: 1.0, pose: 'peek', facing: 'right' },
       // Transition into Meet section: walks towards wooden floor
-      { frac: Math.max(0.02, fMeetStart - 0.02), vpX: 240, vpY: 640, scale: 0.65, pose: 'walk', facing: 'right' },
+      { frac: Math.max(0.02, fMeetStart - 0.02), vpX: Math.round(vw * 0.14), vpY: Math.round(vh - 245), scale: 0.60, pose: 'walk', facing: 'right' },
       // 2. Meet: Grounded walking-in-place at wooden floor (pinned section)
-      // Mascot stays at vpX: 190, vpY: 670 across the whole pinned hallway
-      { frac: fMeetStart, vpX: 190, vpY: 670, scale: 0.60, pose: 'walk', facing: 'right' },
-      { frac: fMeetEnd,   vpX: 190, vpY: 670, scale: 0.60, pose: 'walk', facing: 'right' },
+      // Mascot stays at vpX: 14vw, vpY: vh - 245 with generous bottom feet clearance
+      { frac: fMeetStart, vpX: Math.round(vw * 0.14), vpY: Math.round(vh - 245), scale: 0.60, pose: 'walk', facing: 'right' },
+      { frac: fMeetEnd,   vpX: Math.round(vw * 0.14), vpY: Math.round(vh - 245), scale: 0.60, pose: 'walk', facing: 'right' },
       // 3. Paths: Diagonal movement down wooden signpost, proportional to scroll
       // Starts near the top of the wooden post (vpX ~560, vpY ~500)
       { frac: fPathsStart, vpX: Math.min(560, vw * 0.42), vpY: 500, scale: 0.58, pose: 'walk', facing: 'right' },
@@ -92,8 +92,8 @@ export default function PupLayer() {
       { frac: fTrust, vpX: Math.min(920, vw - 360), vpY: 560, scale: 0.55, pose: 'sit', facing: 'left' },
       // 6. Dusk (Happy Families Preview)
       { frac: fDusk,  vpX: Math.min(960, vw - 340), vpY: 580, scale: 0.55, pose: 'sit', facing: 'left' },
-      // 7. FAQ Preview
-      { frac: fFaq,   vpX: 160, vpY: 630, scale: 0.55, pose: 'sit', facing: 'right' },
+      // 7. FAQ Preview (docks at left 56px inside night column)
+      { frac: fFaq,   vpX: 56, vpY: Math.round(vh * 0.64), scale: 0.55, pose: 'sit', facing: 'right' },
       // 8. Final CTA (Ready to meet, doorway)
       { frac: fCta,   vpX: 220, vpY: 640, scale: 0.65, pose: 'bow', facing: 'right' },
       // 9. Entering Footer: approaches basket
@@ -167,16 +167,16 @@ export default function PupLayer() {
       const vpY = lerp(p0.vpY, p1.vpY, w);
       const sc  = lerp(p0.scale, p1.scale, w);
 
-      // Bounded clamping: keeps mascot naturally within viewport boundaries
+      // Bounded clamping: keeps mascot naturally within viewport boundaries with bottom clearance
       const vw = window.innerWidth;
       const vh = window.innerHeight;
       const cx = Math.max(-50, Math.min(vw - 200, vpX));
-      const cy = Math.max(60, Math.min(vh - 180, vpY));
+      const cy = Math.max(60, Math.min(vh - 215, vpY));
 
       if (actorRef.current) {
         actorRef.current.style.transform =
           `translate3d(${cx.toFixed(1)}px, ${cy.toFixed(1)}px, 0) scale(${sc.toFixed(3)})`;
-        actorRef.current.style.opacity = '1';
+        actorRef.current.style.opacity = progress < 0.015 ? '0' : '1';
       }
 
       // Pose: snug at final basket stop, peek at hero, otherwise walking or resting

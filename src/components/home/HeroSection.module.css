@@ -226,7 +226,7 @@
 .heroTeddy {
   position: absolute;
   left: calc(50% - var(--tw) * 0.7067);
-  bottom: calc(var(--quilt-h) + 26px - var(--tw) * 0.2733);
+  bottom: calc(var(--quilt-h) + 30px - var(--tw) * 0.2733);
   width: var(--tw);
   z-index: 20;
   pointer-events: none;

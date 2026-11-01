@@ -600,6 +600,7 @@
   margin-inline: auto;
   display: grid;
   position: relative;
+  padding-inline: var(--gutter, clamp(1.25rem, 4vw, 3.5rem));
 }
 
 @media (min-width: 1024px) {
@@ -607,6 +608,7 @@
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     align-items: start;
     column-gap: clamp(3rem, 7vw, 8rem);
+    padding-inline: 56px;
   }
 }
 

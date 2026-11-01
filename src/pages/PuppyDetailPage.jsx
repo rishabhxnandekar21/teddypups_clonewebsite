@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MessageCircle, CheckCircle2, ChevronRight, Video, Mail, ChevronLeft } from 'lucide-react';
 import { getPuppyBySlug, puppies } from '../data/puppies.js';
-import PuppyCard from '../components/ui/PuppyCard.jsx';
+import { BUSINESS } from '../data/navigation.js';
+import MascotPup from '../components/common/MascotPup.jsx';
 import PawIcon from '../components/common/PawIcon.jsx';
 import styles from './PuppyDetailPage.module.css';
 
@@ -11,13 +11,14 @@ export default function PuppyDetailPage() {
   const puppy = slug ? getPuppyBySlug(slug) : undefined;
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [scrollScale, setScrollScale] = useState(0.1);
+  const [enquirySent, setEnquirySent] = useState(false);
 
-  // Scroll scale for storybook ribbon
+  // Storybook ribbon scroll progress
   useEffect(() => {
     const onScroll = () => {
       const docH = document.documentElement.scrollHeight - window.innerHeight;
       if (docH > 0) {
-        const ratio = Math.min(1, Math.max(0.1, window.scrollY / docH));
+        const ratio = Math.min(1, Math.max(0.08, window.scrollY / docH));
         setScrollScale(ratio);
       }
     };
@@ -25,34 +26,17 @@ export default function PuppyDetailPage() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Reset active image index whenever slug changes
+  // Title and scroll reset on slug change
   useEffect(() => {
     setActiveImageIndex(0);
+    setEnquirySent(false);
     if (puppy) {
-      const isGoneHome = puppy.status === 'gone-home' || puppy.status === 'adopted';
-      const statusLabel = isGoneHome ? 'Gone Home ♥' : 'Available Puppy';
-      document.title = `${puppy.name} (${puppy.breed}) — ${statusLabel} | TeddyPups UAE`;
+      document.title = `${puppy.name}, ${puppy.breed} puppy | TeddyPups U.A.E.`;
     } else {
-      document.title = 'Puppy Not Found — TeddyPups UAE';
+      document.title = 'Puppy Not Found | TeddyPups U.A.E.';
     }
     window.scrollTo(0, 0);
   }, [puppy, slug]);
-
-  // Keyboard navigation for image gallery
-  useEffect(() => {
-    if (!puppy || !puppy.images || puppy.images.length <= 1) return;
-
-    const handleKeyDown = (e) => {
-      if (e.key === 'ArrowLeft') {
-        setActiveImageIndex((prev) => (prev > 0 ? prev - 1 : puppy.images.length - 1));
-      } else if (e.key === 'ArrowRight') {
-        setActiveImageIndex((prev) => (prev < puppy.images.length - 1 ? prev + 1 : 0));
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [puppy]);
 
   if (!puppy) {
     return (
@@ -87,33 +71,13 @@ export default function PuppyDetailPage() {
         `Hi TeddyPups! I saw ${puppy.name} (${puppy.breed}) who has gone home. I would love to ask about upcoming puppies like ${puppy.name}!`
       )}`
     : `https://wa.me/971541676733?text=${encodeURIComponent(
-        `Hi TeddyPups! I am inquiring about ${puppy.name} (${puppy.breed}). Is ${puppy.gender === 'male' ? 'he' : 'she'} still available?`
+        `Hi TeddyPups! I'm interested in ${puppy.name}, the ${puppy.breed}: https://puppy.instabizweb.com/puppies/${puppy.slug}`
       )}`;
 
-  // Find previous and next puppies in the collection for navigation
+  // Find previous and next puppies for bottom navigation cards
   const currentIndex = puppies.findIndex((p) => p.slug === puppy.slug);
   const prevPuppy = currentIndex > 0 ? puppies[currentIndex - 1] : puppies[puppies.length - 1];
   const nextPuppy = currentIndex < puppies.length - 1 ? puppies[currentIndex + 1] : puppies[0];
-
-  // Contextual related puppies: same breed or same status first, then other available
-  const otherPuppies = puppies
-    .filter((p) => p.slug !== puppy.slug)
-    .sort((a, b) => {
-      if (a.breed === puppy.breed && b.breed !== puppy.breed) return -1;
-      if (b.breed === puppy.breed && a.breed !== puppy.breed) return 1;
-      if (a.status === puppy.status && b.status !== puppy.status) return -1;
-      return 0;
-    })
-    .slice(0, 3);
-
-  const defaultInclusions = [
-    'Complete veterinary health clearance',
-    'Full age-appropriate vaccinations',
-    'ISO microchip with UAE registration certificate',
-    'Export & MOCCAE entry documentation',
-    'Luxury puppy starter cuddle kit',
-    '24/7 post-adoption care concierge',
-  ];
 
   const getCoatColor = (p) => {
     if (p.colorHex) return p.colorHex;
@@ -125,267 +89,393 @@ export default function PuppyDetailPage() {
     return '#785838';
   };
 
+  const handleEnquirySubmit = (e) => {
+    e.preventDefault();
+    setEnquirySent(true);
+  };
+
   return (
     <div data-page="pup" className="tp-page">
       <article
-        className={`tp-storybook ${styles.page}`}
+        className={styles.storybook}
         style={{
-          position: 'relative',
-          background: `linear-gradient(180deg, color-mix(in srgb, ${getCoatColor(puppy)} 24%, var(--color-milk, #fffdf8)) 0%, var(--color-milk, #fffdf8) 85%)`,
+          background: `linear-gradient(180deg, color-mix(in srgb, ${getCoatColor(puppy)} 24%, var(--color-milk)) 0, var(--color-milk) 85%)`,
         }}
       >
         {/* Storybook Ribbon Bookmark */}
-        <div aria-hidden="true" className={`tp-ribbon ${styles.ribbon}`}>
-          <div className={`tp-ribbon__track ${styles.ribbonTrack}`}>
+        <div aria-hidden="true" className={styles.ribbon}>
+          <div className={styles.ribbonTrack}>
             <span
-              className={`tp-ribbon__band ${styles.ribbonBand}`}
+              className={styles.ribbonBand}
               style={{ transform: `scaleY(${scrollScale})` }}
-            ></span>
+            />
           </div>
         </div>
 
-        <div className="container">
-          {/* ── Breadcrumbs & Prev/Next Bar ── */}
-          <div className={styles.navRow}>
-            <nav className={styles.breadcrumbs} aria-label="Breadcrumbs">
-              {isGoneHome ? (
-                <>
-                  <Link to="/gone-home" className={styles.breadcrumbLink}>
-                    Gone home
-                  </Link>
-                  <span className={styles.breadcrumbSep} aria-hidden="true">
-                    /
-                  </span>
-                  <span className={styles.breadcrumbCurrent}>{puppy.name}</span>
-                </>
-              ) : (
-                <>
-                  <Link to="/puppies" className={styles.breadcrumbLink}>
-                    Available puppies
-                  </Link>
-                  <span className={styles.breadcrumbSep} aria-hidden="true">
-                    /
-                  </span>
-                  <span className={styles.breadcrumbCurrent}>{puppy.name}</span>
-                </>
-              )}
-            </nav>
+        <div className={styles.container}>
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className={styles.breadcrumb}>
+            <Link to={isGoneHome ? '/gone-home' : '/puppies'} className={styles.breadcrumbLink}>
+              {isGoneHome ? 'Gone home' : 'Available puppies'}
+            </Link>
+            <span aria-hidden="true"> / </span>
+            <span aria-current="page">{puppy.name}</span>
+          </nav>
 
-            {/* Sibling Puppy Quick Links */}
-            <div className={styles.pupSiblingNav}>
-              <Link
-                to={`/puppies/${prevPuppy.slug}`}
-                className={styles.pupSiblingLink}
-                title={`Previous pup: ${prevPuppy.name}`}
-              >
-                <ChevronLeft size={14} aria-hidden="true" />
-                <span>Previous pup</span>
-              </Link>
-              <span className={styles.pupSiblingDivider}>•</span>
-              <Link
-                to={`/puppies/${nextPuppy.slug}`}
-                className={styles.pupSiblingLink}
-                title={`Next pup: ${nextPuppy.name}`}
-              >
-                <span>Next pup</span>
-                <ChevronRight size={14} aria-hidden="true" />
-              </Link>
-            </div>
-          </div>
-
-          {/* ── Storybook Chapter Marker ── */}
-          <p className={`tp-chapter ${styles.chapter}`}>
-            <span aria-hidden="true" className={`tp-chapter__n font-plush ${styles.chapterN}`}>1</span>
-            <span className={`font-scrawl ${styles.chapterText}`}>hello, it's me</span>
+          {/* ── Chapter 1: hello, it's me ── */}
+          <p className={styles.chapter}>
+            <span aria-hidden="true" className={styles.chapterN}>1</span>
+            <span className={styles.chapterText}>hello, it's me</span>
           </p>
 
-        {/* ── Detail Grid ── */}
-        <div className={styles.detailGrid}>
-          {/* Media Column / Gallery */}
-          <div className={styles.mediaCol}>
-            <div className={styles.imageCard}>
-              <img
-                src={currentImage}
-                alt={`${puppy.name}, ${puppy.breed} photo ${activeImageIndex + 1} of ${totalImages}`}
-                className={styles.mainImage}
-                width={700}
-                height={840}
-              />
-
-              {puppy.hasVideo && activeImageIndex === 0 && (
-                <div className={styles.videoTag}>
-                  <Video size={14} color="var(--color-toffee)" />
-                  <span>▶ Video Available</span>
+          <div className={styles.chapter1Grid}>
+            {/* Left Media Display */}
+            <div className={styles.mediaCol}>
+              <div className={styles.storypage}>
+                <div className={styles.photoFrame}>
+                  {puppy.hasVideo && activeImageIndex === 1 ? (
+                    <div className={styles.videoPlaceholder}>
+                      <img
+                        src={currentImage}
+                        alt={`${puppy.name}, video thumbnail`}
+                        className={styles.storyImg}
+                      />
+                      <span className={styles.videoCenterPlay}>▶</span>
+                    </div>
+                  ) : (
+                    <img
+                      src={currentImage}
+                      alt={`${puppy.name}, ${puppy.gender === 'male' ? 'male' : 'female'} ${puppy.breed} puppy`}
+                      className={styles.storyImg}
+                    />
+                  )}
                 </div>
-              )}
 
-              {/* Gallery Controls Overlay */}
+                {totalImages > 1 && (
+                  <div className={styles.photoControls}>
+                    <button
+                      type="button"
+                      onClick={handlePrevImage}
+                      className={styles.photoNavBtn}
+                      aria-label="Previous photo"
+                    >
+                      ‹
+                    </button>
+                    <span className={styles.photoBadge}>
+                      {activeImageIndex + 1} / {totalImages}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleNextImage}
+                      className={styles.photoNavBtn}
+                      aria-label="Next photo"
+                    >
+                      ›
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              {/* Thumbnail Strip */}
               {totalImages > 1 && (
-                <div className={styles.galleryControls}>
-                  <button
-                    type="button"
-                    onClick={handlePrevImage}
-                    className={styles.navBtn}
-                    aria-label="Previous photo"
-                  >
-                    ‹
-                  </button>
-                  <span className={styles.counterBadge}>
-                    {activeImageIndex + 1} / {totalImages}
-                  </span>
-                  <button
-                    type="button"
-                    onClick={handleNextImage}
-                    className={styles.navBtn}
-                    aria-label="Next photo"
-                  >
-                    ›
-                  </button>
-                </div>
+                <ul className={styles.thumbnailStrip} aria-label={`All photos of ${puppy.name}`}>
+                  {images.map((imgUrl, idx) => {
+                    const isActive = idx === activeImageIndex;
+                    const isVideoThumb = puppy.hasVideo && idx === 1;
+                    return (
+                      <li key={imgUrl} className={styles.thumbItem}>
+                        <button
+                          type="button"
+                          onClick={() => setActiveImageIndex(idx)}
+                          aria-label={`${puppy.name}, ${isVideoThumb ? 'video' : 'photo'} ${idx + 1} of ${totalImages}`}
+                          aria-current={isActive}
+                          className={`${styles.thumbBtn} ${isActive ? styles.thumbBtnActive : ''}`}
+                        >
+                          <img src={imgUrl} alt="" className={styles.thumbImg} />
+                          {isVideoThumb && (
+                            <span className={styles.videoThumbPlay}>▶</span>
+                          )}
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
               )}
             </div>
 
-            {/* Thumbnail Strip */}
-            {totalImages > 1 && (
-              <ul className={styles.thumbnailStrip} aria-label={`All photos of ${puppy.name}`}>
-                {images.map((imgUrl, idx) => {
-                  const isActive = idx === activeImageIndex;
-                  return (
-                    <li key={imgUrl} className={styles.thumbItem}>
-                      <button
-                        type="button"
-                        onClick={() => setActiveImageIndex(idx)}
-                        className={`${styles.thumbBtn} ${isActive ? styles.thumbActive : ''}`}
-                        aria-label={`${puppy.name}, photo ${idx + 1} of ${totalImages}`}
-                        aria-current={isActive ? 'true' : 'false'}
-                      >
-                        <img src={imgUrl} alt="" className={styles.thumbImage} loading="lazy" />
-                        {puppy.hasVideo && idx === 1 && (
-                          <span className={styles.videoOverlay} aria-hidden="true">
-                            ▶
-                          </span>
-                        )}
-                      </button>
+            {/* Right Tag Board */}
+            <div className={styles.tagCol}>
+              <div className={styles.tagSticky}>
+                <div className={styles.tagBoard}>
+                  <span aria-hidden="true" className={styles.tagRing} />
+                  
+                  {/* Peeking Mascot */}
+                  <div className={styles.tagMascot} data-facing="right">
+                    <MascotPup
+                      pose="peeking"
+                      facing="right"
+                      ariaLabel={`Teddy, peeking over ${puppy.name}'s tag`}
+                    />
+                  </div>
+
+                  <span className={styles.chip}>
+                    <PawIcon size={14} color="var(--color-toffee)" />
+                    <span>{isGoneHome ? 'Gone Home ♥' : 'Available'}</span>
+                  </span>
+
+                  <h1 className={styles.pupName}>{puppy.name}</h1>
+                  <p className={styles.pupBreed}>{puppy.subBreed || puppy.breed}</p>
+
+                  <dl className={styles.specsDl}>
+                    <div>
+                      <dt className={styles.specDt}>Breed</dt>
+                      <dd className={styles.specDd}>{puppy.breed}</dd>
+                    </div>
+                    <div>
+                      <dt className={styles.specDt}>Boy or girl</dt>
+                      <dd className={styles.specDd}>{puppy.gender === 'male' ? 'Boy' : 'Girl'}</dd>
+                    </div>
+                    <div>
+                      <dt className={styles.specDt}>Age</dt>
+                      <dd className={styles.specDd}>{puppy.age || '3 months'}</dd>
+                    </div>
+                    <div>
+                      <dt className={styles.specDt}>Where</dt>
+                      <dd className={styles.specDd}>
+                        {puppy.location || (puppy.origin === 'local' ? 'In Dubai showroom' : 'Imported for you')}
+                      </dd>
+                    </div>
+                  </dl>
+
+                  <div className={styles.tagActions}>
+                    <a
+                      href={whatsappInquiryUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-whatsapp"
+                    >
+                      {isGoneHome ? 'Ask about a puppy like this' : `Ask about ${puppy.name} on WhatsApp`}
+                    </a>
+                    <a href={`#enquire-${puppy.slug}`} className="btn btn-ghost">
+                      Send an enquiry
+                    </a>
+                  </div>
+                </div>
+
+                {/* ── Chapter 2: what comes with puppy ── */}
+                <div className={styles.paperNote}>
+                  <p className={styles.chapter}>
+                    <span aria-hidden="true" className={styles.chapterN}>2</span>
+                    <span className={styles.chapterText}>what comes with {puppy.name}</span>
+                  </p>
+                  <h2 className={styles.paperTitle}>Every Teddy Pup comes</h2>
+                  <ul className={styles.inclusionsList}>
+                    <li className={styles.inclusionItem}>
+                      <svg viewBox="0 0 32 32" className={styles.checkIcon} aria-hidden="true">
+                        <path d="M5 17l7 7L27 8" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <span>Vaccinated</span>
                     </li>
-                  );
-                })}
-              </ul>
-            )}
+                    <li className={styles.inclusionItem}>
+                      <svg viewBox="0 0 32 32" className={styles.checkIcon} aria-hidden="true">
+                        <path d="M5 17l7 7L27 8" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <span>Dewormed</span>
+                    </li>
+                    <li className={styles.inclusionItem}>
+                      <svg viewBox="0 0 32 32" className={styles.checkIcon} aria-hidden="true">
+                        <path d="M5 17l7 7L27 8" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <span>Verified health certificate from licensed vets</span>
+                    </li>
+                    <li className={styles.inclusionItem}>
+                      <svg viewBox="0 0 32 32" className={styles.checkIcon} aria-hidden="true">
+                        <path d="M5 17l7 7L27 8" fill="none" stroke="currentColor" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <span>Thoroughly checked before joining your family</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Right Column / Spec Card */}
-          <div className={styles.specCard}>
-            <div className={styles.specHeader}>
-              <span className={styles.stepTag}>
-                {isGoneHome ? "1 the day they went home" : "1 hello, it's me"}
-              </span>
+          {/* ── Chapter 3: the way home ── */}
+          <section aria-labelledby={`home-steps-${puppy.slug}`} className={styles.trailSection}>
+            <p className={styles.chapter}>
+              <span aria-hidden="true" className={styles.chapterN}>3</span>
+              <span className={styles.chapterText}>the way home</span>
+            </p>
+            <h2 id={`home-steps-${puppy.slug}`} className={styles.trailTitle}>
+              {puppy.origin === 'local' ? 'Bringing your puppy home in Dubai' : 'Coming home from abroad'}
+            </h2>
+            <ol className={styles.trailList}>
+              <li className={styles.trailStep}>
+                <span aria-hidden="true" className={styles.trailNum}>1</span>
+                <h3 className={styles.stepHeading}>Reserve your puppy</h3>
+                <p className={styles.stepCopy}>Tell us which puppy has captured your heart.</p>
+              </li>
+              <li className={styles.trailStep}>
+                <span aria-hidden="true" className={styles.trailNum}>2</span>
+                <h3 className={styles.stepHeading}>Personalized consultation</h3>
+                <p className={styles.stepCopy}>We finalize details with you and share updates on your puppy's journey.</p>
+              </li>
+              <li className={styles.trailStep}>
+                <span aria-hidden="true" className={styles.trailNum}>3</span>
+                <h3 className={styles.stepHeading}>Import and arrival</h3>
+                <p className={styles.stepCopy}>We manage health checks, travel arrangements, and documentation.</p>
+              </li>
+              <li className={styles.trailStep}>
+                <span aria-hidden="true" className={styles.trailNum}>4</span>
+                <h3 className={styles.stepHeading}>Welcome home</h3>
+                <p className={styles.stepCopy}>We help your new puppy settle in and ensure a smooth transition into your home.</p>
+              </li>
+            </ol>
+          </section>
 
-              {isGoneHome ? (
-                <div className={`${styles.statusBadge} ${styles.statusBadgeGoneHome}`}>
-                  GONE HOME ♥
+          {/* ── Chapter 4: dear TeddyPups... ── */}
+          <section id={`enquire-${puppy.slug}`} aria-labelledby={`enquire-title-${puppy.slug}`} className={styles.letterSection}>
+            <span aria-hidden="true" className={styles.letterStamp}>
+              <PawIcon size={32} color="var(--color-toffee-deep)" />
+            </span>
+
+            <div className={styles.letterCopy}>
+              <p className={styles.chapter}>
+                <span aria-hidden="true" className={styles.chapterN}>4</span>
+                <span className={styles.chapterText}>dear TeddyPups…</span>
+              </p>
+              <h2 id={`enquire-title-${puppy.slug}`} className={styles.letterTitle}>
+                Ask about {puppy.name}
+              </h2>
+              <p className={styles.letterLede}>
+                Leave your details and our team will get back to you promptly — or message us on WhatsApp for the quickest reply.
+              </p>
+            </div>
+
+            <div className={styles.letterFormCol}>
+              {enquirySent ? (
+                <div className={styles.sentBox}>
+                  <PawIcon size={36} color="var(--color-toffee)" />
+                  <p className={styles.sentTitle}>Thank you, friend!</p>
+                  <p className={styles.sentDesc}>
+                    We received your message about {puppy.name}. Our concierge will get back to you shortly!
+                  </p>
+                  <a href={whatsappInquiryUrl} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp mt-4">
+                    Message us on WhatsApp
+                  </a>
                 </div>
               ) : (
-                <div className={`${styles.statusBadge} ${styles.statusBadgeAvailable}`}>
-                  ● Available
-                </div>
+                <form onSubmit={handleEnquirySubmit} className={styles.letterForm}>
+                  <div className={styles.formGrid}>
+                    <div>
+                      <label className={styles.formLabel}>
+                        Your name <span className={styles.reqStar}>*</span>
+                      </label>
+                      <input
+                        required
+                        minLength={2}
+                        maxLength={80}
+                        name="name"
+                        placeholder="your name"
+                        className={styles.formInput}
+                      />
+                    </div>
+                    <div>
+                      <label className={styles.formLabel}>
+                        Phone or WhatsApp <span className={styles.reqStar}>*</span>
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        name="phone"
+                        placeholder="+971 50 123 4567"
+                        className={styles.formInput}
+                      />
+                      <p className={styles.formHint}>With country code, e.g. +971 50 123 4567</p>
+                    </div>
+                    <div>
+                      <label className={styles.formLabel}>
+                        Email <span className={styles.optLabel}>(optional)</span>
+                      </label>
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="your email"
+                        className={styles.formInput}
+                      />
+                    </div>
+                    <div>
+                      <label className={styles.formLabel}>
+                        Your area <span className={styles.optLabel}>(optional)</span>
+                      </label>
+                      <input
+                        name="area"
+                        placeholder="e.g. Dubai Marina"
+                        className={styles.formInput}
+                      />
+                      <p className={styles.formHint}>e.g. Dubai Marina</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className={styles.formLabel}>
+                      Message <span className={styles.optLabel}>(optional)</span>
+                    </label>
+                    <textarea
+                      name="message"
+                      rows={4}
+                      maxLength={2000}
+                      defaultValue={`Hi! I'd love to know more about ${puppy.name} (${puppy.breed}).`}
+                      className={styles.formTextarea}
+                    />
+                  </div>
+
+                  <button type="submit" className="btn btn-primary">
+                    Send enquiry
+                  </button>
+                </form>
               )}
-
-              <h1 className={styles.pupTitle}>{puppy.name}</h1>
-              <p className={styles.pupBreed}>{puppy.subBreed || puppy.breed}</p>
             </div>
+          </section>
 
-            {/* Specs Grid */}
-            <div className={styles.specsTable}>
-              <div className={styles.specCell}>
-                <span className={styles.specLabel}>Breed</span>
-                <span className={styles.specValue}>{puppy.breed}</span>
-              </div>
-              <div className={styles.specCell}>
-                <span className={styles.specLabel}>Boy or girl</span>
-                <span className={styles.specValue}>
-                  {puppy.genderLabel || (puppy.gender === 'male' ? 'Boy' : 'Girl')}
-                </span>
-              </div>
-              <div className={styles.specCell}>
-                <span className={styles.specLabel}>Age</span>
-                <span className={styles.specValue}>{puppy.age || `${puppy.ageWeeks} weeks`}</span>
-              </div>
-              <div className={styles.specCell}>
-                <span className={styles.specLabel}>Where</span>
-                <span className={styles.specValue}>
-                  {puppy.location || (puppy.origin === 'local' ? 'In Dubai showroom' : 'Imported for you')}
-                </span>
-              </div>
-            </div>
-
-            <p className={styles.description}>
-              {puppy.description ||
-                (isGoneHome
-                  ? `${puppy.name} has already found their loving forever family in the UAE! If you love ${puppy.breed}s, our concierge can find or import a healthy, certified puppy just like ${puppy.name}.`
-                  : `${puppy.name} is a healthy, charming ${puppy.breed} puppy lovingly cared for. Contact our Dubai concierge team for full video footage, health certificates, and consultation.`)}
-            </p>
-
-            {/* Actions */}
-            <div className={styles.ctaActions}>
-              <a
-                href={whatsappInquiryUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-whatsapp btn-lg"
-              >
-                <MessageCircle size={18} aria-hidden="true" />
-                {isGoneHome ? 'Ask about a puppy like this' : `Ask about ${puppy.name} on WhatsApp`}
-              </a>
-              <Link to="/contact" className="btn btn-outline btn-lg">
-                <Mail size={18} aria-hidden="true" />
-                Send an enquiry
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* ── Section 2: Inclusions ── */}
-        <section className={styles.inclusionsSection} aria-labelledby="inclusions-title">
-          <div className={styles.inclusionsHeader}>
-            <span className="section-eyebrow">
-              {isGoneHome ? `② what came with ${puppy.name}` : `② what comes with ${puppy.name}`}
-            </span>
-            <h2
-              className="section-heading"
-              id="inclusions-title"
-              style={{ fontSize: '1.75rem', marginTop: '0.25rem' }}
+          {/* ── Bottom Prev / Next Pup Navigation ── */}
+          <nav aria-label="More puppies" className={styles.siblingNav}>
+            <Link
+              to={`/puppies/${prevPuppy.slug}`}
+              className={styles.siblingCard}
             >
-              Every Teddy Pup comes
-            </h2>
-          </div>
+              <span className={styles.siblingThumb}>
+                <img
+                  src={prevPuppy.image || prevPuppy.images?.[0]}
+                  alt={`${prevPuppy.gender === 'male' ? 'Male' : 'Female'} ${prevPuppy.breed} puppy`}
+                  className={styles.siblingImg}
+                />
+              </span>
+              <span>
+                <span className={styles.siblingKicker}>Previous pup</span>
+                <span className={styles.siblingTitle}>{prevPuppy.name || prevPuppy.breed}</span>
+              </span>
+            </Link>
 
-          <div className={styles.inclusionsGrid}>
-            {(puppy.features || defaultInclusions).map((feature) => (
-              <div key={feature} className={styles.inclusionItem}>
-                <CheckCircle2 size={18} color="var(--color-whatsapp)" style={{ flexShrink: 0 }} />
-                <span>{feature}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ── Other Puppies ── */}
-        <section className={styles.otherSection} aria-labelledby="other-pups-title">
-          <div className="sectionHeader" style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
-            <span className="section-eyebrow">more furry friends</span>
-            <h2 className="section-heading" id="other-pups-title" style={{ fontSize: '2rem' }}>
-              You might also love
-            </h2>
-          </div>
-
-          <div className={styles.relatedGrid}>
-            {otherPuppies.map((other) => (
-              <PuppyCard key={other.slug} puppy={other} />
-            ))}
-          </div>
-        </section>
-      </div>
-    </article>
-  </div>
+            <Link
+              to={`/puppies/${nextPuppy.slug}`}
+              className={`${styles.siblingCard} ${styles.siblingCardNext}`}
+            >
+              <span className={styles.siblingThumb}>
+                <img
+                  src={nextPuppy.image || nextPuppy.images?.[0]}
+                  alt={`${nextPuppy.gender === 'male' ? 'Male' : 'Female'} ${nextPuppy.breed} puppy`}
+                  className={styles.siblingImg}
+                />
+              </span>
+              <span>
+                <span className={styles.siblingKicker}>Next pup</span>
+                <span className={styles.siblingTitle}>{nextPuppy.name || nextPuppy.breed}</span>
+              </span>
+            </Link>
+          </nav>
+        </div>
+      </article>
+    </div>
   );
 }
