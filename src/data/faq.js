@@ -1,6 +1,6 @@
+// File: src/data/faq.js
 // ============================================================
-// TeddyPups UAE — FAQ Data
-// 9 questions verified from reference inspection of /faq
+// TeddyPups UAE — FAQ Data (Exact 1:1 Live Reference Copy)
 // ============================================================
 
 export const faqItems = [
@@ -15,56 +15,56 @@ export const faqItems = [
     id: 'faq-2',
     question: 'Can I meet a puppy before I decide?',
     answer:
-      'Absolutely! You are welcome to visit our Downtown Dubai showroom to meet available puppies face-to-face, or schedule a live video call.',
+      'Yes. Come meet our locally available puppies in our Downtown Dubai showroom and spend time bonding before making your decision.',
     category: 'visit',
   },
   {
     id: 'faq-3',
     question: 'Can I take my puppy home the same day?',
     answer:
-      'For puppies currently in our Dubai showroom that have completed all veterinary checks, same-day handover is possible.',
+      'Local puppies are available immediately, so you can take your puppy home the same day.',
     category: 'adoption',
   },
   {
     id: 'faq-4',
     question: 'Do you import puppies from abroad?',
     answer:
-      'Yes, we work with ethical, verified breeders in South Korea and Europe for rare miniature and teacup breeds upon request.',
+      'Yes. Through our Order Upon Request service we source rare and premium teacup breeds from the most reputable, certified breeders across Europe, Korea, and beyond — and we handle the import for you.',
     category: 'import',
   },
   {
     id: 'faq-5',
     question: 'How does an imported puppy travel to Dubai?',
     answer:
-      'Puppies travel in temperature-controlled, authorized pet travel cabins accompanied by professional flight escorts, fully compliant with UAE MOCCAE regulations.',
+      'We manage every part of the import process, including health checks, travel arrangements, and the necessary documentation, so your puppy arrives happy, healthy, and stress-free.',
     category: 'import',
   },
   {
     id: 'faq-6',
     question: 'Will I see photos and health details first?',
     answer:
-      'Yes, you receive complete video footage, veterinary records, weight charts, and parents’ pedigree before making any commitment.',
+      'Yes. Photos, videos, and health certificates are shared before your puppy travels, and our team sends real photos and health details directly on WhatsApp.',
     category: 'import',
   },
   {
     id: 'faq-7',
     question: 'Do you deliver?',
     answer:
-      'We provide personal chauffeur delivery throughout Dubai, Abu Dhabi, and all other Emirates, right to your doorstep.',
+      'Yes. We deliver within Dubai, and our trusted international cargo partners deliver puppies safely to loving homes all around the world.',
     category: 'delivery',
   },
   {
     id: 'faq-8',
     question: 'Which breeds do you usually have?',
     answer:
-      'We specialize in Maltipoos, Pomeranians, Toy & Teacup Poodles, Cavapoos, and Shih-Tzus.',
+      'Breeds we regularly have include Maltipoo, Pomeranian, Poodle and Bichon, plus rare teacup lines such as Korean teacup poodles, Maltese, Pom and Yorkie.',
     category: 'breeds',
   },
   {
     id: 'faq-9',
     question: 'Is there help after my puppy comes home?',
     answer:
-      'Yes, our dedicated puppy care concierge is available 24/7 to advise on diet, routine, training, and veterinary support.',
+      'Yes. Our team is available 24/7 and offers advice on training, nutrition, and general care to ensure a smooth transition for you and your new furry friend.',
     category: 'care',
   },
 ];

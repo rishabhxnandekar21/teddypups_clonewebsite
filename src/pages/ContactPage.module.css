@@ -1,451 +1,394 @@
+/* File: src/pages/ContactPage.module.css */
 /* ============================================================
-   ContactPage Styles (Airmail Letterfold & Postbox Theme)
+   ContactPage Styles — 1:1 Live Reference Fidelity
    ============================================================ */
 
 .page {
-  padding-bottom: 5rem;
+  position: relative;
+  min-height: 100vh;
 }
 
-/* Header */
-.header {
-  background-color: var(--color-sand);
-  padding-block: 3.5rem 3rem;
-  border-bottom: 2px solid rgba(42, 23, 14, 0.08);
-  text-align: center;
+.contactScene {
+  background: linear-gradient(180deg, var(--sky-top, #fff9ee) 0%, var(--sky-bottom, #f9dca4) 100%);
+  width: 100%;
+  padding-bottom: clamp(5rem, 9vh, 7rem);
 }
 
-.headerInner {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  max-width: 680px;
+.inner {
+  max-width: 110rem;
   margin-inline: auto;
+  padding-inline: var(--gutter, 1.25rem);
+  padding-top: clamp(2.5rem, 5vh, 4rem);
+}
+
+/* 2-Column Header */
+.headerGrid {
+  display: grid;
+  gap: 1.5rem;
+  align-items: flex-end;
+}
+
+@media (min-width: 1024px) {
+  .headerGrid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
 }
 
 .title {
-  font-family: var(--font-display);
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-family: var(--font-plush, "Fraunces", serif);
+  font-size: clamp(2.5rem, 5.5vw, 4.2rem);
   font-weight: 800;
-  color: var(--color-cocoa);
-  line-height: 1.1;
+  line-height: 1.05;
+  color: var(--color-cocoa, #2a170e);
+  max-width: 12ch;
 }
 
-.subhead {
-  font-size: 1.1rem;
-  color: var(--color-cocoa-soft);
+@media (min-width: 1024px) {
+  .title {
+    grid-column: span 7 / span 7;
+  }
+}
+
+.lede {
+  font-size: clamp(1.1rem, 1.35vw, 1.25rem);
   line-height: 1.6;
+  color: var(--ink-soft, #7a5840);
 }
 
-/* Layout Grid */
+@media (min-width: 1024px) {
+  .lede {
+    grid-column: span 5 / span 5;
+    padding-bottom: 0.75rem;
+  }
+}
+
+/* ── Main Layout Grid ── */
 .layoutGrid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 2.5rem;
-  margin-top: 3rem;
+  gap: 3rem;
+  margin-top: 3.5rem;
 }
 
 @media (min-width: 1024px) {
   .layoutGrid {
-    grid-template-columns: 1fr 1.35fr;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
     gap: 3.5rem;
-    align-items: start;
   }
 }
 
-/* Left Column: Direct Channels */
+/* ── Left Column ── */
 .channelsCol {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .channelsCol {
+    grid-column: span 5 / span 5;
+  }
+}
+
+.contactList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.contactLabel {
+  font-size: 1.25rem;
+  color: var(--ink-soft, #7a5840);
+}
+
+.contactValue {
+  margin-top: 0.25rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-cocoa, #2a170e);
+}
+
+.contactValue a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.contactValue a:hover {
+  color: var(--color-toffee-deep, #b56e29);
+}
+
+/* ── Downtown Dubai Showroom (tp-shopfront) ── */
+.shopfront {
+  position: relative;
+  background-color: #fffdf8;
+  border: 2px solid var(--color-cocoa, #2a170e);
+  border-radius: 16px;
+  box-shadow: 4px 7px 0px rgba(42, 23, 14, 0.2);
+  margin-top: 3rem;
+  overflow: hidden;
+}
+
+.shopfrontSkyline {
+  position: absolute;
+  bottom: -4px;
+  right: 0;
+  width: 75%;
+  color: rgba(212, 137, 63, 0.3);
+  pointer-events: none;
+}
+
+.visitInner {
+  position: relative;
+  padding: 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
 }
 
-.channelCard {
-  background-color: var(--color-milk);
-  border: 2.5px solid var(--color-cocoa);
-  border-radius: var(--radius-xl);
-  padding: 1.75rem 1.25rem;
-  box-shadow: 4px 6px 0px rgba(42, 23, 14, 0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-
 @media (min-width: 640px) {
-  .channelCard {
-    padding: 2rem;
+  .visitInner {
+    display: grid;
+    grid-template-columns: 1fr 11rem;
+    align-items: center;
   }
 }
 
-.channelTitle {
-  font-family: var(--font-display);
-  font-size: 1.35rem;
+.visitTitle {
+  font-size: 1.85rem;
   font-weight: 800;
-  color: var(--color-cocoa);
+  line-height: 1.15;
+  color: var(--color-cocoa, #2a170e);
 }
 
-.infoList {
+.visitDesc {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--color-cocoa-soft, #5a3c2c);
+  margin-top: 0.75rem;
+  max-width: 36ch;
+}
+
+.visitAddress {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-cocoa, #2a170e);
+  margin-top: 1rem;
 }
 
-.infoItem {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.85rem;
+.addressPaw {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--color-toffee-deep, #b56e29);
+  flex-shrink: 0;
 }
 
-.infoIcon {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background-color: var(--color-sand);
-  border: 1.5px solid var(--color-cocoa);
+.visitPhoto {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid var(--color-cocoa, #2a170e);
+  box-shadow: 2px 4px 0px rgba(42, 23, 14, 0.15);
+  margin: 0;
+}
+
+.visitImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ── Right Column ── */
+.letterCol {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .letterCol {
+    grid-column: 6 / span 7;
+  }
+}
+
+.postContainer {
+  position: relative;
+}
+
+.letterform {
+  position: relative;
+  background-color: #fffdf8;
+  border: 2px solid var(--color-cocoa, #2a170e);
+  border-radius: 16px;
+  box-shadow: 4px 8px 0px rgba(42, 23, 14, 0.2);
+  padding: clamp(1.75rem, 4vw, 3rem);
+}
+
+.letterStamp {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 3.2rem;
+  height: 3.8rem;
+  border: 2px dashed #b56e29;
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;
-  color: var(--color-toffee);
-}
-
-.infoLabel {
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--color-cocoa-soft);
-}
-
-.infoValue {
-  font-weight: 700;
-  color: var(--color-cocoa);
-  font-size: 0.95rem;
-  word-break: break-word;
-}
-
-.infoValue a {
-  color: inherit;
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-.infoValue a:hover {
-  color: var(--color-toffee);
-}
-
-/* ── Scene 5: Airmail Letterfold Container (tp-post) ── */
-.postContainer {
-  position: relative;
-  transition: min-height 0.3s ease;
-}
-
-.postContainer[data-phase="sealing"],
-.postContainer[data-phase="posting"] {
-  overflow: clip;
-}
-
-/* Airmail Stationery Letterform */
-.letterform {
-  border: 3px solid var(--color-cocoa);
-  background:
-    linear-gradient(
-      90deg,
-      transparent 0 calc(clamp(1.5rem, 4vw, 2.75rem) - 0.9rem),
-      rgba(194, 98, 43, 0.28) calc(clamp(1.5rem, 4vw, 2.75rem) - 0.9rem) calc(clamp(1.5rem, 4vw, 2.75rem) - 0.75rem),
-      transparent 0
-    ),
-    var(--color-milk);
-  color: var(--color-cocoa);
-  transform-origin: 50% 0;
-  border-radius: 1.6rem;
-  padding: clamp(1.5rem, 4vw, 2.75rem);
-  position: relative;
-  box-shadow: 8px 10px rgba(42, 23, 14, 0.16);
-}
-
-/* Postal stamp top right */
-.letterStamp {
-  aspect-ratio: 1;
-  border: 3px dashed var(--color-toffee-deep);
-  background: var(--color-honey-soft);
-  width: 4.5rem;
-  color: var(--color-toffee-deep);
-  border-radius: 0.5rem;
-  place-items: center;
-  display: grid;
-  position: absolute;
-  top: -1.25rem;
-  right: 2rem;
-  transform: rotate(6deg);
-  box-shadow: 2px 2px 4px rgba(42, 23, 14, 0.1);
+  color: #b56e29;
+  transform: rotate(4deg);
 }
 
 .letterGreeting {
-  font-family: var(--font-scrawl, "Shantell Sans", cursive);
-  color: var(--color-toffee-ink, #a24a1a);
-  font-size: clamp(1.4rem, 2.4vw, 1.75rem);
-  margin-bottom: 0.5rem;
+  font-size: 1.85rem;
+  color: var(--color-toffee-ink, #945327);
+  margin-bottom: 1.25rem;
 }
 
 .letterLine {
-  margin-top: 0.9rem;
-  font-size: clamp(1.05rem, 1.5vw, 1.2rem);
-  line-height: 2.55;
-  color: var(--color-cocoa);
+  font-size: clamp(1.1rem, 1.4vw, 1.3rem);
+  line-height: 2.2;
+  color: var(--color-cocoa, #2a170e);
+  margin-bottom: 1rem;
 }
 
-/* Inline Fill-in-the-Blank Underlines */
 .blank {
   display: inline-block;
-  border-bottom: 2px dashed var(--color-cocoa-soft);
-  vertical-align: baseline;
-  width: var(--size, auto);
-  margin-inline: 0.25rem;
+  border-bottom: 2px solid var(--color-cocoa, #2a170e);
+  min-width: var(--size, 12ch);
+  padding-inline: 0.35rem;
 }
 
 .blank input,
 .blank select {
   border: none;
   background: transparent;
-  width: 100%;
-  font-family: var(--font-scrawl, "Shantell Sans", cursive);
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--color-toffee-deep);
   outline: none;
-  padding: 0 0.25rem;
-}
-
-.blank input::placeholder {
-  color: rgba(122, 88, 64, 0.45);
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 0.9rem;
+  font-family: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-toffee-deep, #b56e29);
+  width: 100%;
 }
 
 .blank select {
   cursor: pointer;
-  appearance: auto;
 }
 
 .letterNote {
   width: 100%;
-  color: var(--color-toffee-ink);
-  font-family: var(--font-scrawl, "Shantell Sans", cursive);
+  margin-top: 1.5rem;
+  background-color: rgba(246, 204, 133, 0.12);
+  border: 1.5px dashed rgba(42, 23, 14, 0.25);
+  border-radius: 8px;
+  padding: 1rem;
+  font-family: inherit;
+  font-size: 1.05rem;
+  color: var(--color-cocoa, #2a170e);
   resize: vertical;
-  background: repeating-linear-gradient(
-    transparent 0 calc(2.3rem - 2px),
-    rgba(42, 23, 14, 0.16) calc(2.3rem - 2px) 2.3rem
-  ) local;
-  border: 0;
   outline: none;
-  margin-top: 1.1rem;
-  padding: 0 0.25rem;
-  font-size: 1.1rem;
-  line-height: 2.3rem;
-  display: block;
 }
 
-.letterNote:focus-visible {
-  background-color: rgba(251, 227, 180, 0.35);
-  border-radius: 0.4rem;
+.letterNote:focus {
+  border-color: var(--color-toffee, #d4893f);
 }
 
 .letterSign {
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem 1.5rem;
-  margin-top: 1.6rem;
   display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+  .letterSign {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .letterSign p {
-  color: var(--color-cocoa-soft);
-  font-size: 1.1rem;
-  font-family: var(--font-scrawl, "Shantell Sans", cursive);
+  font-size: 1.35rem;
+  color: var(--color-toffee-ink, #945327);
 }
 
-/* ── 3D Folding Animation on Submit ── */
-.postContainer[data-phase="sealing"] .letterform,
-.postContainer[data-phase="posting"] .letterform {
-  animation: letterFold 0.65s var(--ease-snap) forwards;
+/* ── Waiting Teddy Below Letter ── */
+.waitingTeddyWrap {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -0.75rem;
+  margin-right: 1.5rem;
 }
 
-@keyframes letterFold {
-  55% {
-    opacity: 0.7;
-    transform: perspective(1100px) rotateX(62deg) scale(0.8);
-  }
-  100% {
-    opacity: 0;
-    transform: perspective(1100px) rotateX(80deg) scale(0.35) translateY(30%);
-  }
+.waitingTeddy {
+  width: clamp(8.5rem, 12vw, 10rem);
+  height: auto;
 }
 
-/* ── Interactive 3D Envelope & Postbox Scene ── */
+/* ── Sealing / Posting Animation ── */
 .postScene {
-  pointer-events: none;
-  width: 14rem;
-  height: 26rem;
   position: absolute;
-  bottom: 0.5rem;
-  left: 50%;
-  transform: translateX(-50%);
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 253, 248, 0.95);
+  border-radius: 16px;
+  z-index: 10;
 }
 
 .envelope {
-  z-index: 1;
-  width: 11rem;
-  animation: envIn 0.45s 0.3s var(--ease-pounce) both;
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-@keyframes envIn {
-  0% {
-    opacity: 0;
-    transform: translateX(-50%) scale(0.4);
-  }
-  100% {
-    opacity: 1;
-    transform: translateX(-50%) scale(1);
-  }
-}
-
-.envelopeFlap {
-  transform-box: fill-box;
-  transform-origin: 50% 0;
-  animation: 0.3s ease-in 0.55s both envFlap;
-}
-
-@keyframes envFlap {
-  0% {
-    transform: scaleY(-1);
-  }
-  100% {
-    transform: scaleY(1);
-  }
+  width: 160px;
+  animation: foldAndFly 1.2s ease-in-out forwards;
 }
 
 .postbox {
-  z-index: 2;
-  width: 13rem;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translate(-50%, 120%);
+  width: 180px;
 }
 
-.postContainer[data-phase="posting"] .envelope {
-  animation: envPost 0.85s var(--ease-snap) forwards;
+@keyframes foldAndFly {
+  0% { transform: scale(1) translateY(0); opacity: 1; }
+  50% { transform: scale(0.8) translateY(-40px); }
+  100% { transform: scale(0.3) translateY(60px); opacity: 0; }
 }
 
-@keyframes envPost {
-  0% {
-    transform: translateX(-50%) scale(1);
-  }
-  35% {
-    transform: translateX(-50%) translateY(-1.2rem) scale(0.92);
-  }
-  100% {
-    transform: translateX(-50%) translateY(12.5rem) scale(0.55);
-  }
-}
-
-.postContainer[data-phase="posting"] .postbox {
-  animation: boxUp 0.5s var(--ease-pounce) forwards;
-}
-
-@keyframes boxUp {
-  0% {
-    transform: translate(-50%, 120%);
-  }
-  100% {
-    transform: translate(-50%, 0%);
-  }
-}
-
-.postboxFlag {
-  transform-box: fill-box;
-  transform-origin: 0 100%;
-  transform: rotate(90deg);
-}
-
-.postContainer[data-phase="posting"] .postboxFlag {
-  animation: flagUp 0.4s 0.75s var(--ease-pounce) forwards;
-}
-
-@keyframes flagUp {
-  0% {
-    transform: rotate(90deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
-}
-
-/* ── Sent Confirmation State ── */
+/* ── Sent Confirmation ── */
 .sentCard {
-  border: 3px solid var(--color-cocoa);
-  background: var(--color-honey);
-  color: var(--color-cocoa);
+  background-color: #fffdf8;
+  border: 2px solid var(--color-cocoa, #2a170e);
+  border-radius: 16px;
+  box-shadow: 4px 8px 0px rgba(42, 23, 14, 0.2);
+  padding: 3rem 2rem;
   text-align: center;
-  animation: sentIn 0.55s var(--ease-pounce) both;
-  border-radius: 1.6rem;
-  outline: none;
-  padding: clamp(2rem, 5vw, 3rem) 1.5rem;
-}
-
-@keyframes sentIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.9) translateY(1rem);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
 }
 
 .sentBox {
-  width: 9rem;
+  width: 140px;
   margin-inline: auto;
-  display: block;
+  margin-bottom: 1.5rem;
 }
 
 .sentTitle {
-  font-family: var(--font-plush, "Fraunces", serif);
-  margin-top: 1rem;
-  font-size: clamp(1.8rem, 3vw, 2.2rem);
-  color: var(--color-cocoa);
+  font-family: var(--font-plush, serif);
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--color-cocoa, #2a170e);
 }
 
 .sentBody {
-  margin: 0.5rem auto 1.5rem;
-  max-width: 40ch;
-  color: var(--color-cocoa-soft);
-  line-height: 1.5;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--ink-soft, #7a5840);
+  max-width: 42ch;
+  margin-inline: auto;
+  margin-top: 0.75rem;
 }
 
 .sentActions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
   gap: 1rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .letterform,
-  .envelope,
-  .envelopeFlap,
-  .postbox,
-  .postboxFlag,
-  .sentCard {
-    animation: none !important;
-  }
+  justify-content: center;
+  margin-top: 2rem;
 }

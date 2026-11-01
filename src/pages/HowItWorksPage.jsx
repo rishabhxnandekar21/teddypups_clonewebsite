@@ -1,82 +1,19 @@
+// File: src/pages/HowItWorksPage.jsx
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BUSINESS } from '../data/navigation.js';
 import MascotPup from '../components/common/MascotPup.jsx';
 import styles from './HowItWorksPage.module.css';
 
-const STEPS_LOCAL = [
-  {
-    step: '1',
-    title: 'Explore our puppies',
-    desc: 'Browse our website to view available puppies. Each listing includes photos, breed details, age, and health information.',
-    tint: '#fbe3b4',
-    iconD: 'M21 21l-4.35-4.35M19 11a8 8 0 11-16 0 8 8 0 0116 0z',
-  },
-  {
-    step: '2',
-    title: 'Choose your puppy',
-    desc: 'Once you find a puppy you love, open their profile for more information or reach out directly with any questions.',
-    tint: '#fde6de',
-    iconD: 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z',
-  },
-  {
-    step: '3',
-    title: 'Meet before you choose',
-    desc: 'Spend time bonding in our Downtown Dubai showroom before making your final decision.',
-    tint: '#e3f0fb',
-    iconD: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
-  },
-  {
-    step: '4',
-    title: 'Pick-up or delivery',
-    desc: 'Pick up your puppy from our showroom or enjoy climate-controlled chauffeur delivery to your door across all Emirates.',
-    tint: '#e6f2df',
-    iconD: 'M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0zM13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8h4l3 3v5a1 1 0 01-1 1h-1',
-  },
-];
-
-const STEPS_IMPORT = [
-  {
-    step: '1',
-    title: 'Reserve your puppy',
-    desc: 'Browse our selection of available breeds and place a reservation. Our model ensures each puppy is specifically sourced to meet your preferences.',
-    tint: '#fbe3b4',
-    iconD: 'M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z',
-  },
-  {
-    step: '2',
-    title: 'Personalized consultation',
-    desc: "Once confirmed, we work closely with you on WhatsApp to finalize details and provide continuous updates on your puppy's journey.",
-    tint: '#fde6de',
-    iconD: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z',
-  },
-  {
-    step: '3',
-    title: 'Import and arrival',
-    desc: 'We manage every aspect of the import process, veterinary certificates, MOCCAE permits, and premium pet flight arrangements.',
-    tint: '#e3f0fb',
-    iconD: 'M12 19l9 2-9-18-9 18 9-2zm0 0v-8',
-  },
-  {
-    step: '4',
-    title: 'Welcome home',
-    desc: 'Upon arrival, our concierge assists with gentle acclimation, nutrition guidelines, and 24/7 support for a seamless transition.',
-    tint: '#e6f2df',
-    iconD: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
-  },
-];
-
 export default function HowItWorksPage() {
-  const [activeTab, setActiveTab] = useState('local');
+  const [activeTab, setActiveTab] = useState('local'); // 'local' | 'imported'
 
   useEffect(() => {
     document.title = 'How it works | TeddyPups U.A.E.';
   }, []);
 
-  const currentSteps = activeTab === 'local' ? STEPS_LOCAL : STEPS_IMPORT;
-
   return (
-    <div className={styles.page}>
+    <div data-page="how" className={styles.page}>
       <section
         data-pup-scene="true"
         data-tone="light"
@@ -90,27 +27,27 @@ export default function HowItWorksPage() {
         <div className={styles.container}>
           {/* Header */}
           <header className={styles.headerGrid}>
-            <h1 id="how-title" className={styles.title}>
+            <h1 id="how-title" className={`font-plush text-giant ${styles.title}`}>
               How it works
             </h1>
             <p className={styles.lede}>
-              Whether you choose to visit us locally in Downtown Dubai or import a puppy from Korea, here is exactly how the process works.
+              Whether you choose to visit us locally or order a premium breed from overseas, TeddyPups is here to make the experience unforgettable.
             </p>
           </header>
 
           {/* Jump Pills */}
-          <nav aria-label="Jump to section" className={styles.pills}>
-            <a href="#two-ways" className={styles.pill}>
-              <span>1</span> Two ways home
+          <nav aria-label="On this page" className={styles.pills}>
+            <a href="#two-ways" className={`chip ${styles.pill}`}>
+              <span className="font-plush">1</span> Two ways home
             </a>
-            <a href="#promise" className={styles.pill}>
-              <span>2</span> Our premium puppy promise
+            <a href="#promise" className={`chip ${styles.pill}`}>
+              <span className="font-plush">2</span> Our premium puppy promise
             </a>
-            <a href="#delivery" className={styles.pill}>
-              <span>3</span> Delivery &amp; collection
+            <a href="#delivery" className={`chip ${styles.pill}`}>
+              <span className="font-plush">3</span> Delivery &amp; collection
             </a>
-            <a href="#why" className={styles.pill}>
-              <span>4</span> Why choose us
+            <a href="#why" className={`chip ${styles.pill}`}>
+              <span className="font-plush">4</span> Why choose us
             </a>
           </nav>
 
@@ -118,8 +55,8 @@ export default function HowItWorksPage() {
           <div className={styles.journeysSection} id="two-ways">
             <div className={styles.journeysTop}>
               <div>
-                <p className={styles.kicker}>choose your way</p>
-                <h2 id="two-ways-title" className={styles.sectionHeading}>
+                <p className={`font-scrawl ${styles.kicker}`}>choose your way</p>
+                <h2 id="two-ways-title" className={`font-plush text-big ${styles.sectionHeading}`}>
                   Two ways home
                 </h2>
               </div>
@@ -128,68 +65,215 @@ export default function HowItWorksPage() {
                   role="tablist"
                   aria-label="Ways to bring your puppy home"
                   className={styles.switchBar}
+                  style={{ '--at': activeTab === 'local' ? 0 : 1, '--n': 2 }}
                 >
                   <button
                     type="button"
                     role="tab"
                     id="tab-local"
                     aria-selected={activeTab === 'local'}
-                    aria-controls="panel-steps"
+                    aria-controls="panel-local"
                     className={`${styles.switchBtn} ${activeTab === 'local' ? styles.switchBtnActive : ''}`}
                     onClick={() => setActiveTab('local')}
                   >
-                    In Dubai (meet in person)
+                    <span className={`font-plush ${styles.switchLabel}`}>In Dubai</span>
+                    <span className={styles.switchHint}>meet in person</span>
                   </button>
                   <button
                     type="button"
                     role="tab"
-                    id="tab-import"
-                    aria-selected={activeTab === 'import'}
-                    aria-controls="panel-steps"
-                    className={`${styles.switchBtn} ${activeTab === 'import' ? styles.switchBtnActive : ''}`}
-                    onClick={() => setActiveTab('import')}
+                    id="tab-imported"
+                    aria-selected={activeTab === 'imported'}
+                    aria-controls="panel-imported"
+                    className={`${styles.switchBtn} ${activeTab === 'imported' ? styles.switchBtnActive : ''}`}
+                    onClick={() => setActiveTab('imported')}
                   >
-                    Imported (order upon request)
+                    <span className={`font-plush ${styles.switchLabel}`}>Imported</span>
+                    <span className={styles.switchHint}>order upon request</span>
                   </button>
+                </div>
+
+                <div className={styles.journeysTeddy}>
+                  <MascotPup
+                    pose="sitting"
+                    facing="right"
+                    ariaLabel="Teddy, waiting to see which way you pick"
+                    className={styles.tabMascot}
+                  />
                 </div>
               </div>
             </div>
 
-            <ol
-              id="panel-steps"
-              role="tabpanel"
-              aria-labelledby={activeTab === 'local' ? 'tab-local' : 'tab-import'}
-              className={styles.stepsGrid}
-            >
-              {currentSteps.map((item, idx) => (
-                <li
-                  key={item.step}
-                  className={styles.stepCard}
-                  style={{ '--tint': item.tint, '--i': idx }}
-                >
-                  <span aria-hidden="true" className={styles.stepIcon}>
-                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d={item.iconD} />
+            {/* TAB PANEL 1: IN DUBAI */}
+            {activeTab === 'local' && (
+              <div role="tabpanel" id="panel-local" aria-labelledby="tab-local" className={styles.journeyPanel}>
+                <div className={styles.journeyHead}>
+                  <div>
+                    <h3 className={`font-plush ${styles.journeyTitle}`}>Meet your puppy in person</h3>
+                    <p className={`text-lede ${styles.journeyLede}`}>
+                      Step into our Downtown Dubai showroom and experience the joy of choosing your puppy face-to-face. We source healthy, well-socialized puppies from trusted local breeders, ensuring they're raised with care, proper nutrition, and veterinary checks.
+                    </p>
+                  </div>
+
+                  {/* Postcard: Downtown Dubai Skyline */}
+                  <div aria-hidden="true" className={styles.postcard}>
+                    <span className={styles.postcardSun}></span>
+                    <svg viewBox="0 0 300 120" className={styles.postcardCity} aria-hidden="true">
+                      <path d="M4 116h292M20 116V78h16v38M44 116V60h18v56M70 116V84h12v32M150 116V36l4-6v-14l3-4 3 4v14l4 6v80M118 116V70l12-8v54M174 116V64l14 8v44M200 116V82h18v34M226 116V56h14v60M248 116V88h22v28" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                  </span>
-                  <span className={styles.stepNum}>Step {item.step}</span>
-                  <h3 className={styles.stepTitle}>{item.title}</h3>
-                  <p className={styles.stepDesc}>{item.desc}</p>
-                </li>
-              ))}
-            </ol>
+                    <span className={`font-scrawl ${styles.postcardTo} ${styles.postcardToLeft}`}>Downtown Dubai</span>
+                  </div>
+                </div>
+
+                <ol className={styles.stepsGrid}>
+                  <li className={styles.stepCard} style={{ '--tint': '#fbe3b4', '--i': 0 }}>
+                    <span aria-hidden="true" className={styles.stepIcon}>
+                      <svg viewBox="0 0 48 48">
+                        <circle cx="21" cy="21" r="12" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></circle>
+                        <path d="m30 30 10 10" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <path d="M21 27c-3-2-4.4-3.6-4.4-5.2a2.2 2.2 0 0 1 4.4-.4 2.2 2.2 0 0 1 4.4.4c0 1.6-1.4 3.2-4.4 5.2z" fill="currentColor"></path>
+                      </svg>
+                    </span>
+                    <span className={`font-plush ${styles.stepNum}`}>Step 1</span>
+                    <h4 className={`font-plush-text ${styles.stepTitle}`}>Explore our puppies</h4>
+                    <p className={styles.stepDesc}>Browse our website to view the available puppies. Each listing includes photos, breed details, age, and health information.</p>
+                  </li>
+
+                  <li className={styles.stepCard} style={{ '--tint': '#fde6de', '--i': 1 }}>
+                    <span aria-hidden="true" className={styles.stepIcon}>
+                      <svg viewBox="0 0 48 48">
+                        <path d="M24 40C11 31 6 24.5 6 17.8 6 12.4 10.2 8 15.4 8c3.7 0 6.8 2.1 8.6 5.3C25.8 10.1 28.9 8 32.6 8 37.8 8 42 12.4 42 17.8 42 24.5 37 31 24 40z" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <path d="m17 22 5 5 9-10" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                      </svg>
+                    </span>
+                    <span className={`font-plush ${styles.stepNum}`}>Step 2</span>
+                    <h4 className={`font-plush-text ${styles.stepTitle}`}>Choose your puppy</h4>
+                    <p className={styles.stepDesc}>Once you find a puppy you love, open their profile for more information or to enquire further. You can also reach out to us directly if you have any questions.</p>
+                  </li>
+
+                  <li className={styles.stepCard} style={{ '--tint': '#e3f0fb', '--i': 2 }}>
+                    <span aria-hidden="true" className={styles.stepIcon}>
+                      <svg viewBox="0 0 48 48">
+                        <path d="M14 18c-3-6-1-10 3-10s5 4 4 8M34 18c3-6 1-10-3-10s-5 4-4 8" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <ellipse cx="24" cy="27" rx="13" ry="12" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></ellipse>
+                        <circle cx="19.5" cy="25" r="1.6" fill="currentColor"></circle>
+                        <circle cx="28.5" cy="25" r="1.6" fill="currentColor"></circle>
+                        <path d="M22 31h4l-2 2z" fill="currentColor" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                      </svg>
+                    </span>
+                    <span className={`font-plush ${styles.stepNum}`}>Step 3</span>
+                    <h4 className={`font-plush-text ${styles.stepTitle}`}>Meet before you choose</h4>
+                    <p className={styles.stepDesc}>Spend time bonding before making your decision.</p>
+                  </li>
+
+                  <li className={styles.stepCard} style={{ '--tint': '#e6f2df', '--i': 3 }}>
+                    <span aria-hidden="true" className={styles.stepIcon}>
+                      <svg viewBox="0 0 48 48">
+                        <path d="M5 30V18h22v12M27 22h8l6 6v2H27" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <path d="M5 30h36" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <circle cx="13" cy="33" r="3.4" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></circle>
+                        <circle cx="34" cy="33" r="3.4" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></circle>
+                        <path d="M16 26c-2.3-1.6-3.4-2.8-3.4-4a1.7 1.7 0 0 1 3.4-.4 1.7 1.7 0 0 1 3.4.4c0 1.2-1.1 2.4-3.4 4z" fill="currentColor"></path>
+                      </svg>
+                    </span>
+                    <span className={`font-plush ${styles.stepNum}`}>Step 4</span>
+                    <h4 className={`font-plush-text ${styles.stepTitle}`}>Pick-up or delivery</h4>
+                    <p className={styles.stepDesc}>Pick up your puppy from us or have them delivered to your home within Dubai. Our delivery service is safe and reliable, ensuring your puppy arrives comfortably.</p>
+                  </li>
+                </ol>
+              </div>
+            )}
+
+            {/* TAB PANEL 2: IMPORTED */}
+            {activeTab === 'imported' && (
+              <div role="tabpanel" id="panel-imported" aria-labelledby="tab-imported" className={styles.journeyPanel}>
+                <div className={styles.journeyHead}>
+                  <div>
+                    <h3 className={`font-plush ${styles.journeyTitle}`}>Order upon request</h3>
+                    <p className={`text-lede ${styles.journeyLede}`}>
+                      Looking for a truly exceptional companion? Our Order Upon Request service gives you access to some of the world's most sought-after teacup breeds — ethically sourced from the most reputable, certified breeders across Europe, Korea, and beyond.
+                    </p>
+                    <p className={`font-scrawl ${styles.journeyHandwrite}`}>
+                      From Korean teacup poodles to rare Maltese, Pom, and Yorkie lines, we bring the world's finest puppies to Dubai, just for you.
+                    </p>
+                  </div>
+
+                  {/* Postcard: International Sky Route */}
+                  <div aria-hidden="true" className={`${styles.postcard} ${styles.postcardSky}`}>
+                    <svg viewBox="0 0 320 150" className={styles.postcardRoute} preserveAspectRatio="none">
+                      <path d="M28 128C90 20 230 20 292 118" />
+                    </svg>
+                    <svg viewBox="0 0 64 40" className={styles.postcardPlane} aria-hidden="true">
+                      <path d="M4 22l20-2 12-14h6l-6 14 14-1 6-7h4l-3 10 3 10h-4l-6-7-14-1 6 14h-6L24 24 4 22z" fill="#fffdf8" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span className={`font-scrawl ${styles.postcardFrom}`}>Europe · Korea</span>
+                    <span className={`font-scrawl ${styles.postcardTo}`}>Dubai</span>
+                  </div>
+                </div>
+
+                <ol className={styles.stepsGrid}>
+                  <li className={styles.stepCard} style={{ '--tint': '#fbe3b4', '--i': 0 }}>
+                    <span aria-hidden="true" className={styles.stepIcon}>
+                      <svg viewBox="0 0 48 48">
+                        <rect x="7" y="10" width="34" height="30" rx="5" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></rect>
+                        <path d="M7 19h34M16 6v8M32 6v8" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <path d="m17 29 5 5 9-9" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                      </svg>
+                    </span>
+                    <span className={`font-plush ${styles.stepNum}`}>Step 1</span>
+                    <h4 className={`font-plush-text ${styles.stepTitle}`}>Reserve your puppy</h4>
+                    <p className={styles.stepDesc}>Browse our selection of available breeds and place a reservation for the teacup puppy that captures your heart. Our reservation-only model ensures that each puppy is specifically sourced to meet your preferences.</p>
+                  </li>
+
+                  <li className={styles.stepCard} style={{ '--tint': '#fde6de', '--i': 1 }}>
+                    <span aria-hidden="true" className={styles.stepIcon}>
+                      <svg viewBox="0 0 48 48">
+                        <path d="M6 12a5 5 0 0 1 5-5h16a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5h-9l-6 5v-5h-1a5 5 0 0 1-5-5z" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <path d="M36 17h1a5 5 0 0 1 5 5v8a5 5 0 0 1-5 5h-1v5l-6-5h-6a5 5 0 0 1-4-2" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                      </svg>
+                    </span>
+                    <span className={`font-plush ${styles.stepNum}`}>Step 2</span>
+                    <h4 className={`font-plush-text ${styles.stepTitle}`}>Personalized consultation</h4>
+                    <p className={styles.stepDesc}>Once your reservation is confirmed, we will work closely with you to finalize details and provide updates on your puppy's journey.</p>
+                  </li>
+
+                  <li className={styles.stepCard} style={{ '--tint': '#e3f0fb', '--i': 2 }}>
+                    <span aria-hidden="true" className={styles.stepIcon}>
+                      <svg viewBox="0 0 48 48">
+                        <path transform="matrix(-1 0 0 1 48 0)" d="M4 27l13-1.5 8-10h4l-4 9.5 9-.8 4-4.7h3l-2 6.6 2 6.6h-3l-4-4.7-9-.8 4 9.5h-4l-8-10L4 29z" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                      </svg>
+                    </span>
+                    <span className={`font-plush ${styles.stepNum}`}>Step 3</span>
+                    <h4 className={`font-plush-text ${styles.stepTitle}`}>Import and arrival</h4>
+                    <p className={styles.stepDesc}>We manage all aspects of the import process, including health checks, travel arrangements, and necessary documentation. Your puppy will be carefully transported and will arrive ready to join your family.</p>
+                  </li>
+
+                  <li className={styles.stepCard} style={{ '--tint': '#e6f2df', '--i': 3 }}>
+                    <span aria-hidden="true" className={styles.stepIcon}>
+                      <svg viewBox="0 0 48 48">
+                        <path d="M6 23 24 8l18 15M11 19v21h26V19" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"></path>
+                        <path d="M24 35c-4.6-3.2-6.8-5.7-6.8-8.2a3.4 3.4 0 0 1 6.8-.8 3.4 3.4 0 0 1 6.8.8c0 2.5-2.2 5-6.8 8.2z" fill="currentColor"></path>
+                      </svg>
+                    </span>
+                    <span className={`font-plush ${styles.stepNum}`}>Step 4</span>
+                    <h4 className={`font-plush-text ${styles.stepTitle}`}>Welcome home</h4>
+                    <p className={styles.stepDesc}>Upon arrival, we provide support to help your new puppy acclimate to their new environment. Our team is available for any additional assistance and to ensure a smooth transition into your home.</p>
+                  </li>
+                </ol>
+              </div>
+            )}
           </div>
 
           {/* ── 2. Our Premium Puppy Promise (tp-paper) ── */}
-          <section id="promise" aria-labelledby="promise-title" className={styles.paperPromise}>
-            <p aria-hidden="true" className={styles.paperKicker}>
+          <section id="promise" aria-labelledby="promise-title" className={`tp-paper ${styles.paperPromise}`}>
+            <p aria-hidden="true" className={`font-scrawl ${styles.paperKicker}`}>
               puppy passport
             </p>
-            <h2 id="promise-title" className={styles.paperHeading}>
+            <h2 id="promise-title" className={`font-plush ${styles.paperHeading}`}>
               Our premium puppy promise
             </h2>
             <ul className={styles.promiseList}>
-              <li className={styles.promiseEntry} style={{ '--ink-stamp': '#a24a1a', '--tilt': '-8deg' }}>
+              <li className={styles.promiseEntry} style={{ '--ink-stamp': '#a24a1a', '--tilt': '-8deg', '--i': 0 }}>
                 <span className={`${styles.stamp} ${styles.stampRound}`}>
                   <svg viewBox="0 0 64 64" className={styles.stampSvg} aria-hidden="true">
                     <path
@@ -209,14 +293,14 @@ export default function HowItWorksPage() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  <span className={styles.stampTitle}>Hand-selected breeders</span>
+                  <span className={`font-plush ${styles.stampTitle}`}>Hand-selected breeders</span>
                 </span>
                 <p className={styles.entryText}>
                   We work only with breeders who uphold the highest ethical and health standards.
                 </p>
               </li>
 
-              <li className={styles.promiseEntry} style={{ '--ink-stamp': '#1f6b45', '--tilt': '5deg' }}>
+              <li className={styles.promiseEntry} style={{ '--ink-stamp': '#1f6b45', '--tilt': '5deg', '--i': 1 }}>
                 <span className={`${styles.stamp} ${styles.stampTicket}`}>
                   <svg viewBox="0 0 64 64" className={styles.stampSvg} aria-hidden="true">
                     <path
@@ -237,14 +321,14 @@ export default function HowItWorksPage() {
                       strokeDasharray="2 7"
                     />
                   </svg>
-                  <span className={styles.stampTitle}>Full transparency</span>
+                  <span className={`font-plush ${styles.stampTitle}`}>Full transparency</span>
                 </span>
                 <p className={styles.entryText}>
                   Photos, videos, and health certificates are shared before your puppy travels.
                 </p>
               </li>
 
-              <li className={styles.promiseEntry} style={{ '--ink-stamp': '#5a3a28', '--tilt': '-4deg' }}>
+              <li className={styles.promiseEntry} style={{ '--ink-stamp': '#5a3a28', '--tilt': '-4deg', '--i': 2 }}>
                 <span className={`${styles.stamp} ${styles.stampOval}`}>
                   <svg viewBox="0 0 64 64" className={styles.stampSvg} aria-hidden="true">
                     <path
@@ -264,7 +348,7 @@ export default function HowItWorksPage() {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  <span className={styles.stampTitle}>Safe, stress-free delivery</span>
+                  <span className={`font-plush ${styles.stampTitle}`}>Safe, stress-free delivery</span>
                 </span>
                 <p className={styles.entryText}>
                   We handle every detail of the import process, so your puppy arrives happy, healthy, and ready to love you.
@@ -276,7 +360,7 @@ export default function HowItWorksPage() {
           {/* ── 3. Delivery & Collection (2-Column with Dubai Skyline) ── */}
           <section id="delivery" aria-labelledby="delivery-title" className={styles.deliveryGrid}>
             <div className={styles.deliveryContent}>
-              <h2 id="delivery-title" className={styles.sectionHeading}>
+              <h2 id="delivery-title" className={`font-plush ${styles.sectionHeading}`}>
                 Delivery &amp; collection
               </h2>
               <p className={styles.deliveryLede}>
@@ -284,25 +368,25 @@ export default function HowItWorksPage() {
               </p>
               <ul className={styles.deliveryList}>
                 <li>
-                  <h3 className={styles.deliveryItemTitle}>Take your puppy home the same day</h3>
+                  <h3 className={`font-plush-text ${styles.deliveryItemTitle}`}>Take your puppy home the same day</h3>
                   <p className={styles.deliveryItemDesc}>
                     Local puppies are available immediately — visit, fall in love, and go home together.
                   </p>
                 </li>
                 <li>
-                  <h3 className={styles.deliveryItemTitle}>Delivery within Dubai</h3>
+                  <h3 className={`font-plush-text ${styles.deliveryItemTitle}`}>Delivery within Dubai</h3>
                   <p className={styles.deliveryItemDesc}>
                     Prefer to stay home? We deliver your puppy to your door within Dubai, safely and comfortably.
                   </p>
                 </li>
                 <li>
-                  <h3 className={styles.deliveryItemTitle}>Safe international cargo</h3>
+                  <h3 className={`font-plush-text ${styles.deliveryItemTitle}`}>Safe international cargo</h3>
                   <p className={styles.deliveryItemDesc}>
                     We handle all the paperwork and ensure comfortable travel so your puppy arrives happy and stress-free.
                   </p>
                 </li>
                 <li>
-                  <h3 className={styles.deliveryItemTitle}>Worldwide delivery</h3>
+                  <h3 className={`font-plush-text ${styles.deliveryItemTitle}`}>Worldwide delivery</h3>
                   <p className={styles.deliveryItemDesc}>
                     We safely deliver puppies to loving homes all around the world. Our trusted international cargo partners ensure your new furry friend travels comfortably and arrives safely, no matter the distance.
                   </p>
@@ -333,7 +417,7 @@ export default function HowItWorksPage() {
                   <text x="620" y="202" textAnchor="middle" className={styles.flightLabel}>
                     Dubai
                   </text>
-                  <g transform="translate(480.0 90.0) rotate(16.5)">
+                  <g transform="translate(410 70)">
                     <g transform="translate(-126 -78)">
                       <path d="M28 60 L8 26 L34 26 L60 54 Z" fill="#d4893f" />
                       <path d="M108 112 L142 156 L172 156 L158 112 Z" fill="#b56e29" />
@@ -355,7 +439,7 @@ export default function HowItWorksPage() {
           {/* ── 4. Why Choose Us (2-Column Grid) ── */}
           <section id="why" aria-labelledby="why-title" className={styles.whyGrid}>
             <div className={styles.whyContent}>
-              <h2 id="why-title" className={styles.sectionHeading}>
+              <h2 id="why-title" className={`font-plush ${styles.sectionHeading}`}>
                 Why choose us
               </h2>
               <p className={styles.whyLede}>
@@ -384,7 +468,7 @@ export default function HowItWorksPage() {
                   />
                 </svg>
                 <div>
-                  <h3 className={styles.featureTitle}>International cargo</h3>
+                  <h3 className={`font-plush ${styles.featureTitle}`}>International cargo</h3>
                   <p className={styles.featureDesc}>
                     We safely deliver puppies to loving homes all around the world. Our trusted international cargo partners ensure your new furry friend travels comfortably and arrives safely, no matter the distance.
                   </p>
@@ -411,7 +495,7 @@ export default function HowItWorksPage() {
                   />
                 </svg>
                 <div>
-                  <h3 className={styles.featureTitle}>Support 24/7</h3>
+                  <h3 className={`font-plush ${styles.featureTitle}`}>Support 24/7</h3>
                   <p className={styles.featureDesc}>
                     Our team is available 24/7 to answer your questions and assist you through every step of the adoption process. From choosing your puppy to post-delivery support — we're just a message away.
                   </p>
@@ -438,7 +522,7 @@ export default function HowItWorksPage() {
                   />
                 </svg>
                 <div>
-                  <h3 className={styles.featureTitle}>Health guarantee</h3>
+                  <h3 className={`font-plush ${styles.featureTitle}`}>Health guarantee</h3>
                   <p className={styles.featureDesc}>
                     All our puppies come with a verified health certificate from licensed vets. We ensure every puppy is vaccinated, dewormed, and thoroughly checked before joining your family.
                   </p>
@@ -448,9 +532,9 @@ export default function HowItWorksPage() {
           </section>
 
           {/* ── 5. Unique & High Quality Puppies Board ── */}
-          <section aria-labelledby="care-title" className={styles.boardCard}>
+          <section aria-labelledby="care-title" className={`tp-board ${styles.boardCard}`}>
             <div className={styles.boardContent}>
-              <h2 id="care-title" className={styles.boardHeading}>
+              <h2 id="care-title" className={`font-plush text-big ${styles.boardHeading}`}>
                 Unique and high quality puppies
               </h2>
               <p className={styles.boardLede}>
@@ -472,7 +556,7 @@ export default function HowItWorksPage() {
             </div>
 
             <div className={styles.boardBuddy}>
-              <MascotPup pose="stand" facing="left" ariaLabel="Teddy ready to play" />
+              <MascotPup pose="walking" facing="left" ariaLabel="Teddy, ready to play" className={styles.playfulTeddy} />
             </div>
           </section>
         </div>

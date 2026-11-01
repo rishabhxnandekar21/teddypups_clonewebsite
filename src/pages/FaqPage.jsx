@@ -1,25 +1,26 @@
+// File: src/pages/FaqPage.jsx
 import { useState, useMemo, useEffect } from 'react';
 import { faqItems } from '../data/faq.js';
 import { BUSINESS } from '../data/navigation.js';
 import MascotPup from '../components/common/MascotPup.jsx';
 import styles from './FaqPage.module.css';
 
-const TILTS = [-1.6, 1.2, -1.1, 1.5, -1.4, 1.3, -1.2, 1.6, -1.0];
+const TILTS = [-1.6, 1.2, -0.8, 1.8, -1.2, 0.7, -1.9, 1.4, -1.6];
 const PIN_COLORS = [
   'var(--color-toffee, #d97736)',
   'var(--color-sky-deep, #3a7ca5)',
-  'var(--color-leaf, #4b8f52)',
-  '#d9534f',
-  '#f0ad4e',
-  '#5bc0de',
-  '#9b59b6',
-  '#34495e',
-  '#16a085',
+  '#d9a13c',
+  '#c45a6a',
+  'var(--color-toffee, #d97736)',
+  'var(--color-sky-deep, #3a7ca5)',
+  '#d9a13c',
+  '#c45a6a',
+  'var(--color-toffee, #d97736)',
 ];
 
 export default function FaqPage() {
   const [search, setSearch] = useState('');
-  const [openId, setOpenId] = useState('faq-1'); // First open by default
+  const [openId, setOpenId] = useState(null);
 
   useEffect(() => {
     document.title = 'Questions & answers | TeddyPups U.A.E.';
@@ -105,10 +106,11 @@ export default function FaqPage() {
 
                 <div className={`tp-notes__cta ${styles.cta}`}>
                   <a
-                    href={BUSINESS.whatsappUrl}
+                    href="https://wa.me/971541676733?text=Hi%20TeddyPups!%20I%20have%20a%20question%3A"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`btn btn-primary ${styles.ctaBtn}`}
+                    className="btn btn-whatsapp tp-notes__ask"
+                    style={{ width: '100%', textAlign: 'center' }}
                   >
                     Ask your own question
                   </a>

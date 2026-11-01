@@ -1,3 +1,4 @@
+/* File: src/pages/HowItWorksPage.module.css */
 /* ============================================================
    HowItWorksPage Styles — Full Reference Fidelity
    ============================================================ */
@@ -75,8 +76,8 @@
   font-weight: 700;
   padding: 0.45rem 1.05rem;
   border-radius: var(--radius-full, 9999px);
-  border: 1.5px solid var(--color-cocoa, #2a170e);
-  background-color: var(--color-milk, #fffdf8);
+  border: 2px solid var(--color-cocoa, #2a170e);
+  background-color: var(--color-milk, #fffdf8) !important;
   color: var(--color-cocoa, #2a170e);
   text-decoration: none;
   display: inline-flex;
@@ -98,14 +99,8 @@
 }
 
 .pill:hover {
-  background-color: var(--color-toffee, #d4893f);
-  border-color: var(--color-toffee, #d4893f);
-  color: var(--color-milk, #fffdf8);
-}
-
-.pill:hover span {
-  background-color: var(--color-milk, #fffdf8);
-  color: var(--color-toffee, #d4893f);
+  background-color: var(--color-honey-soft, #fcecc9) !important;
+  border-color: var(--color-cocoa, #2a170e);
 }
 
 /* ── 1. Journeys Section (Two Ways Home) ── */
@@ -144,6 +139,8 @@
 
 .journeysPick {
   display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
 }
 
 .switchBar {
@@ -159,108 +156,256 @@
   border-radius: var(--radius-full, 9999px);
   border: none;
   background: transparent;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 700;
   color: var(--color-cocoa, #2a170e);
   cursor: pointer;
-  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s ease;
 }
 
 .switchBtnActive {
-  background-color: var(--color-toffee, #d4893f);
-  color: var(--color-milk, #fffdf8);
-  box-shadow: 0 2px 8px rgba(42, 23, 14, 0.15);
+  background-color: #fffdf8;
+  box-shadow: 0 4px 12px rgba(42, 23, 14, 0.12);
 }
 
-/* Steps Grid */
-.stepsGrid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.switchLabel {
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.switchHint {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.journeysTeddy {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .journeysTeddy {
+    display: block;
+    width: 6.5rem;
+    margin-bottom: -0.5rem;
+  }
+}
+
+.tabMascot {
+  width: 100%;
+  height: auto;
+}
+
+/* ── Journey Panel & Postcard ── */
+.journeyPanel {
   margin-top: 2.5rem;
+}
+
+.journeyHead {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 900px) {
+  .journeyHead {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 3.5rem;
+  }
+}
+
+.journeyTitle {
+  font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+  font-weight: 800;
+  color: var(--color-cocoa, #2a170e);
+  line-height: 1.2;
+}
+
+.journeyLede {
+  margin-top: 1rem;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: var(--ink-soft, #7a5840);
+}
+
+.journeyHandwrite {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  color: var(--color-toffee-ink, #945327);
+  line-height: 1.45;
+}
+
+.postcard {
+  position: relative;
+  background-color: #fffdf8;
+  border-radius: 12px;
+  border: 2px solid var(--color-cocoa, #2a170e);
+  box-shadow: 4px 6px 0px rgba(42, 23, 14, 0.2);
+  height: 140px;
+  padding: 1rem;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+.postcardSun {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  width: 32px;
+  height: 32px;
+  background: #f7bb53;
+  border-radius: 50%;
+  box-shadow: 0 0 16px rgba(247, 187, 83, 0.6);
+}
+
+.postcardCity {
+  width: 100%;
+  height: 70px;
+  color: rgba(42, 23, 14, 0.4);
+}
+
+.postcardSky {
+  background: linear-gradient(180deg, #d8eefc 0%, #fffdf8 100%);
+}
+
+.postcardRoute {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--color-toffee, #d4893f);
+  stroke-width: 2.4;
+  stroke-dasharray: 4 6;
+}
+
+.postcardPlane {
+  position: absolute;
+  top: 28px;
+  left: 45%;
+  width: 38px;
+  height: 24px;
+  color: var(--color-cocoa, #2a170e);
+}
+
+.postcardFrom {
+  position: absolute;
+  top: 12px;
+  left: 14px;
+  font-size: 1.05rem;
+  color: var(--color-toffee-ink, #945327);
+}
+
+.postcardTo {
+  position: absolute;
+  bottom: 8px;
+  right: 14px;
+  font-size: 1.15rem;
+  color: var(--color-toffee-ink, #945327);
+}
+
+.postcardToLeft {
+  right: auto;
+  left: 14px;
+}
+
+/* ── Steps Grid ── */
+.stepsGrid {
   display: grid;
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .stepsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (min-width: 1024px) {
   .stepsGrid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
 
 .stepCard {
-  border: 3px solid var(--color-cocoa, #2a170e);
-  background: var(--color-milk, #fffdf8);
-  border-radius: 1.6rem;
-  padding: 1.75rem 1.5rem 1.75rem;
+  background-color: #fffdf8;
+  border: 2px solid var(--color-cocoa, #2a170e);
+  border-radius: 12px;
+  padding: 1.75rem 1.4rem;
+  box-shadow: 3px 5px 0px rgba(42, 23, 14, 0.15);
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  box-shadow: 6px 8px rgba(42, 23, 14, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .stepCard:hover {
-  transform: translateY(-4px) rotate(-0.5deg);
-  box-shadow: 9px 12px rgba(42, 23, 14, 0.12);
+  transform: translateY(-3px);
+  box-shadow: 4px 8px 0px rgba(42, 23, 14, 0.25);
 }
 
 .stepIcon {
-  background: var(--tint, #fbe3b4);
-  width: 3.8rem;
-  height: 3.8rem;
-  color: var(--color-toffee-deep, #945327);
-  border-radius: 46% 54% 52% 48% / 55% 45%;
-  display: grid;
-  place-items: center;
-  margin-bottom: 0.4rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background-color: var(--tint, #fbe3b4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  color: var(--color-cocoa, #2a170e);
+}
+
+.stepIcon svg {
+  width: 1.8rem;
+  height: 1.8rem;
 }
 
 .stepNum {
-  color: var(--color-toffee-ink, #945327);
-  font-family: var(--font-plush, "Fraunces", serif);
   font-size: 0.95rem;
-  font-weight: 700;
-}
-
-.stepTitle {
-  font-family: var(--font-plush, "Fraunces", serif);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--color-cocoa, #2a170e);
-  line-height: 1.25;
-}
-
-.stepDesc {
-  font-size: 0.95rem;
-  color: var(--color-cocoa-soft, #5a3a28);
-  line-height: 1.55;
-}
-
-/* ── 2. Paper Promise Section (Puppy Passport) ── */
-.paperPromise {
-  margin-top: clamp(4rem, 8vh, 6rem);
-  background-color: var(--color-milk, #fffdf8);
-  border: 3px solid var(--color-cocoa, #2a170e);
-  border-radius: 1.8rem;
-  padding: clamp(2.5rem, 5vw, 4rem) clamp(1.75rem, 4vw, 3.5rem);
-  box-shadow: 8px 10px rgba(42, 23, 14, 0.12);
-  transform: rotate(-0.6deg);
-  position: relative;
-}
-
-.paperKicker {
-  font-family: var(--font-scrawl, "Caveat", cursive);
-  font-size: 1.45rem;
+  font-weight: 800;
   color: var(--color-toffee-ink, #945327);
   margin-bottom: 0.35rem;
 }
 
+.stepTitle {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-cocoa, #2a170e);
+  line-height: 1.25;
+  margin-bottom: 0.65rem;
+}
+
+.stepDesc {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-soft, #7a5840);
+}
+
+/* ── 2. Our Premium Puppy Promise (tp-paper) ── */
+.paperPromise {
+  margin-top: clamp(5rem, 9vh, 7rem);
+  background-color: #fffdf6;
+  border: 2px solid var(--color-cocoa, #2a170e);
+  border-radius: 12px;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  box-shadow: 4px 7px 0px rgba(42, 23, 14, 0.2);
+  transform: rotate(-0.6deg);
+}
+
+.paperKicker {
+  font-size: 1.35rem;
+  color: var(--color-toffee-ink, #945327);
+  margin-bottom: 0.25rem;
+}
+
 .paperHeading {
-  font-family: var(--font-plush, "Fraunces", serif);
-  font-size: clamp(2.2rem, 3.5vw, 2.85rem);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
   font-weight: 800;
   color: var(--color-cocoa, #2a170e);
   max-width: 18ch;
@@ -268,83 +413,71 @@
 }
 
 .promiseList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  margin-top: 3rem;
   display: grid;
   gap: 2.5rem;
-  grid-template-columns: 1fr;
+  margin-top: 3rem;
+  list-style: none;
+  padding: 0;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .promiseList {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .promiseList {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 .promiseEntry {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.2rem;
 }
 
 .stamp {
   display: inline-flex;
   align-items: center;
-  gap: 0.85rem;
-  padding: 0.6rem 1.25rem;
-  border-radius: var(--radius-full, 9999px);
-  border: 2.5px dashed var(--ink-stamp, #a24a1a);
+  gap: 0.75rem;
+  padding: 0.65rem 1rem;
+  border: 2px dashed var(--ink-stamp, #a24a1a);
   color: var(--ink-stamp, #a24a1a);
   transform: rotate(var(--tilt, 0deg));
-  width: max-content;
-  max-width: 100%;
+  width: fit-content;
 }
 
 .stampRound {
-  border-radius: 1.5rem;
+  border-radius: 9999px;
 }
 
 .stampTicket {
-  border-style: solid;
-  border-width: 2.5px;
+  border-radius: 8px;
 }
 
 .stampOval {
-  border-style: double;
-  border-width: 3.5px;
+  border-radius: 16px;
 }
 
 .stampSvg {
-  width: 1.85rem;
-  height: 1.85rem;
+  width: 2.2rem;
+  height: 2.2rem;
   flex-shrink: 0;
 }
 
 .stampTitle {
-  font-family: var(--font-plush, "Fraunces", serif);
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 .entryText {
-  color: var(--color-cocoa-soft, #5a3a28);
-  font-size: 1rem;
+  font-size: 1.05rem;
   line-height: 1.6;
+  color: var(--ink-soft, #7a5840);
 }
 
-/* ── 3. Delivery & Collection (2-Column) ── */
+/* ── 3. Delivery & Collection ── */
 .deliveryGrid {
-  margin-top: clamp(4rem, 8vh, 6rem);
+  margin-top: clamp(5rem, 9vh, 7rem);
   display: grid;
-  gap: 2.5rem;
+  gap: 3rem;
   align-items: center;
 }
 
@@ -361,47 +494,48 @@
 }
 
 .deliveryLede {
+  font-size: 1.15rem;
+  line-height: 1.6;
   color: var(--ink-soft, #7a5840);
-  font-size: clamp(1.05rem, 1.2vw, 1.2rem);
-  line-height: 1.55;
   margin-top: 1rem;
 }
 
 .deliveryList {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  margin-top: 2rem;
   display: grid;
   gap: 1.75rem 2rem;
-  grid-template-columns: 1fr;
+  margin-top: 2.5rem;
+  list-style: none;
+  padding: 0;
 }
 
 @media (min-width: 640px) {
   .deliveryList {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
 .deliveryItemTitle {
-  font-family: var(--font-plush-text, var(--font-display));
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--color-cocoa, #2a170e);
-  line-height: 1.3;
+  line-height: 1.25;
 }
 
 .deliveryItemDesc {
-  color: var(--ink-soft, #7a5840);
   font-size: 0.95rem;
-  line-height: 1.5;
-  margin-top: 0.4rem;
+  line-height: 1.55;
+  color: var(--ink-soft, #7a5840);
+  margin-top: 0.35rem;
 }
 
 .deliveryVisual {
   position: relative;
-  height: clamp(14rem, 30vw, 22rem);
-  width: 100%;
+  background-color: #fffdf8;
+  border: 2px solid var(--color-cocoa, #2a170e);
+  border-radius: 16px;
+  box-shadow: 4px 7px 0px rgba(42, 23, 14, 0.2);
+  height: clamp(16rem, 28vw, 22rem);
+  overflow: hidden;
 }
 
 .skylineSvg {
@@ -410,46 +544,37 @@
   bottom: 0;
   width: 100%;
   color: rgba(42, 23, 14, 0.25);
-  pointer-events: none;
 }
 
 .flightScene {
-  position: relative;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-}
-
-.flightScene svg {
-  width: 100%;
-  height: 100%;
-  overflow: visible;
 }
 
 .flightRoute {
   fill: none;
-  stroke: var(--color-toffee-ink, #945327);
-  stroke-width: 3;
+  stroke: var(--color-toffee, #d4893f);
+  stroke-width: 3.5;
   stroke-linecap: round;
-  stroke-dasharray: 4 10;
-  opacity: 0.65;
+  stroke-dasharray: 6 8;
 }
 
 .flightDot {
   fill: var(--color-toffee, #d4893f);
-  stroke: var(--color-cocoa, #2a170e);
-  stroke-width: 2.5;
 }
 
 .flightLabel {
-  font-family: var(--font-scrawl, "Caveat", cursive);
+  font-family: var(--font-scrawl, cursive);
   font-size: 1.35rem;
-  font-weight: 700;
-  fill: var(--color-cocoa, #2a170e);
+  fill: var(--color-toffee-ink, #945327);
+  font-weight: bold;
 }
 
 /* ── 4. Why Choose Us ── */
 .whyGrid {
-  margin-top: clamp(4rem, 8vh, 6rem);
+  margin-top: clamp(5rem, 9vh, 7rem);
   display: grid;
   gap: 3rem;
 }
@@ -467,16 +592,16 @@
 }
 
 .whyLede {
-  color: var(--ink-soft, #7a5840);
-  font-size: clamp(1.05rem, 1.2vw, 1.2rem);
+  font-size: 1.15rem;
   line-height: 1.6;
+  color: var(--ink-soft, #7a5840);
   margin-top: 1.25rem;
 }
 
 .whyFeatures {
   list-style: none;
-  margin: 0;
   padding: 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -492,31 +617,30 @@
   width: 3.5rem;
   height: 3.5rem;
   flex-shrink: 0;
-  color: var(--color-toffee-deep, #945327);
+  color: var(--color-toffee-deep, #b56e29);
 }
 
 .featureTitle {
-  font-family: var(--font-plush, "Fraunces", serif);
-  font-size: 1.55rem;
-  font-weight: 700;
+  font-size: 1.6rem;
+  font-weight: 800;
   color: var(--color-cocoa, #2a170e);
 }
 
 .featureDesc {
-  color: var(--ink-soft, #7a5840);
-  font-size: 0.95rem;
+  font-size: 1rem;
   line-height: 1.55;
-  margin-top: 0.5rem;
+  color: var(--ink-soft, #7a5840);
+  margin-top: 0.35rem;
 }
 
-/* ── 5. Board Card (Unique & High Quality) ── */
+/* ── 5. Board Card ── */
 .boardCard {
-  margin-top: clamp(4rem, 8vh, 6rem);
-  background-color: var(--color-sand, #f6e6cd);
-  border: 3px solid var(--color-cocoa, #2a170e);
-  border-radius: 2rem;
-  padding: clamp(2.5rem, 4vw, 3.5rem);
-  box-shadow: 8px 10px rgba(42, 23, 14, 0.12);
+  margin-top: clamp(5rem, 9vh, 7rem);
+  background-color: #fffdf8;
+  border: 2px solid var(--color-cocoa, #2a170e);
+  border-radius: 16px;
+  padding: clamp(2rem, 5vw, 3.5rem);
+  box-shadow: 4px 7px 0px rgba(42, 23, 14, 0.2);
   display: grid;
   gap: 2rem;
   align-items: center;
@@ -529,35 +653,33 @@
 }
 
 .boardHeading {
-  font-family: var(--font-plush, "Fraunces", serif);
-  font-size: clamp(1.85rem, 3vw, 2.5rem);
+  font-size: clamp(2rem, 3.5vw, 2.8rem);
   font-weight: 800;
   color: var(--color-cocoa, #2a170e);
   line-height: 1.15;
 }
 
 .boardLede {
-  color: var(--color-cocoa-soft, #5a3a28);
-  font-size: clamp(1rem, 1.15vw, 1.15rem);
+  font-size: 1.15rem;
   line-height: 1.6;
+  color: var(--color-cocoa-soft, #5a3c2c);
   margin-top: 1rem;
-  max-width: 65ch;
+  max-width: 55ch;
 }
 
 .boardBtns {
-  margin-top: 2rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 0.85rem;
+  margin-top: 2rem;
 }
 
 .boardBuddy {
-  width: 12rem;
-  margin-inline: auto;
+  display: flex;
+  justify-content: center;
 }
 
-@media (min-width: 768px) {
-  .boardBuddy {
-    width: 14rem;
-  }
+.playfulTeddy {
+  width: clamp(10rem, 15vw, 14rem);
+  height: auto;
 }
