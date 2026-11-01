@@ -1,5 +1,18 @@
-# Logs
-logs
+# Dependencies
+node_modules/
+
+# Production build outputs
+dist/
+dist-ssr/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Debug and runtime logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,34 +20,20 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# Editor and OS metadata
+.DS_Store
+Thumbs.db
+.idea/
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# Environment files
-.env
-.env.local
-.env.*.local
-
+# Temporary investigation, audit, and browser automation artifacts
+scratch/
 scratch_shots/
-
-# Visual fidelity audit screenshots and comparison evidence
 audit_screenshots/
-scratch/screenshots/
-scratch/screenshots_exact/
-scratch/screenshots_h5/
-scratch/*.png
-
-
+.cache/

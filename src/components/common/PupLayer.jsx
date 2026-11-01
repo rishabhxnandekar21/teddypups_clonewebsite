@@ -34,7 +34,6 @@ export default function PupLayer() {
       return el.getBoundingClientRect().top + window.scrollY;
     };
 
-    const heroTop  = 0;
     const meetTop  = getDocTop('.tp-meet, [class*="meetSection"]') || 900;
     const pathsTop = getDocTop('.tp-paths, [class*="paths"]') || 5340;
     const chatTop  = getDocTop('.tp-chat, [class*="journeySection"]') || 6419;
@@ -45,7 +44,6 @@ export default function PupLayer() {
     const footerTop = getDocTop('footer, [class*="footer"]') || 12300;
 
     // Convert document offsets to progress fractions [0, 1]
-    const fHero   = 0;
     const fMeetStart = meetTop / docH;
     // Meet is pinned; midpoint and end of meet section
     const meetEl = document.querySelector('.tp-meet, [class*="meetSection"]');
@@ -56,21 +54,13 @@ export default function PupLayer() {
     const fChat = chatTop / docH;
     const fTrust = trustTop / docH;
     const fDusk = duskTop / docH;
-    const fFaq = faqTop / docH;
     const fCta = ctaTop / docH;
     const fFooter = footerTop / docH;
-    const fEnd = 1.0;
 
     // Viewport-space coordinates matching live reference
     // Target viewport: 1440 × 900 (responsive via window dimensions)
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-
-    // Basket position measured from footer
-    const basketEl = document.querySelector('[class*="basketPup"]');
-    const basketR = basketEl ? basketEl.getBoundingClientRect() : null;
-    const basketX = basketR ? basketR.left : -26;
-    const basketY = basketR ? basketR.top : 451;
 
     // 1. Hero: peeking sitting state matching center gap
     const heroX = Math.round(vw * 0.5 - 292.6);

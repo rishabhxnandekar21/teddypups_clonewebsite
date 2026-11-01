@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
-import { faqItems } from '../data/faq.js';
 import { moments } from '../data/families.js';
 import { BUSINESS } from '../data/navigation.js';
 import AccordionItem from '../components/ui/AccordionItem.jsx';
@@ -35,7 +34,6 @@ const JOURNEY_STEPS = [
 ];
 
 export default function HomePage() {
-  const [openFaq, setOpenFaq] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   const journeySectionRef = useRef(null);
 
@@ -70,8 +68,6 @@ export default function HomePage() {
 
   // 8 moments for Happy Families dusk preview (see all on /happy-families)
   const featuredMoments = moments.slice(0, 8);
-  // First 4 FAQ items for FAQ preview
-  const featuredFaqs = faqItems.slice(0, 4);
 
   return (
     <div className={styles.home}>
