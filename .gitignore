@@ -32,8 +32,20 @@ Thumbs.db
 *.sln
 *.sw?
 
-# Temporary investigation, audit, and browser automation artifacts
+# Temporary investigation, audit, and reference artifacts
 scratch/
 scratch_shots/
 audit_screenshots/
+reference/
+.agent/
+.skills/
 .cache/
+
+# Investigation and audit documentation
+ANIMATION_INVENTORY.md
+AUTONOMOUS_IMPLEMENTATION_REPORT.md
+CURSOR_RECREATION.md
+PROMPTS.md
+REFERENCE_INSPECTION.md
+REFERENCE_VS_LOCAL_AUDIT.md
+VISUAL_FIDELITY_REPORT.md
