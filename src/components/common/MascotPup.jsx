@@ -9,10 +9,10 @@ export default function MascotPup({
   className = '',
   style = {},
 }) {
-  const isPeeking = pose === 'peeking';
+  const isPeeking = pose === 'peeking' || pose === 'peek';
   const isSnug = pose === 'snug';
-  const isWalking = pose === 'walking';
-  const isSitting = pose === 'sitting';
+  const isWalking = pose === 'walking' || pose === 'walk' || pose === 'trot';
+  const isSitting = pose === 'sitting' || pose === 'sit';
 
   const bodyOpacity = isPeeking || isSnug ? 0 : 1;
   const ledgeOpacity = isPeeking || isSnug ? 1 : 0;

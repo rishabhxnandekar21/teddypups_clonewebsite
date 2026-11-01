@@ -337,3 +337,9 @@ a:focus-visible {
   line-height: 1.6;
   max-width: 56ch;
 }
+
+/* ── Active Scroll Runner Stop Coordination ── */
+html[data-pup] [data-pup-stop] > * {
+  visibility: hidden;
+}
+

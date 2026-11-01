@@ -106,7 +106,12 @@ export default function Footer() {
             </svg>
 
             {/* 2. Middle Mascot Layer: Snug in Basket */}
-            <div className={styles.basketPup}>
+            <div
+              className={styles.basketPup}
+              data-pup-stop="true"
+              data-pose="snug"
+              data-facing="right"
+            >
               <MascotPup
                 pose="snug"
                 facing="right"

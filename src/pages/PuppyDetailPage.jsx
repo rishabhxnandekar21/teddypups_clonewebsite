@@ -10,6 +10,20 @@ export default function PuppyDetailPage() {
   const { slug } = useParams();
   const puppy = slug ? getPuppyBySlug(slug) : undefined;
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [scrollScale, setScrollScale] = useState(0.1);
+
+  // Scroll scale for storybook ribbon
+  useEffect(() => {
+    const onScroll = () => {
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      if (docH > 0) {
+        const ratio = Math.min(1, Math.max(0.1, window.scrollY / docH));
+        setScrollScale(ratio);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Reset active image index whenever slug changes
   useEffect(() => {
@@ -101,56 +115,89 @@ export default function PuppyDetailPage() {
     '24/7 post-adoption care concierge',
   ];
 
-  return (
-    <div className={styles.page}>
-      <div className="container">
-        {/* ── Breadcrumbs & Prev/Next Bar ── */}
-        <div className={styles.navRow}>
-          <nav className={styles.breadcrumbs} aria-label="Breadcrumbs">
-            {isGoneHome ? (
-              <>
-                <Link to="/gone-home" className={styles.breadcrumbLink}>
-                  Gone home
-                </Link>
-                <span className={styles.breadcrumbSep} aria-hidden="true">
-                  /
-                </span>
-                <span className={styles.breadcrumbCurrent}>{puppy.name}</span>
-              </>
-            ) : (
-              <>
-                <Link to="/puppies" className={styles.breadcrumbLink}>
-                  Available puppies
-                </Link>
-                <span className={styles.breadcrumbSep} aria-hidden="true">
-                  /
-                </span>
-                <span className={styles.breadcrumbCurrent}>{puppy.name}</span>
-              </>
-            )}
-          </nav>
+  const getCoatColor = (p) => {
+    if (p.colorHex) return p.colorHex;
+    const clr = (p.color || '').toLowerCase();
+    if (clr.includes('white') || clr.includes('cream')) return '#e8d5be';
+    if (clr.includes('apricot') || clr.includes('golden')) return '#c8965a';
+    if (clr.includes('chocolate') || clr.includes('brown')) return '#5a3d28';
+    if (clr.includes('red')) return '#964b28';
+    return '#785838';
+  };
 
-          {/* Sibling Puppy Quick Links */}
-          <div className={styles.pupSiblingNav}>
-            <Link
-              to={`/puppies/${prevPuppy.slug}`}
-              className={styles.pupSiblingLink}
-              title={`Previous pup: ${prevPuppy.name}`}
-            >
-              <ChevronLeft size={14} aria-hidden="true" />
-              <span>Previous pup</span>
-            </Link>
-            <span className={styles.pupSiblingDivider}>•</span>
-            <Link
-              to={`/puppies/${nextPuppy.slug}`}
-              className={styles.pupSiblingLink}
-              title={`Next pup: ${nextPuppy.name}`}
-            >
-              <span>Next pup</span>
-              <ChevronRight size={14} aria-hidden="true" />
-            </Link>
+  return (
+    <div data-page="pup" className="tp-page">
+      <article
+        className={`tp-storybook ${styles.page}`}
+        style={{
+          position: 'relative',
+          background: `linear-gradient(180deg, color-mix(in srgb, ${getCoatColor(puppy)} 24%, var(--color-milk, #fffdf8)) 0%, var(--color-milk, #fffdf8) 85%)`,
+        }}
+      >
+        {/* Storybook Ribbon Bookmark */}
+        <div aria-hidden="true" className={`tp-ribbon ${styles.ribbon}`}>
+          <div className={`tp-ribbon__track ${styles.ribbonTrack}`}>
+            <span
+              className={`tp-ribbon__band ${styles.ribbonBand}`}
+              style={{ transform: `scaleY(${scrollScale})` }}
+            ></span>
           </div>
         </div>
+
+        <div className="container">
+          {/* ── Breadcrumbs & Prev/Next Bar ── */}
+          <div className={styles.navRow}>
+            <nav className={styles.breadcrumbs} aria-label="Breadcrumbs">
+              {isGoneHome ? (
+                <>
+                  <Link to="/gone-home" className={styles.breadcrumbLink}>
+                    Gone home
+                  </Link>
+                  <span className={styles.breadcrumbSep} aria-hidden="true">
+                    /
+                  </span>
+                  <span className={styles.breadcrumbCurrent}>{puppy.name}</span>
+                </>
+              ) : (
+                <>
+                  <Link to="/puppies" className={styles.breadcrumbLink}>
+                    Available puppies
+                  </Link>
+                  <span className={styles.breadcrumbSep} aria-hidden="true">
+                    /
+                  </span>
+                  <span className={styles.breadcrumbCurrent}>{puppy.name}</span>
+                </>
+              )}
+            </nav>
+
+            {/* Sibling Puppy Quick Links */}
+            <div className={styles.pupSiblingNav}>
+              <Link
+                to={`/puppies/${prevPuppy.slug}`}
+                className={styles.pupSiblingLink}
+                title={`Previous pup: ${prevPuppy.name}`}
+              >
+                <ChevronLeft size={14} aria-hidden="true" />
+                <span>Previous pup</span>
+              </Link>
+              <span className={styles.pupSiblingDivider}>•</span>
+              <Link
+                to={`/puppies/${nextPuppy.slug}`}
+                className={styles.pupSiblingLink}
+                title={`Next pup: ${nextPuppy.name}`}
+              >
+                <span>Next pup</span>
+                <ChevronRight size={14} aria-hidden="true" />
+              </Link>
+            </div>
+          </div>
+
+          {/* ── Storybook Chapter Marker ── */}
+          <p className={`tp-chapter ${styles.chapter}`}>
+            <span aria-hidden="true" className={`tp-chapter__n font-plush ${styles.chapterN}`}>1</span>
+            <span className={`font-scrawl ${styles.chapterText}`}>hello, it's me</span>
+          </p>
 
         {/* ── Detail Grid ── */}
         <div className={styles.detailGrid}>
@@ -338,6 +385,7 @@ export default function PuppyDetailPage() {
           </div>
         </section>
       </div>
-    </div>
+    </article>
+  </div>
   );
 }

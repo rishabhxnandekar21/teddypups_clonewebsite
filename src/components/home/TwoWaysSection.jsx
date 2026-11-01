@@ -6,16 +6,12 @@ import styles from './TwoWaysSection.module.css';
 export default function TwoWaysSection() {
   const pathRef = useRef(null);
   const planeRef = useRef(null);
-  const sceneRightRef = useRef(null);
+  const flightContainerRef = useRef(null);
 
-  const [planeTransform, setPlaneTransform] = useState('translate(410 70) rotate(18)');
+  const [planeTransform, setPlaneTransform] = useState('translate(40 250) rotate(-45)');
   const [planeOpacity, setPlaneOpacity] = useState(1);
 
-  const targetProgress = useRef(0.62);
-  const currentProgress = useRef(0.62);
-  const rafId = useRef(null);
-
-  // Flight tangent math updater
+  // Flight tangent math updater along reference bezier curve
   const updatePlanePosition = (t) => {
     const path = pathRef.current;
     const plane = planeRef.current;
@@ -31,40 +27,40 @@ export default function TwoWaysSection() {
     const angle = (180 * Math.atan2(pNext.y - pPrev.y, pNext.x - pPrev.x)) / Math.PI;
 
     const transformStr = `translate(${p.x.toFixed(1)} ${p.y.toFixed(1)}) rotate(${angle.toFixed(1)})`;
-    const opacityVal = Math.min(1, Math.max(0, (t - 0.11) / 0.06));
+    // Reference opacity curve: visible as it lifts off from Korea, stays solid through Dubai
+    const opacityVal = Math.min(1, Math.max(0.65, (t + 0.05) / 0.15));
 
     setPlaneTransform(transformStr);
     setPlaneOpacity(opacityVal);
   };
 
-  // Smooth animation loop towards targetProgress
+  // Scroll-driven progress: ["start 95%", "end 25%"]
   useEffect(() => {
-    const loop = () => {
-      currentProgress.current += (targetProgress.current - currentProgress.current) * 0.08;
-      updatePlanePosition(currentProgress.current);
-      rafId.current = requestAnimationFrame(loop);
+    const handleScroll = () => {
+      const container = flightContainerRef.current;
+      if (!container) return;
+      const rect = container.getBoundingClientRect();
+      const vh = window.innerHeight;
+
+      // start: container top enters 95% of viewport height
+      // end: container bottom exits 25% of viewport height
+      const startY = vh * 0.95;
+      const endY = vh * 0.25 - rect.height;
+      const progress = (startY - rect.top) / (startY - endY);
+      const clamped = Math.min(1, Math.max(0, progress));
+
+      updatePlanePosition(clamped);
     };
 
-    rafId.current = requestAnimationFrame(loop);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    handleScroll();
+
     return () => {
-      if (rafId.current) cancelAnimationFrame(rafId.current);
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
     };
   }, []);
-
-  // Handle pointer tracking on the right branch scene
-  const handlePointerMove = (e) => {
-    if (!sceneRightRef.current) return;
-    const rect = sceneRightRef.current.getBoundingClientRect();
-    const relX = (e.clientX - rect.left) / rect.width;
-    // Map relX from [0, 1] to progress range [0.15, 0.95]
-    const clampedProgress = Math.max(0.15, Math.min(0.95, 0.15 + relX * 0.8));
-    targetProgress.current = clampedProgress;
-  };
-
-  const handlePointerLeave = () => {
-    // Return gracefully to rest position
-    targetProgress.current = 0.62;
-  };
 
   return (
     <section
@@ -133,22 +129,13 @@ export default function TwoWaysSection() {
           <article
             className={`${styles.way} ${styles.wayRight}`}
             aria-labelledby="way-imported"
-            onPointerMove={handlePointerMove}
-            onMouseMove={handlePointerMove}
-            onPointerLeave={handlePointerLeave}
-            onMouseLeave={handlePointerLeave}
           >
             <h3 id="way-imported" className={`${styles.sign} ${styles.signRight}`}>
               Imported for you
             </h3>
 
-            <div
-              ref={sceneRightRef}
-              className={styles.wayScene}
-              onPointerMove={handlePointerMove}
-              onMouseMove={handlePointerMove}
-            >
-              {/* Interactive Flight Canvas */}
+            <div ref={flightContainerRef} className={styles.wayScene}>
+              {/* Scroll-Driven Flight Canvas */}
               <div className={styles.flightCanvas}>
                 <svg
                   viewBox="0 0 660 300"
@@ -178,7 +165,7 @@ export default function TwoWaysSection() {
                     Dubai
                   </text>
 
-                  {/* Tangent-Rotated Airplane Group */}
+                  {/* Scroll-Progress-Driven Airplane Group */}
                   <g
                     ref={planeRef}
                     transform={planeTransform}
@@ -224,7 +211,12 @@ export default function TwoWaysSection() {
           </article>
 
           {/* Center Sitting Mascot Teddy */}
-          <div className={styles.forkTeddy}>
+          <div
+            className={styles.forkTeddy}
+            data-pup-stop="true"
+            data-pose="sit"
+            data-facing="right"
+          >
             <MascotPup
               pose="sitting"
               facing="right"

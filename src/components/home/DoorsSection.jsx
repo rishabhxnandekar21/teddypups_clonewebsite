@@ -180,7 +180,12 @@ export default function DoorsSection() {
             <div aria-hidden="true" className={styles.meetFloor} />
 
             {/* Walking Mascot Teddy */}
-            <div className={styles.meetTeddy}>
+            <div
+              className={styles.meetTeddy}
+              data-pup-stop="true"
+              data-pose="walk"
+              data-facing={facing}
+            >
               <MascotPup
                 pose="walking"
                 facing={facing}

@@ -18,7 +18,7 @@ export default function PhoneMockup({ activeStep = 0, onSelectBreed }) {
   // Trigger typing indicator momentarily when switching steps
   useEffect(() => {
     setIsTyping(true);
-    const timer = setTimeout(() => setIsTyping(false), 650);
+    const timer = setTimeout(() => setIsTyping(false), 500);
     return () => clearTimeout(timer);
   }, [activeStep]);
 
@@ -41,8 +41,14 @@ export default function PhoneMockup({ activeStep = 0, onSelectBreed }) {
           <div className={styles.phoneBarInfo}>
             <span className={styles.phoneName}>TeddyPups U.A.E.</span>
             <span className={styles.phoneStatus}>
-              <span className={styles.onlineDot} />
-              online
+              {isTyping ? (
+                'typing…'
+              ) : (
+                <>
+                  <span className={styles.onlineDot} />
+                  online
+                </>
+              )}
             </span>
           </div>
         </div>
@@ -55,8 +61,8 @@ export default function PhoneMockup({ activeStep = 0, onSelectBreed }) {
           </p>
 
           {/* Step 0: Choose your breed */}
-          {activeStep === 0 && (
-            <div className={styles.msgGroup} data-step="0">
+          {activeStep >= 0 && (
+            <div className={styles.msgGroup} data-step="0" data-show="true">
               <div className={`${styles.msg} ${styles.msgThem}`}>
                 <p>
                   Select your preferred breed or tell us what you're looking for. We'll guide you based on availability and your lifestyle.
@@ -79,8 +85,8 @@ export default function PhoneMockup({ activeStep = 0, onSelectBreed }) {
           )}
 
           {/* Step 1: Photos & details */}
-          {activeStep === 1 && (
-            <div className={styles.msgGroup} data-step="1">
+          {activeStep >= 1 && (
+            <div className={styles.msgGroup} data-step="1" data-show="true">
               <div className={`${styles.msg} ${styles.msgThem} ${styles.msgMedia}`}>
                 <div className={styles.snaps}>
                   <img
@@ -100,25 +106,19 @@ export default function PhoneMockup({ activeStep = 0, onSelectBreed }) {
                 </div>
               </div>
               <p className={`${styles.msg} ${styles.msgThem}`}>
-                Here are high-definition video reports of Max and Luna, complete with their current vet checks and parents’ pedigree!
+                Our team will share real photos, health details, and all necessary information directly on WhatsApp.
               </p>
             </div>
           )}
 
           {/* Step 2: Delivery & handover */}
-          {activeStep === 2 && (
-            <div className={styles.msgGroup} data-step="2">
+          {activeStep >= 2 && (
+            <div className={styles.msgGroup} data-step="2" data-show="true">
               <div className={`${styles.msg} ${styles.msgThem}`}>
                 <p>
-                  Your puppy is ready! Would you prefer visiting our Downtown Dubai showroom for cuddle time, or home delivery with our climate-controlled chauffeur?
+                  Once confirmed, we handle everything professionally and ensure your puppy reaches you safely and stress-free.
                 </p>
               </div>
-              <p className={`${styles.msg} ${styles.msgMe}`}>
-                We'd love to visit the showroom this weekend!
-              </p>
-              <p className={`${styles.msg} ${styles.msgThem}`}>
-                Reserved for you! VIP suite booked with puppy care package included ♥
-              </p>
             </div>
           )}
 
@@ -140,7 +140,7 @@ export default function PhoneMockup({ activeStep = 0, onSelectBreed }) {
           className={styles.phoneCompose}
           aria-label="Reply to TeddyPups on WhatsApp"
         >
-          <span>Reply on WhatsApp…</span>
+          <span>Say hello on WhatsApp</span>
           <div className={styles.sendBtn} aria-hidden="true">
             <svg viewBox="0 0 24 24" width={16} height={16} fill="currentColor">
               <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />

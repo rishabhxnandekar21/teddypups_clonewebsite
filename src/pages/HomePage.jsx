@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
 import { faqItems } from '../data/faq.js';
@@ -6,8 +6,8 @@ import { moments } from '../data/families.js';
 import { BUSINESS } from '../data/navigation.js';
 import AccordionItem from '../components/ui/AccordionItem.jsx';
 import PolaroidCard from '../components/ui/PolaroidCard.jsx';
-import LightboxModal from '../components/ui/LightboxModal.jsx';
 import SplashCurtain from '../components/common/SplashCurtain.jsx';
+import PupLayer from '../components/common/PupLayer.jsx';
 import MascotPup from '../components/common/MascotPup.jsx';
 import HeroSection from '../components/home/HeroSection.jsx';
 import DoorsSection from '../components/home/DoorsSection.jsx';
@@ -37,14 +37,39 @@ const JOURNEY_STEPS = [
 export default function HomePage() {
   const [openFaq, setOpenFaq] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
-  const [lightboxIndex, setLightboxIndex] = useState(null);
+  const journeySectionRef = useRef(null);
 
   useEffect(() => {
     document.title = 'TeddyPups UAE — Premium Teacup Puppies in Dubai';
   }, []);
 
-  // First 4 moments for Happy Families preview
-  const featuredMoments = moments.slice(0, 4);
+  // Scroll-linked progression for the 3-step journey:
+  // Step 0: Choose breed, Step 1: Photos & details, Step 2: Secure delivery
+  useEffect(() => {
+    const handleScroll = () => {
+      const section = journeySectionRef.current;
+      if (!section) return;
+
+      const rect = section.getBoundingClientRect();
+      const scrollOffset = -rect.top;
+
+      // Each step has min-height: 380px in CSS, keeping the section pinned
+      if (scrollOffset < 340) {
+        setActiveStep(0);
+      } else if (scrollOffset < 720) {
+        setActiveStep(1);
+      } else {
+        setActiveStep(2);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // 8 moments for Happy Families dusk preview (see all on /happy-families)
+  const featuredMoments = moments.slice(0, 8);
   // First 4 FAQ items for FAQ preview
   const featuredFaqs = faqItems.slice(0, 4);
 
@@ -52,6 +77,9 @@ export default function HomePage() {
     <div className={styles.home}>
       {/* Intro splash loader */}
       <SplashCurtain />
+
+      {/* Active Scroll Mascot Layer */}
+      <PupLayer />
 
       {/* ── 1. Hero Section (tp-hero) ── */}
       <HeroSection />
@@ -63,7 +91,11 @@ export default function HomePage() {
       <TwoWaysSection />
 
       {/* ── 4. Your Puppy Journey (tp-chat Interactive Phone Mockup) ── */}
-      <section className={styles.journeySection} aria-labelledby="journey-title">
+      <section
+        ref={journeySectionRef}
+        className={`tp-scene tp-chat ${styles.journeySection}`}
+        aria-labelledby="journey-title"
+      >
         <div className={styles.chatGrid}>
           {/* Left Column: Interactive Story Steps */}
           <div className={styles.chatStory}>
@@ -80,6 +112,7 @@ export default function HomePage() {
                   key={step.num}
                   className={styles.chatStep}
                   data-active={activeStep === idx}
+                  data-done={activeStep > idx}
                   role="tab"
                   tabIndex={0}
                   aria-selected={activeStep === idx}
@@ -102,9 +135,13 @@ export default function HomePage() {
                 </li>
               ))}
             </ol>
+
+            <Link to="/how-it-works" className={`btn btn-ghost ${styles.chatCta}`}>
+              How it works
+            </Link>
           </div>
 
-          {/* Right Column: Interactive Phone Mockup */}
+          {/* Right Column: Sticky Interactive Phone Mockup */}
           <div className={styles.chatSide}>
             <PhoneMockup activeStep={activeStep} onSelectBreed={() => setActiveStep(0)} />
           </div>
@@ -147,7 +184,12 @@ export default function HomePage() {
             </figure>
 
             {/* Horizon Mascot */}
-            <div className={styles.duskTeddy}>
+            <div
+              className={styles.duskTeddy}
+              data-pup-stop="true"
+              data-pose="sit"
+              data-facing="left"
+            >
               <MascotPup
                 pose="sitting"
                 facing="left"
@@ -156,33 +198,24 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Polaroid Cards Grid */}
+          {/* Polaroid Cards Grid — 32 Verified Moments */}
           <div className={styles.familiesGrid}>
             {featuredMoments.map((moment, idx) => (
               <PolaroidCard
                 key={moment.id}
                 moment={moment}
                 index={idx}
-                tilt={idx % 2 === 0 ? -2.2 : 2.5}
-                onClick={() => setLightboxIndex(idx)}
+                tilt={idx % 4 === 0 ? -2.2 : idx % 4 === 1 ? 1.6 : idx % 4 === 2 ? -0.9 : 2.4}
               />
             ))}
           </div>
 
-          <div className={styles.seeAllRow} style={{ marginTop: '3rem' }}>
-            <Link to="/happy-families" className="btn btn-outline btn-lg" style={{ borderColor: 'rgba(255,253,248,0.7)', color: '#fffdf8' }}>
-              View all happy family stories &rarr;
+          <div className={styles.seeAllRow} style={{ marginTop: '4rem', textAlign: 'center' }}>
+            <Link to="/happy-families" className="btn btn-primary btn-lg">
+              See every happy family
             </Link>
           </div>
         </div>
-
-        {/* Modal Lightbox */}
-        <LightboxModal
-          moments={featuredMoments}
-          initialIndex={lightboxIndex ?? 0}
-          isOpen={lightboxIndex !== null}
-          onClose={() => setLightboxIndex(null)}
-        />
       </section>
 
       {/* ── 7. FAQ Preview (tp-night) ── */}

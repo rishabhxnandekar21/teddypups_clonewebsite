@@ -20,9 +20,14 @@ export default function DoorCard({ puppy, color = '#a24a1a', isAll = false }) {
     );
   }
 
-  const imageSrc = puppy?.media?.photos?.[0] || puppy?.media?.cardPhoto || '/media/maltipoo-max-male.webp';
+  const imageSrc =
+    puppy?.images?.[0] ||
+    puppy?.image ||
+    puppy?.media?.photos?.[0] ||
+    puppy?.media?.cardPhoto ||
+    '/media/maltipoo-max-male.webp';
   const genderLabel = puppy.gender === 'male' ? 'boy' : puppy.gender === 'female' ? 'girl' : puppy.gender;
-  const metaText = `${puppy.breed}, ${genderLabel}, ${puppy.ageMonths || 3} months, with video`;
+  const metaText = `${puppy.breed}, ${genderLabel}, ${puppy.age || puppy.ageMonths ? `${puppy.age || `${puppy.ageMonths} months`}` : '3 months'}, with video`;
 
   return (
     <li className={`${styles.door} tp-door`} data-open="false">

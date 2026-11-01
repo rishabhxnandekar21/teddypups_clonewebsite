@@ -29,3 +29,12 @@ dist-ssr
 .env.*.local
 
 scratch_shots/
+
+# Visual fidelity audit screenshots and comparison evidence
+audit_screenshots/
+scratch/screenshots/
+scratch/screenshots_exact/
+scratch/screenshots_h5/
+scratch/*.png
+
+

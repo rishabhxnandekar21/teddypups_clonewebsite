@@ -8,7 +8,36 @@ import styles from './Header.module.css';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const location = useLocation();
+
+  // Scroll direction detection for auto-hiding and revealing header
+  useEffect(() => {
+    let lastY = window.scrollY;
+    let ticking = false;
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const curY = window.scrollY;
+          const diff = curY - lastY;
+          if (curY <= 15) {
+            setHidden(false);
+          } else if (diff > 6 && curY > 80) {
+            setHidden(true);
+          } else if (diff < -6) {
+            setHidden(false);
+          }
+          lastY = curY;
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   // Close mobile drawer on route change
   useEffect(() => {
@@ -29,8 +58,15 @@ export default function Header() {
 
   return (
     <>
-      <div className={styles.headerWrapper}>
-        <header className={styles.header} id="site-header">
+      <div
+        className={`tp-header ${styles.headerWrapper}`}
+        data-hidden={hidden}
+      >
+        <header
+          className={styles.header}
+          id="site-header"
+          data-hidden={hidden}
+        >
           <div className={styles.header__inner}>
             {/* Logo */}
             <Link to="/" className={styles.header__logo}>

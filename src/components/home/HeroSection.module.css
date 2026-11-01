@@ -242,6 +242,7 @@
               var(--quilt, #fff1d8);
   border-top: 0;
   z-index: 25;
+  pointer-events: none;
 }
 
 .quiltEdge {

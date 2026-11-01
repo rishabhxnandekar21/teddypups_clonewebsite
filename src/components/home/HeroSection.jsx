@@ -228,7 +228,12 @@ export default function HeroSection() {
         </ul>
 
         {/* Center Peeking Mascot Teddy */}
-        <div className={styles.heroTeddy}>
+        <div
+          className={styles.heroTeddy}
+          data-pup-stop="true"
+          data-pose="peek"
+          data-facing="right"
+        >
           <MascotPup
             pose="peeking"
             facing="right"
